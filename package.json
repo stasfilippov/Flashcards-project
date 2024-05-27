@@ -10,10 +10,7 @@
     "format": "prettier --write src",
     "lint": "eslint src --ext .jsx,.js,.tsx,.ts  --no-error-on-unmatched-pattern --fix && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "replace-colors": "node scripts/replace-colors.cjs",
-    "rename-icons": "node scripts/rename-icons.cjs",
-    "generate-icons": "pnpm run rename-icons && npx @svgr/cli --out-dir src/assets/icons/components --jsx-runtime automatic --typescript --ref --memo --no-dimensions -- src/assets/icons/svg && pnpm run replace-colors"
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@fontsource/roboto": "^5.0.13",
