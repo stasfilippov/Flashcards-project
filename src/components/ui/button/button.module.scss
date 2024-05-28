@@ -12,9 +12,9 @@
   gap: 10px;
 
   &:disabled {
+    cursor: not-allowed;
     color: var(--color-light-900);
   }
-
   &:focus-visible {
     outline: 2px solid var(--color-info-700);
   }
@@ -22,6 +22,7 @@
 
 .primary {
   background-color: var(--color-accent-500);
+
   &:active {
     background-color: var(--color-accent-700);
   }
@@ -29,13 +30,13 @@
     background-color: var(--color-accent-300);
   }
   &:disabled {
-    cursor: not-allowed;
     background-color: var(--color-accent-900);
   }
 }
 
 .secondary {
   background-color: var(--color-dark-300);
+
   &:active {
     background-color: var(--color-dark-500);
   }
@@ -43,7 +44,6 @@
     background-color: var(--color-dark-100);
   }
   &:disabled {
-    cursor: not-allowed;
     background-color: var(--color-dark-300);
   }
 }
