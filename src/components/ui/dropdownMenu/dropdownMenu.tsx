@@ -15,11 +15,11 @@ export const DropdownMenu = (props: Props) => {
 
   return (
     <DropdownMenuRadix.Root {...rest}>
-      <DropdownMenuRadix.Trigger asChild>
+      <DropdownMenuRadix.Trigger asChild className={s.trigger}>
         {trigger || <MoreVerticalOutline width={24} />}
       </DropdownMenuRadix.Trigger>
       <DropdownMenuRadix.Portal>
-        <DropdownMenuRadix.Content className={s.dropdownContent} sideOffset={12}>
+        <DropdownMenuRadix.Content className={s.dropdownContent} sideOffset={9}>
           {children}
           <DropdownMenuRadix.Arrow asChild className={s.triangleBox}>
             <div className={s.triangle}></div>
