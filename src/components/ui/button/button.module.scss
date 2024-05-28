@@ -1,20 +1,25 @@
 .button {
   all: unset;
+
   cursor: pointer;
-  box-sizing: border-box;
-  color: inherit;
+
   display: inline-flex;
-  justify-content: center;
-  align-content: center;
-  font-family: inherit;
-  padding: 6px 28px;
-  border-radius: 4px;
   gap: 10px;
+  place-content: center center;
+
+  box-sizing: border-box;
+  padding: 6px 28px;
+
+  font-family: inherit;
+  color: inherit;
+
+  border-radius: 4px;
 
   &:disabled {
     cursor: not-allowed;
     color: var(--color-light-900);
   }
+
   &:focus-visible {
     outline: 2px solid var(--color-info-700);
   }
@@ -26,9 +31,11 @@
   &:active {
     background-color: var(--color-accent-700);
   }
+
   &:hover {
     background-color: var(--color-accent-300);
   }
+
   &:disabled {
     background-color: var(--color-accent-900);
   }
@@ -40,9 +47,11 @@
   &:active {
     background-color: var(--color-dark-500);
   }
+
   &:hover {
     background-color: var(--color-dark-100);
   }
+
   &:disabled {
     background-color: var(--color-dark-300);
   }
