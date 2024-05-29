@@ -19,7 +19,7 @@ export const Avatar = ({ className, size = 'small', src, ...rest }: Props) => {
       {src ? (
         <img alt={'avatar'} className={classNames.avatar} src={src} {...rest} />
       ) : (
-        <div className={classNames.avatar}>
+        <div className={classNames.avatar} {...rest}>
           <Person />
         </div>
       )}
