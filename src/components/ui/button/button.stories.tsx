@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { LogOut } from '@/assets/icons/components'
-import { Typography } from '@/components/ui/typography'
 
 import { Button } from './'
 
@@ -22,7 +21,7 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    children: <Typography variant={'subtitle2'}>Primary Button</Typography>,
+    children: 'Primary Button',
     disabled: false,
     variant: 'primary',
   },
@@ -30,39 +29,31 @@ export const Primary: Story = {
 
 export const PrimaryWithIcon: Story = {
   args: {
-    children: (
-      <>
-        <LogOut width={16} />
-        <Typography variant={'subtitle2'}>Primary with Icon</Typography>
-      </>
-    ),
+    children: 'Primary with Icon',
     disabled: false,
+    icon: <LogOut width={16} />,
     variant: 'primary',
   },
 }
 
 export const Secondary: Story = {
   args: {
-    children: <Typography variant={'subtitle2'}>Secondary Button</Typography>,
+    children: 'Secondary Button',
     disabled: false,
     variant: 'secondary',
   },
 }
 export const SecondaryWithIcon: Story = {
   args: {
-    children: (
-      <>
-        <LogOut width={16} />
-        <Typography variant={'subtitle2'}>Secondary with Icon</Typography>
-      </>
-    ),
+    children: 'Secondary with Icon',
     disabled: false,
+    icon: <LogOut width={16} />,
     variant: 'secondary',
   },
 }
 export const FullWidth: Story = {
   args: {
-    children: <Typography variant={'subtitle2'}>Full Width Primary Button</Typography>,
+    children: 'Full Width Primary Button',
     disabled: false,
     fullWidth: true,
     variant: 'primary',
