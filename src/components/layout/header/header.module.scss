@@ -1,0 +1,24 @@
+.header {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 60px;
+}
+
+.userContainer {
+  cursor: pointer;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+
+  span {
+    border-bottom: 1px dashed var(--color-light-100);
+  }
+}
