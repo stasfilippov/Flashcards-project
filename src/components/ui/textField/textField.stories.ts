@@ -3,25 +3,12 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { TextField } from './'
 
 const meta = {
-  // argTypes: {
-  //   variant: {
-  //     control: { type: 'radio' },
-  //     options: [
-  //       'body1',
-  //       'body2',
-  //       'caption',
-  //       'h1',
-  //       'h2',
-  //       'h3',
-  //       'h4',
-  //       'link1',
-  //       'link2',
-  //       'overline',
-  //       'subtitle1',
-  //       'subtitle2',
-  //     ],
-  //   },
-  // },
+  argTypes: {
+    type: {
+      control: { type: 'radio' },
+      options: ['password', 'search'],
+    },
+  },
   component: TextField,
   tags: ['autodocs'],
   title: 'Components/TextField',
