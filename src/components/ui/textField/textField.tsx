@@ -31,7 +31,7 @@ export const TextField = (props: TextFieldProps) => {
     onChange,
     onChangeCallback,
     placeholder,
-    type = 'default',
+    type = 'text',
     ...rest
   } = props
 
@@ -58,18 +58,18 @@ export const TextField = (props: TextFieldProps) => {
   const domainId = id ?? generatedId
   const domainType = getType(type, isShowPassword)
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     onChangeCallback?.(e.target.value)
   }
-  const clearInputHandler = () => {
+  const clearHandler = () => {
     if (inputRef.current) {
       inputRef.current.value = ''
     }
   }
-  const handleFocus = () => {
+  const focusHandler = () => {
     setIsActive(true)
   }
-  const handleBlur = () => {
+  const blurHandler = () => {
     setIsActive(false)
   }
 
@@ -106,9 +106,9 @@ export const TextField = (props: TextFieldProps) => {
           )}
           disabled={disabled}
           id={domainId}
-          onBlur={handleBlur}
-          onChange={onChangeHandler}
-          onFocus={handleFocus}
+          onBlur={blurHandler}
+          onChange={changeHandler}
+          onFocus={focusHandler}
           placeholder={placeholder}
           ref={inputRef}
           type={domainType}
@@ -124,7 +124,7 @@ export const TextField = (props: TextFieldProps) => {
           </button>
         )}
         {isSearchField && isActive && (
-          <button className={s.clearInputIcon} onClick={clearInputHandler}>
+          <button className={s.clearInputIcon} onClick={clearHandler}>
             <CloseOutline height={16} width={16} />
           </button>
         )}
