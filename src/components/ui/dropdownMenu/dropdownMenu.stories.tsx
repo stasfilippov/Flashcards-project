@@ -7,6 +7,7 @@ import {
   PlayCircleOutline,
   TrashOutline,
 } from '@/assets/icons/components'
+import { Avatar } from '@/components/ui/avatar'
 import { Typography } from '@/components/ui/typography'
 
 import s from './styleForStories.module.scss'
@@ -58,7 +59,7 @@ export const WithUser: Story = {
       <>
         <DropdownItem>
           <div className={s.userInfo}>
-            <img alt={user.photo.alt} className={s.photoBlock} src={user.photo.src} />
+            <Avatar src={user.photo.src} />
             <div className={s.infoBlock}>
               <Typography variant={'subtitle2'}>{user.name}</Typography>
               <Typography className={s.email} variant={'caption'}>
@@ -79,6 +80,10 @@ export const WithUser: Story = {
         </DropdownItem>
       </>
     ),
-    trigger: <img alt={user.photo.alt} src={user.photo.src} />,
+    trigger: (
+      <div className={s.triggerBox}>
+        <Avatar src={user.photo.src} />
+      </div>
+    ),
   },
 }
