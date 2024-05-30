@@ -16,7 +16,7 @@
   border-radius: 4px;
 
   &:disabled {
-    cursor: not-allowed;
+    cursor: auto;
     color: var(--color-light-900);
   }
 
