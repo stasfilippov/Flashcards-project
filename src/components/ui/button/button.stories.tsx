@@ -59,3 +59,17 @@ export const FullWidth: Story = {
     variant: 'primary',
   },
 }
+export const DisabledPrimary: Story = {
+  args: {
+    children: 'Disabled',
+    disabled: true,
+    variant: 'primary',
+  },
+}
+export const DisabledSecondary: Story = {
+  args: {
+    children: 'Disabled',
+    disabled: true,
+    variant: 'secondary',
+  },
+}
