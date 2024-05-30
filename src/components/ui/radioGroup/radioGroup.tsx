@@ -5,7 +5,7 @@ import { v4 } from 'uuid'
 import s from './radioGroup.module.scss'
 
 type Props = {
-  options: any[]
+  options: string[]
 } & RadioGroupRadix.RadioGroupProps
 
 export const RadioGroup = ({ children, className, defaultValue, options, ...rest }: Props) => {
