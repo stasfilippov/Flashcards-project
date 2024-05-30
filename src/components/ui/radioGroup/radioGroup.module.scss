@@ -1,0 +1,110 @@
+button {
+  all: unset;
+}
+
+.radioGroupRoot {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &[data-disabled] {
+    .label {
+      pointer-events: none;
+      cursor: default;
+      color: var(--color-light-900);
+    }
+
+    .radioGroupItem {
+      pointer-events: none;
+      cursor: default;
+
+      background-color: transparent;
+      border: 2px solid var(--color-accent-900);
+      box-shadow: none;
+    }
+
+    .radioGroupIndicator {
+      pointer-events: none;
+      cursor: default;
+
+      &::after {
+        background-color: var(--color-accent-900);
+      }
+    }
+  }
+}
+
+.radioGroupItem {
+  cursor: pointer;
+
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid var(--color-accent-500);
+  border-radius: 100%;
+
+  &:hover {
+    background-color: var(--color-dark-500);
+    box-shadow: 0 0 0 10px var(--color-dark-500);
+  }
+
+  &:focus-visible {
+    background-color: var(--color-dark-700);
+    box-shadow: 0 0 0 10px var(--color-dark-700);
+  }
+
+  &:active {
+    background-color: var(--color-accent-900);
+    box-shadow: 0 0 0 10px var(--color-accent-900);
+  }
+}
+
+.radioGroupItemContainer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 4px 16px 4px 4px;
+}
+
+.radioGroupIndicator {
+  cursor: pointer;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  &::after {
+    content: '';
+
+    display: block;
+
+    width: 9px;
+    height: 9px;
+
+    background-color: var(--color-accent-500);
+    border-radius: 50%;
+
+    animation: radioAppear 0.3s forwards;
+  }
+}
+
+@keyframes radioAppear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.label {
+  cursor: pointer;
+}
