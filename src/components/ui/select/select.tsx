@@ -19,14 +19,13 @@ type Props = {
 
 export const Select = (props: Props) => {
   const { className, label, options, placeholder, width = '100%', ...rest } = props
-  const widthStyle = { width }
 
   const onCloseFocus = (e: Event) => {
     e.preventDefault()
   }
 
   return (
-    <div className={s.selectBox} style={widthStyle}>
+    <div className={s.selectBox} style={{ width }}>
       {label && (
         <Typography className={s.label} variant={'body2'}>
           {label}
