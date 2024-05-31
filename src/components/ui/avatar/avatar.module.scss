@@ -1,0 +1,20 @@
+.avatar {
+  object-fit: cover;
+  border-radius: 50%;
+
+  &.small {
+    width: 36px;
+    height: 36px;
+  }
+
+  &.large {
+    width: 96px;
+    height: 96px;
+  }
+}
+
+.icon {
+  display: inline-block;
+  padding: 5px;
+  border: 1px solid var(--color-light-100);
+}

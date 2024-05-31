@@ -1,0 +1,105 @@
+@mixin reset {
+  all: unset;
+}
+.wrapper {
+  min-width: 200px;
+  width: 100%;
+}
+
+.label {
+  color: var(--color-dark-100);
+  cursor: pointer;
+}
+
+.fieldContainer {
+  position: relative;
+  width: 100%;
+}
+
+.searchIcon {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+
+  stroke: var(--color-dark-100);
+}
+
+.searchIconActive {
+  stroke: var(--color-light-100);
+}
+
+.showPasswordIcon,
+.clearInputIcon {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+}
+
+.field {
+  padding: 6px 12px;
+  width: 100%;
+  font-family: inherit;
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
+  background: transparent;
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+
+  &::placeholder {
+    color: var(--color-dark-100);
+  }
+
+  &:focus {
+    border-color: var(--color-light-100);
+    outline: 1px solid var(--color-light-100);
+  }
+
+  &:hover {
+    background: var(--color-dark-700);
+  }
+
+  &.error {
+    color: var(--color-danger-300);
+    border-color: var(--color-danger-300);
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--color-danger-300);
+    }
+  }
+
+  &.hasSearchIcon {
+    padding-left: 41px;
+  }
+
+  &[type='search']::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+.fieldDisabled {
+  color: var(--color-dark-300);
+  &:hover {
+    background: initial;
+  }
+}
+
+.iconDisabled {
+  stroke: var(--color-dark-300);
+  cursor: initial;
+}
+
+.error {
+  color: var(--color-danger-300);
+}

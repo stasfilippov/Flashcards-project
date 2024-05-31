@@ -1,0 +1,21 @@
+.userInfo {
+  display: inline-flex;
+  gap: 8px;
+  min-width: 192px;
+}
+
+.triggerBox {
+  width: 36px;
+  height: 36px;
+}
+
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  .email {
+    color: var(--color-dark-100);
+  }
+}
