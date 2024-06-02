@@ -20,41 +20,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-//!--deck
-// [
-//   {
-//     "answer": "Котики",
-//     "answerImg": "https://staging-it-incubator.s3.eu-central-1.amazonaws.com/flashcards/Image/567584f2-402c-4eef-88df-0462e6264608_images.jpeg",
-//     "answerVideo": null,
-//     "created": "2024-05-30T17:13:32.256Z",
-//     "deckId": "clwti7ygx03tzqj01difp81ai",
-//     "grade": 0,
-//     "id": "clwtikzmo03usqj01o3qinmbu",
-//     "question": "Котики",
-//     "questionImg": null,
-//     "questionVideo": null,
-//     "shots": 0,
-//     "updated": "2024-05-30T17:14:13.625Z",
-//     "userId": "3752c89f-88b2-4e81-9344-8b3d61afecbe"
-//   },
-//   {
-//     "answer": "Котики",
-//     "answerImg": null,
-//     "answerVideo": null,
-//     "created": "2024-05-30T17:14:07.435Z",
-//     "deckId": "clwti7ygx03tzqj01difp81ai",
-//     "grade": 0,
-//     "id": "clwtilqrv03uvqj01e4hnt1or",
-//     "question": "Котики",
-//     "questionImg": "https://staging-it-incubator.s3.eu-central-1.amazonaws.com/flashcards/Image/b15ec9ba-00c5-41fa-992c-1d9610f38948_images (1).jpeg",
-//     "questionVideo": null,
-//     "shots": 0,
-//     "updated": "2024-05-30T17:14:07.435Z",
-//     "userId": "3752c89f-88b2-4e81-9344-8b3d61afecbe"
-//   }
-// ]
-
-const TableWithState = () => {
+const TableWithStateOfDecks = () => {
   const [decks] = useState([
     {
       author: {
@@ -137,19 +103,147 @@ const TableWithState = () => {
           <TableBody>
             {decks.map(deck => (
               <TableRow key={deck.id}>
-                <TableCell deck={deck} id={'name'}>
+                <TableCell id={'name'} itemDeck={deck}>
                   {deck.name}
                 </TableCell>
-                <TableCell deck={deck} id={'cardsCount'}>
+                <TableCell id={'cardsCount'} itemDeck={deck}>
                   {deck.cardsCount}
                 </TableCell>
-                <TableCell deck={deck} id={'updated'}>
+                <TableCell id={'updatedDeck'} itemDeck={deck}>
                   {formatDateToDdMmYY(deck.updated)}
                 </TableCell>
-                <TableCell deck={deck} id={'created'}>
+                <TableCell id={'created'} itemDeck={deck}>
                   {deck.author.name}
                 </TableCell>
-                <TableCell deck={deck} id={'controls'} />
+                <TableCell id={'controls'} itemDeck={deck} />
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </BrowserRouter>
+  )
+}
+
+const TableWithStateOfQuestions = () => {
+  const [questions] = useState([
+    {
+      answer: 'Tin',
+      answerImg: null,
+      answerVideo: null,
+      created: '2024-04-22T14:48:51.955Z',
+      deckId: 'clvb1n01f00ognx01veotzkpc',
+      grade: 0,
+      id: 'clvb2okj700oqnx01su1xmc9n',
+      question: 'What element is denoted by the chemical symbol Sn in the periodic table?',
+      questionImg: null,
+      questionVideo: null,
+      shots: 0,
+      updated: '2024-06-01T13:44:09.235Z',
+      userId: '70383690-0d88-4474-bd58-bbcb21cb27d8',
+    },
+    {
+      answer: 'Krone',
+      answerImg: null,
+      answerVideo: null,
+      created: '2024-04-22T14:55:25.314Z',
+      deckId: 'clvb1n01f00ognx01veotzkpc',
+      grade: 0,
+      id: 'clvb2x01t00oznx01ycofizeo',
+      question: 'What is the currency of Denmark?',
+      questionImg: null,
+      questionVideo: null,
+      shots: 0,
+      updated: '2024-06-01T13:43:10.071Z',
+      userId: '70383690-0d88-4474-bd58-bbcb21cb27d8',
+    },
+    {
+      answer: 'Four (The Godfather Part 2, Heat, Righteous Kill, The Irishman)',
+      answerImg:
+        'https://staging-it-incubator.s3.eu-central-1.amazonaws.com/flashcards/Image/d03771ea-9a23-4535-8cf0-ab86203571e4_robert-deniro-al-pacino-053123-aff8d3b4ba864cfe982676733b4a879a.jpg',
+      answerVideo: null,
+      created: '2024-04-22T14:57:00.540Z',
+      deckId: 'clvb1n01f00ognx01veotzkpc',
+      grade: 0,
+      id: 'clvb2z1j000p0nx01386l0u8s',
+      question: 'How many films have Al Pacino and Robert De Niro appeared in together?',
+      questionImg:
+        'https://staging-it-incubator.s3.eu-central-1.amazonaws.com/flashcards/Image/1776e69e-6a89-41a4-9790-89a6cb32986e_al-pacino-robert-de-niro-mc-1x1-230515-copy-2-dd0c8c.webp',
+      questionVideo: null,
+      shots: 0,
+      updated: '2024-05-12T15:39:43.375Z',
+      userId: '70383690-0d88-4474-bd58-bbcb21cb27d8',
+    },
+    {
+      answer: 'Once (1966)',
+      answerImg: null,
+      answerVideo: null,
+      created: '2024-04-22T15:02:55.483Z',
+      deckId: 'clvb1n01f00ognx01veotzkpc',
+      grade: 0,
+      id: 'clvb36nei00p8nx01mbhxp0od',
+      question: "How many times has England won the men's football World Cup?",
+      questionImg: null,
+      questionVideo: null,
+      shots: 0,
+      updated: '2024-05-12T15:39:17.293Z',
+      userId: '70383690-0d88-4474-bd58-bbcb21cb27d8',
+    },
+    {
+      answer: '1997',
+      answerImg: null,
+      answerVideo: null,
+      created: '2024-04-22T14:47:16.534Z',
+      deckId: 'clvb1n01f00ognx01veotzkpc',
+      grade: 0,
+      id: 'clvb2miwm00opnx01tsj9skiq',
+      question: 'When was the movie the Titanic released?',
+      questionImg:
+        'https://staging-it-incubator.s3.eu-central-1.amazonaws.com/flashcards/Image/fcf5d092-8591-49e8-814d-9271056a138e_titanic_custom-fc6a03aedd8e562d780ecf9b9a8a947d4dcbf163-s1100-c50.jpg',
+      questionVideo: null,
+      shots: 0,
+      updated: '2024-05-12T15:38:44.110Z',
+      userId: '70383690-0d88-4474-bd58-bbcb21cb27d8',
+    },
+  ])
+
+  const [columns] = useState([
+    {
+      id: 'question',
+      title: 'Question',
+    },
+    {
+      id: 'answer',
+      title: 'Answer',
+    },
+    {
+      id: 'updated',
+      title: 'Last Updated',
+    },
+    {
+      id: 'grade',
+      title: 'Grade',
+    },
+  ])
+
+  return (
+    <BrowserRouter>
+      <div className={s.outerContainer}>
+        <Table>
+          <TableHeader columns={columns} />
+          <TableBody>
+            {questions.map(question => (
+              <TableRow key={question.id}>
+                <TableCell id={'question'} itemQuestion={question}>
+                  {question.question}
+                </TableCell>
+                <TableCell id={'answer'} itemQuestion={question}>
+                  {question.answer}
+                </TableCell>
+                <TableCell id={'updatedQuestion'} itemQuestion={question}>
+                  {formatDateToDdMmYY(question.updated)}
+                </TableCell>
+                <TableCell id={'grade'} itemQuestion={question} />
               </TableRow>
             ))}
           </TableBody>
@@ -160,5 +254,9 @@ const TableWithState = () => {
 }
 
 export const DecksList: Story = {
-  render: () => <TableWithState />,
+  render: () => <TableWithStateOfDecks />,
+}
+
+export const QuestionList: Story = {
+  render: () => <TableWithStateOfQuestions />,
 }

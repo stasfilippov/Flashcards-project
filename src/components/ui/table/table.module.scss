@@ -6,24 +6,31 @@
   border-top: 1px solid var(--color-dark-500);
   border-right: 1px solid var(--color-dark-500);
   border-left: 1px solid var(--color-dark-500);
-  border-bottom: none;
+  border-bottom: 1px solid var(--color-dark-500);
 }
 
 .table {
   width: 100%;
   border-spacing: 0;
-  border-collapse: separate;
+  //border-collapse: separate;
+  & tr::after {
+    content: '';
+    display: block;
+    background-color: var(--color-dark-500);
+    height: 1px;
+  }
 }
-.thead {
-}
-.tbody {
-}
-
 .trow {
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: var(--color-dark-700);
+  }
 }
 
 .tCell {
   padding: 6px 24px;
+  position: relative;
   background: transparent;
   font-weight: var(--font-weight-regular);
   font-size: var(--font-size-s);
@@ -52,7 +59,7 @@
     max-width: 150px;
   }
 
-  &[id='updated'] {
+  &[id='updatedDeck'] {
     max-width: 180px;
   }
 
@@ -65,10 +72,62 @@
     justify-content: center;
     align-items: center;
   }
+
+  //&[id='question'] {
+  //  max-width: 301px;
+  //  padding: 6px 10px 6px 110px;
+  //
+  //  img {
+  //    position: absolute;
+  //    top: 12px;
+  //    left: 24px;
+  //    max-width: 70px;
+  //    height: 50px;
+  //    object-fit: cover;
+  //    border-radius: 3px;
+  //  }
+  //
+  //  span {
+  //    display: block;
+  //    word-break: break-word;
+  //    vertical-align: top;
+  //  }
+  //}
+
+  &[id='answer'],
+  &[id='question'] {
+    height: 75px;
+    max-width: 301px;
+    padding: 6px 10px 6px 110px;
+
+    img {
+      position: absolute;
+      top: 12px;
+      left: 24px;
+      max-width: 70px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 3px;
+    }
+
+    span {
+      display: block;
+      word-break: break-word;
+      vertical-align: top;
+    }
+  }
+
+  &[id='updatedQuestion'] {
+    //min-width: 180px;
+  }
+
+  &[id='grade'] {
+    //min-width: 170px;
+  }
 }
 
 .tCellImageOfDeck {
-  height: 48px;
+  height: 40px;
 }
 
 .tCellControlsWrapper {
@@ -99,11 +158,6 @@
   }
 }
 
-.tHeadCell,
-.tCell {
-  border-bottom: 1px solid var(--color-dark-500);
-}
-
 .tHeadCell {
   cursor: pointer;
   padding: 6px 24px;
@@ -112,12 +166,10 @@
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-bold);
   color: var(--color-light-100);
-  border-top: 1px solid var(--color-dark-500);
   transition: all 0.2s;
 
   &:hover {
     background-color: var(--color-dark-300);
-    border-top: 1px solid var(--color-dark-300);
   }
 
   &[id='controls'] {
