@@ -28,8 +28,8 @@ const TableRow = forwardRef<HTMLTableRowElement, ComponentPropsWithoutRef<'tr'>>
 )
 
 const TableHeadCell = forwardRef<HTMLTableCellElement, ComponentPropsWithoutRef<'th'>>(
-  ({ className, ...props }, ref) => (
-    <th className={clsx(classNames.tHeadCell, className)} ref={ref} {...props} />
+  ({ className, id, ...props }, ref) => (
+    <th className={clsx(classNames.tHeadCell, className)} id={id} ref={ref} {...props} />
   )
 )
 
