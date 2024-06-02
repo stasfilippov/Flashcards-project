@@ -1,8 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { useState } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table/table'
+import { Table, TableBody, TableRow } from '@/components/ui/table/table'
+import { TableCell } from '@/components/ui/table/tableCell'
+import { TableHeader } from '@/components/ui/table/tableHeader'
 import { formatDateToDdMmYY } from '@/components/ui/table/utils/convertDate'
 
 import s from './table.module.scss'
@@ -17,8 +20,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-//!--packs
-//
 //!--deck
 // [
 //   {
@@ -54,7 +55,7 @@ type Story = StoryObj<typeof meta>
 // ]
 
 const TableWithState = () => {
-  const [decks, setDecks] = useState([
+  const [decks] = useState([
     {
       author: {
         id: '01d5498b-2849-49f1-b6c1-7c5dc204bdde',
@@ -122,27 +123,39 @@ const TableWithState = () => {
       title: 'Created by',
     },
     {
-      id: 'created',
-      title: '',
+      id: 'controls',
+      sortable: false,
+      title: null,
     },
   ])
 
   return (
-    <div className={s.outerContainer}>
-      <Table>
-        <TableHeader columns={columns} />
-        <TableBody>
-          {decks.map(deck => (
-            <TableRow key={deck.id}>
-              <TableCell>{deck.name}</TableCell>
-              <TableCell>{deck.cardsCount}</TableCell>
-              <TableCell>{formatDateToDdMmYY(deck.updated)}</TableCell>
-              <TableCell>{deck.author.name}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+    <BrowserRouter>
+      <div className={s.outerContainer}>
+        <Table>
+          <TableHeader columns={columns} />
+          <TableBody>
+            {decks.map(deck => (
+              <TableRow key={deck.id}>
+                <TableCell deck={deck} id={'name'}>
+                  {deck.name}
+                </TableCell>
+                <TableCell deck={deck} id={'cardsCount'}>
+                  {deck.cardsCount}
+                </TableCell>
+                <TableCell deck={deck} id={'updated'}>
+                  {formatDateToDdMmYY(deck.updated)}
+                </TableCell>
+                <TableCell deck={deck} id={'created'}>
+                  {deck.author.name}
+                </TableCell>
+                <TableCell deck={deck} id={'controls'} />
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </BrowserRouter>
   )
 }
 
