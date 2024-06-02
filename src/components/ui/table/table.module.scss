@@ -1,0 +1,47 @@
+.outerContainer {
+  max-width: 1006px;
+  border-top: 1px solid var(--color-dark-500);
+  border-right: 1px solid var(--color-dark-500);
+  border-left: 1px solid var(--color-dark-500);
+  border-bottom: none;
+}
+
+.table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: separate;
+}
+.thead {
+}
+.tbody {
+}
+
+.trow {
+  // 'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
+}
+
+.tCell {
+  padding: 6px 24px;
+  background: transparent;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  color: var(--color-light-100);
+
+  //'p-4 align-middle [&:has([role=checkbox])]:pr-0',
+}
+
+.tHeadCell,
+.tCell {
+  border-bottom: 1px solid var(--color-dark-500);
+}
+
+.tHeadCell {
+  padding: 6px 24px;
+  text-align: left;
+  background: var(--color-dark-500);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-light-100);
+  border-top: 1px solid var(--color-dark-500);
+  //'h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0',
+}
