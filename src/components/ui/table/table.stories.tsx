@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table/table'
+import { formatDateToDdMmYY } from '@/components/ui/table/utils/convertDate'
 
 import s from './table.module.scss'
 
@@ -17,53 +18,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 //!--packs
-// [
-//   {
-//     "id": "clvfklx8r028mnx01d0zwn6vl",
-//     "userId": "01d5498b-2849-49f1-b6c1-7c5dc204bdde",
-//     "name": "А ты сделал DnD?!1",
-//     "isPrivate": false,
-//     "cover": "https://staging-it-incubator.s3.eu-central-1.amazonaws.com/flashcards/Image/e0a229b7-8601-4a7d-b7b7-68c5321cc6f5_sun-icon.png",
-//     "created": "2024-04-25T18:21:46.252Z",
-//     "updated": "2024-05-30T19:04:15.651Z",
-//     "cardsCount": 3,
-//     "isFavorite": false,
-//     "author": {
-//       "id": "01d5498b-2849-49f1-b6c1-7c5dc204bdde",
-//       "name": "Пупсик"
-//     }
-//   },
-//   {
-//     "id": "clwti7ygx03tzqj01difp81ai",
-//     "userId": "3752c89f-88b2-4e81-9344-8b3d61afecbe",
-//     "name": "ждлорпавы",
-//     "isPrivate": false,
-//     "cover": "https://staging-it-incubator.s3.eu-central-1.amazonaws.com/flashcards/Image/574ab75f-d30a-4fe4-88bd-3c7e6181a1ca_593a772a913111eeac812ab2a9c6ab46_upscaled.jpeg",
-//     "created": "2024-05-30T17:03:24.226Z",
-//     "updated": "2024-05-30T17:14:26.573Z",
-//     "cardsCount": 2,
-//     "isFavorite": false,
-//     "author": {
-//       "id": "3752c89f-88b2-4e81-9344-8b3d61afecbe",
-//       "name": "alinamurashko"
-//     }
-//   },
-//   {
-//     "id": "clwthve6203t5qj018y7fclln",
-//     "userId": "e67f3260-559a-48d1-a18b-cfd8915db68a",
-//     "name": "123",
-//     "isPrivate": false,
-//     "cover": null,
-//     "created": "2024-05-30T16:53:38.042Z",
-//     "updated": "2024-05-30T16:53:38.042Z",
-//     "cardsCount": 0,
-//     "isFavorite": false,
-//     "author": {
-//       "id": "e67f3260-559a-48d1-a18b-cfd8915db68a",
-//       "name": "moisidiroman"
-//     }
-//   },
-// ]
+//
 //!--deck
 // [
 //   {
@@ -99,6 +54,56 @@ type Story = StoryObj<typeof meta>
 // ]
 
 const TableWithState = () => {
+  const [decks, setDecks] = useState([
+    {
+      author: {
+        id: '01d5498b-2849-49f1-b6c1-7c5dc204bdde',
+        name: 'Пупсик',
+      },
+      cardsCount: 3,
+      cover:
+        'https://staging-it-incubator.s3.eu-central-1.amazonaws.com/flashcards/Image/e0a229b7-8601-4a7d-b7b7-68c5321cc6f5_sun-icon.png',
+      created: '2024-04-25T18:21:46.252Z',
+      id: 'clvfklx8r028mnx01d0zwn6vl',
+      isFavorite: false,
+      isPrivate: false,
+      name: 'А ты сделал DnD?!1',
+      updated: '2024-05-30T19:04:15.651Z',
+      userId: '01d5498b-2849-49f1-b6c1-7c5dc204bdde',
+    },
+    {
+      author: {
+        id: '3752c89f-88b2-4e81-9344-8b3d61afecbe',
+        name: 'alinamurashko',
+      },
+      cardsCount: 2,
+      cover:
+        'https://staging-it-incubator.s3.eu-central-1.amazonaws.com/flashcards/Image/574ab75f-d30a-4fe4-88bd-3c7e6181a1ca_593a772a913111eeac812ab2a9c6ab46_upscaled.jpeg',
+      created: '2024-05-30T17:03:24.226Z',
+      id: 'clwti7ygx03tzqj01difp81ai',
+      isFavorite: false,
+      isPrivate: false,
+      name: 'ждлорпавы',
+      updated: '2024-05-30T17:14:26.573Z',
+      userId: '3752c89f-88b2-4e81-9344-8b3d61afecbe',
+    },
+    {
+      author: {
+        id: 'e67f3260-559a-48d1-a18b-cfd8915db68a',
+        name: 'moisidiroman',
+      },
+      cardsCount: 0,
+      cover: null,
+      created: '2024-05-30T16:53:38.042Z',
+      id: 'clwthve6203t5qj018y7fclln',
+      isFavorite: false,
+      isPrivate: false,
+      name: '123',
+      updated: '2024-05-30T16:53:38.042Z',
+      userId: 'e67f3260-559a-48d1-a18b-cfd8915db68a',
+    },
+  ])
+
   const [columns] = useState([
     {
       id: 'name',
@@ -116,6 +121,10 @@ const TableWithState = () => {
       id: 'created',
       title: 'Created by',
     },
+    {
+      id: 'created',
+      title: '',
+    },
   ])
 
   return (
@@ -123,42 +132,14 @@ const TableWithState = () => {
       <Table>
         <TableHeader columns={columns} />
         <TableBody>
-          <TableRow>
-            <TableCell className={'font-medium'}>INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className={'text-right'}>$250.00</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className={'font-medium'}>INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className={'text-right'}>$250.00</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className={'font-medium'}>INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className={'text-right'}>$250.00</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className={'font-medium'}>INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className={'text-right'}>$250.00</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className={'font-medium'}>INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className={'text-right'}>$250.00</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className={'font-medium'}>INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className={'text-right'}>$250.00</TableCell>
-          </TableRow>
+          {decks.map(deck => (
+            <TableRow key={deck.id}>
+              <TableCell>{deck.name}</TableCell>
+              <TableCell>{deck.cardsCount}</TableCell>
+              <TableCell>{formatDateToDdMmYY(deck.updated)}</TableCell>
+              <TableCell>{deck.author.name}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>
