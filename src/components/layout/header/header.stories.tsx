@@ -26,7 +26,7 @@ export const HeaderWithAvatar: Story = {
   args: {
     user: {
       avatar: user.photo.src,
-      email: 'boris',
+      email: 'boris@ivan.com',
       name: user.nickname,
     },
   },
