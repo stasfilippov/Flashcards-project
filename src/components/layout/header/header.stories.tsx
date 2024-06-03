@@ -24,6 +24,10 @@ const user = {
 export const HeaderWithButton: Story = {}
 export const HeaderWithAvatar: Story = {
   args: {
-    user: user,
+    user: {
+      avatar: user.photo.src,
+      email: 'boris',
+      name: user.nickname,
+    },
   },
 }

@@ -11,7 +11,11 @@ import clsx from 'clsx'
 import s from './header.module.scss'
 
 type Props = {
-  user?: any
+  user?: {
+    avatar?: null | string
+    email: string
+    name: string
+  }
 } & ComponentPropsWithoutRef<'header'>
 
 export const Header = ({ className, user, ...rest }: Props) => {
@@ -27,9 +31,9 @@ export const Header = ({ className, user, ...rest }: Props) => {
       </Link>
       {user ? (
         <div className={classNames.userContainer}>
-          <Typography variant={'subtitle1'}>{user.nickname}</Typography>
+          <Typography variant={'subtitle1'}>{user.name}</Typography>
 
-          <Avatar src={user.photo.src} />
+          <Avatar src={user.avatar ?? undefined} />
         </div>
       ) : (
         <Button as={Link} to={'/'} variant={'secondary'}>
