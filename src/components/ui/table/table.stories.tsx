@@ -4,7 +4,11 @@ import { useState } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
 import { Table, TableBody, TableRow } from '@/components/ui/table/table'
-import { TableCell } from '@/components/ui/table/tableCell'
+import { TableCellWithControls } from '@/components/ui/table/tableCell/tableCellWithControls'
+import { TableCellWithGrade } from '@/components/ui/table/tableCell/tableCellWithGrade'
+import { TableCellWithPhotoDecks } from '@/components/ui/table/tableCell/tableCellWithPhotoDecks'
+import { TableCellWithPhotoQuestions } from '@/components/ui/table/tableCell/tableCellWithPhotoQuestions'
+import { TableCellWithText } from '@/components/ui/table/tableCell/tableCellWithText'
 import { TableHeader } from '@/components/ui/table/tableHeader'
 import { formatDateToDdMmYY } from '@/components/ui/table/utils/convertDate'
 
@@ -103,19 +107,15 @@ const TableWithStateOfDecks = () => {
           <TableBody>
             {decks.map(deck => (
               <TableRow key={deck.id}>
-                <TableCell id={'name'} itemDeck={deck}>
+                <TableCellWithPhotoDecks id={'name'} item={deck}>
                   {deck.name}
-                </TableCell>
-                <TableCell id={'cardsCount'} itemDeck={deck}>
-                  {deck.cardsCount}
-                </TableCell>
-                <TableCell id={'updatedDeck'} itemDeck={deck}>
+                </TableCellWithPhotoDecks>
+                <TableCellWithText id={'cardsCount'}>{deck.cardsCount}</TableCellWithText>
+                <TableCellWithText id={'updatedDeck'}>
                   {formatDateToDdMmYY(deck.updated)}
-                </TableCell>
-                <TableCell id={'created'} itemDeck={deck}>
-                  {deck.author.name}
-                </TableCell>
-                <TableCell id={'controls'} itemDeck={deck} />
+                </TableCellWithText>
+                <TableCellWithText id={'created'}>{deck.author.name}</TableCellWithText>
+                <TableCellWithControls id={'controls'} item={deck} />
               </TableRow>
             ))}
           </TableBody>
@@ -164,7 +164,7 @@ const TableWithStateOfQuestions = () => {
       answerVideo: null,
       created: '2024-04-22T14:57:00.540Z',
       deckId: 'clvb1n01f00ognx01veotzkpc',
-      grade: 0,
+      grade: 1,
       id: 'clvb2z1j000p0nx01386l0u8s',
       question: 'How many films have Al Pacino and Robert De Niro appeared in together?',
       questionImg:
@@ -172,37 +172,6 @@ const TableWithStateOfQuestions = () => {
       questionVideo: null,
       shots: 0,
       updated: '2024-05-12T15:39:43.375Z',
-      userId: '70383690-0d88-4474-bd58-bbcb21cb27d8',
-    },
-    {
-      answer: 'Once (1966)',
-      answerImg: null,
-      answerVideo: null,
-      created: '2024-04-22T15:02:55.483Z',
-      deckId: 'clvb1n01f00ognx01veotzkpc',
-      grade: 0,
-      id: 'clvb36nei00p8nx01mbhxp0od',
-      question: "How many times has England won the men's football World Cup?",
-      questionImg: null,
-      questionVideo: null,
-      shots: 0,
-      updated: '2024-05-12T15:39:17.293Z',
-      userId: '70383690-0d88-4474-bd58-bbcb21cb27d8',
-    },
-    {
-      answer: '1997',
-      answerImg: null,
-      answerVideo: null,
-      created: '2024-04-22T14:47:16.534Z',
-      deckId: 'clvb1n01f00ognx01veotzkpc',
-      grade: 0,
-      id: 'clvb2miwm00opnx01tsj9skiq',
-      question: 'When was the movie the Titanic released?',
-      questionImg:
-        'https://staging-it-incubator.s3.eu-central-1.amazonaws.com/flashcards/Image/fcf5d092-8591-49e8-814d-9271056a138e_titanic_custom-fc6a03aedd8e562d780ecf9b9a8a947d4dcbf163-s1100-c50.jpg',
-      questionVideo: null,
-      shots: 0,
-      updated: '2024-05-12T15:38:44.110Z',
       userId: '70383690-0d88-4474-bd58-bbcb21cb27d8',
     },
   ])
@@ -234,16 +203,16 @@ const TableWithStateOfQuestions = () => {
           <TableBody>
             {questions.map(question => (
               <TableRow key={question.id}>
-                <TableCell id={'question'} itemQuestion={question}>
+                <TableCellWithPhotoQuestions id={'question'} item={question}>
                   {question.question}
-                </TableCell>
-                <TableCell id={'answer'} itemQuestion={question}>
+                </TableCellWithPhotoQuestions>
+                <TableCellWithPhotoQuestions id={'answer'} item={question}>
                   {question.answer}
-                </TableCell>
-                <TableCell id={'updatedQuestion'} itemQuestion={question}>
+                </TableCellWithPhotoQuestions>
+                <TableCellWithText id={'updatedQuestion'}>
                   {formatDateToDdMmYY(question.updated)}
-                </TableCell>
-                <TableCell id={'grade'} itemQuestion={question} />
+                </TableCellWithText>
+                <TableCellWithGrade id={'grade'} item={question} />
               </TableRow>
             ))}
           </TableBody>

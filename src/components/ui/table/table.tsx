@@ -33,4 +33,14 @@ const TableHeadCell = forwardRef<HTMLTableCellElement, ComponentPropsWithoutRef<
   )
 )
 
-export { Table, TableBody, TableHeadCell, TableRow }
+const TableCell = forwardRef<HTMLTableCellElement, ComponentPropsWithoutRef<'td'>>(
+  ({ className, ...rest }, ref) => {
+    const classNames = {
+      cell: clsx(className, s.tableCell),
+    }
+
+    return <td className={classNames.cell} {...rest} ref={ref} />
+  }
+)
+
+export { Table, TableBody, TableCell, TableHeadCell, TableRow }
