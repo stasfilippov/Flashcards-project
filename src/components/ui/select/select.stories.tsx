@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { CSSProperties, useState } from 'react'
+import { useState } from 'react'
 
 import { Select } from './'
 
@@ -51,16 +51,16 @@ type Props = {
   disabled?: boolean
   label?: string
   placeholder?: string
-  width?: CSSProperties['width']
+  variant?: 'pagination'
 }
 const SelectWithState = (props: Props) => {
   const [value, setValue] = useState('')
 
   return (
-    <>
+    <div style={{ width: '220px' }}>
       <Select onValueChange={setValue} options={options} value={value} {...props} />
       <div>Current value: {value}</div>
-    </>
+    </div>
   )
 }
 
@@ -73,13 +73,9 @@ export const WithPlaceholder: Story = {
 export const WithLabel: Story = {
   render: () => <SelectWithState label={'Fruit:'} placeholder={'Select fruit...'} />,
 }
-export const WithWidth: Story = {
-  render: () => (
-    <SelectWithState label={'Fruit:'} placeholder={'Select fruit...'} width={'210px'} />
-  ),
+export const ForPagination: Story = {
+  render: () => <SelectWithState placeholder={'Select fruit...'} variant={'pagination'} />,
 }
 export const Disabled: Story = {
-  render: () => (
-    <SelectWithState disabled label={'Fruit:'} placeholder={'Select fruit...'} width={'210px'} />
-  ),
+  render: () => <SelectWithState disabled label={'Fruit:'} placeholder={'Select fruit...'} />,
 }
