@@ -62,13 +62,12 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 
     const classNames = {
       buttonShowPassword: clsx(s.showPasswordIcon, disabled && s.iconDisabled),
-      fieldContainer: clsx(className, s.fieldContainer),
+      fieldContainer: clsx(s.fieldContainer),
       input: clsx(
         s.field,
         !!errorMessage && s.error,
         isSearchField && s.hasSearchIcon,
-        disabled && s.fieldDisabled,
-        className
+        disabled && s.fieldDisabled
       ),
       searchIcon: clsx(s.searchIcon, isActive && s.searchIconActive, disabled && s.iconDisabled),
       typography: clsx(s.label),
@@ -117,7 +116,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             </button>
           )}
         </div>
-        <Typography className={clsx(s.error)} variant={'caption'}>
+        <Typography className={clsx(s.error, s.errorMessage)} variant={'caption'}>
           {errorMessage}
         </Typography>
       </div>
