@@ -16,11 +16,12 @@ export type RadioProps = {
 } & RadioGroupRadix.RadioGroupProps
 
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, RadioProps>(
-  ({ children, className, defaultValue, options, ...rest }) => {
+  ({ children, className, defaultValue, options, ...rest }, ref) => {
     return (
       <RadioGroupRadix.Root
         className={clsx(s.radioGroupRoot, className)}
         defaultValue={defaultValue}
+        ref={ref}
         {...rest}
       >
         {options.map((o, i) => {
