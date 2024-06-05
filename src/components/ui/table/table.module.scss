@@ -3,10 +3,7 @@
 }
 .outerContainer {
   max-width: 1004px;
-  border-top: 1px solid var(--color-dark-500);
-  border-right: 1px solid var(--color-dark-500);
-  border-left: 1px solid var(--color-dark-500);
-  border-bottom: 1px solid var(--color-dark-500);
+  border: 1px solid var(--color-dark-500);
 }
 
 .table {

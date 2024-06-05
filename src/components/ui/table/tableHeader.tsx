@@ -20,7 +20,7 @@ type PropsHeader = {
 export const TableHeader = ({ className, columns, ...props }: PropsHeader) => {
   const [sort, setSort] = useState('')
 
-  const onChangeSort = (newSort: string) => {
+  const changeSortHandler = (newSort: string) => {
     setSort(newSort)
   }
 
@@ -30,7 +30,7 @@ export const TableHeader = ({ className, columns, ...props }: PropsHeader) => {
         {columns.map(({ id, sortable = true, title }) => (
           <SuperSort
             key={id}
-            onChange={onChangeSort}
+            onChange={changeSortHandler}
             sort={sort}
             sortBy={id}
             sortable={sortable}

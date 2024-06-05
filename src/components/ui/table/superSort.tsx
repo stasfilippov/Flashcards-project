@@ -28,7 +28,7 @@ export const pureChange = (sort: string, down: string, up: string) => {
 export const SuperSort = ({ onChange, sort, sortBy, sortable, title }: SuperSortProps) => {
   const up = '0' + sortBy
   const down = '1' + sortBy
-  const onChangeCallback = () => {
+  const sortHandler = () => {
     onChange(pureChange(sort, down, up))
   }
 
@@ -44,7 +44,7 @@ export const SuperSort = ({ onChange, sort, sortBy, sortable, title }: SuperSort
 
   if (sortable) {
     return (
-      <TableHeadCell id={sortBy} onClick={onChangeCallback}>
+      <TableHeadCell id={sortBy} onClick={sortHandler}>
         <div className={clsx(s.tHeadCellWrapper)}>
           <Typography variant={'subtitle2'}>{title}</Typography>
           {icon}
