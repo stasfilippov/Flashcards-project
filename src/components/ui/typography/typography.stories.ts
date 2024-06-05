@@ -98,7 +98,7 @@ export const Subtitle2: Story = {
 export const Caption: Story = {
   args: {
     children,
-    component: 'caption',
+    component: 'p',
     variant: 'caption',
   },
 }

@@ -1,34 +1,38 @@
 import { Typography } from '@/components/ui'
 import * as RadioGroupRadix from '@radix-ui/react-radio-group'
-import { v4 } from 'uuid'
+import clsx from 'clsx'
 
 import s from './radioGroup.module.scss'
 
+type Options = {
+  label: string
+  value: string
+}
+
 type Props = {
-  options: string[]
+  options: Options[]
 } & RadioGroupRadix.RadioGroupProps
 
 export const RadioGroup = ({ children, className, defaultValue, options, ...rest }: Props) => {
-  const radioGroupOptions = options.map(o => {
-    return { id: v4(), value: o }
-  })
-
   return (
-    <form className={className}>
-      <RadioGroupRadix.Root className={s.radioGroupRoot} defaultValue={defaultValue} {...rest}>
-        {radioGroupOptions.map(o => {
-          return (
-            <div className={s.radioGroupItemContainer} key={o.id}>
-              <RadioGroupRadix.Item className={s.radioGroupItem} id={o.id} value={o.value}>
+    <RadioGroupRadix.Root
+      className={clsx(s.radioGroupRoot, className)}
+      defaultValue={defaultValue}
+      {...rest}
+    >
+      {options.map((o, i) => {
+        return (
+          <label className={s.label} key={`${o}-${i}`}>
+            <div className={s.radioGroupItemContainer}>
+              <RadioGroupRadix.Item className={s.radioGroupItem} value={o.value}>
                 <RadioGroupRadix.Indicator className={s.radioGroupIndicator} />
               </RadioGroupRadix.Item>
-              <label className={s.label} htmlFor={o.id}>
-                <Typography variant={'body2'}>{o.value}</Typography>
-              </label>
+
+              <Typography variant={'body2'}>{o.label}</Typography>
             </div>
-          )
-        })}
-      </RadioGroupRadix.Root>
-    </form>
+          </label>
+        )
+      })}
+    </RadioGroupRadix.Root>
   )
 }
