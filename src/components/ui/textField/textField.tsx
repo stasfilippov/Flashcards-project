@@ -11,8 +11,8 @@ import s from './textField.module.scss'
 export type TextFieldProps = {
   className?: string
   errorMessage?: string
+  inputChangeHandler?: (value: string) => void
   label?: string
-  onChangeCallback?: (value: string) => void
   placeholder?: string
 } & ComponentPropsWithoutRef<'input'>
 
@@ -23,11 +23,12 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       disabled,
       errorMessage,
       id,
+      inputChangeHandler,
       label,
       onChange,
-      onChangeCallback,
       placeholder,
       type = 'text',
+      value,
       ...rest
     },
     forwardedRef
@@ -46,7 +47,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const domainType = getType(type, isShowPassword)
 
     const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-      onChangeCallback?.(e.target.value)
+      inputChangeHandler?.(e.target.value)
     }
     const clearHandler = () => {
       if (internalRef.current) {
@@ -99,6 +100,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             placeholder={placeholder}
             ref={finalRef}
             type={domainType}
+            value={value}
             {...rest}
           />
           {isPasswordField && (
