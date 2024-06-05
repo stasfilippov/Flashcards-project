@@ -22,3 +22,25 @@
     border-bottom: 1px dashed var(--color-light-100);
   }
 }
+
+.userInfo {
+  cursor: default;
+  display: inline-flex;
+  gap: 8px;
+  min-width: 192px;
+}
+
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  .email {
+    color: var(--color-dark-100);
+  }
+}
+
+.dropDownItem {
+  cursor: pointer;
+}
