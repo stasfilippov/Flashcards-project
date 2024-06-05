@@ -1,0 +1,159 @@
+@mixin reset {
+  all: unset;
+}
+.outerContainer {
+  max-width: 1004px;
+  border: 1px solid var(--color-dark-500);
+}
+
+.table {
+  width: 100%;
+  border-spacing: 0;
+  & tr::after {
+    content: '';
+    display: block;
+    background-color: var(--color-dark-500);
+    height: 1px;
+  }
+}
+.trow {
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: var(--color-dark-700);
+  }
+}
+
+.tCellControlsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  button {
+    display: flex;
+    padding: 5px 5px;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 50px;
+    transition: all 0.2s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: var(--color-dark-500);
+    }
+
+    &[disabled] {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+  }
+}
+
+.tHeadCell {
+  cursor: pointer;
+  padding: 6px 24px;
+  text-align: left;
+  background-color: var(--color-dark-500);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-light-100);
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: var(--color-dark-300);
+  }
+
+  &[id='controls'] {
+    pointer-events: none;
+  }
+}
+
+.tHeadCellWrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tCell {
+  padding: 6px 24px;
+  position: relative;
+  background: transparent;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  color: var(--color-light-100);
+
+  &[id='name'] {
+    display: flex;
+
+    & > a {
+      @include reset;
+      height: 100%;
+      cursor: pointer;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      gap: 10px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &[id='cardsCount'] {
+    max-width: 150px;
+  }
+
+  &[id='updatedDeck'] {
+    max-width: 180px;
+  }
+
+  &[id='created'] {
+    max-width: 200px;
+  }
+
+  &[id='controls'] {
+    padding: 6px 6px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &[id='answer'],
+  &[id='question'] {
+    height: 75px;
+    max-width: 301px;
+    padding: 6px 10px 6px 110px;
+
+    img {
+      position: absolute;
+      top: 12px;
+      left: 24px;
+      max-width: 70px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 3px;
+    }
+
+    span {
+      display: block;
+      word-break: break-word;
+      vertical-align: top;
+    }
+  }
+}
+
+.tableCellImage {
+  height: 40px;
+}
+
+.star {
+  color: var(--color-warning-500);
+}
+
+.starOutline {
+  stroke: var(--color-warning-500);
+}

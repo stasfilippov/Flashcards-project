@@ -8,7 +8,7 @@ type Props<T extends FieldValues> = Omit<
 > &
   UseControllerProps<T>
 
-export const TextFieldForm = <T extends FieldValues>({
+export const ControlledTextField = <T extends FieldValues>({
   control,
   defaultValue,
   disabled,
