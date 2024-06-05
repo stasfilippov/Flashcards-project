@@ -20,27 +20,32 @@ export const Checkbox = forwardRef<ElementRef<typeof RadixCheckbox.Root>, Checkb
       id = rest.id
     }
 
+    const classNames = {
+      checkbox: clsx(s.checkbox, {
+        [s.checked]: checked,
+        [s.disabled]: disabled,
+      }),
+      container: clsx(className, s.container),
+      indicator: clsx(s.indicator, {
+        [s.checked]: checked,
+        [s.disabled]: disabled,
+      }),
+      label: clsx(s.label, { [s.disabled]: disabled }),
+    }
+
     return (
-      <Typography className={clsx(s.container, className)} component={'div'} variant={'body2'}>
-        <RadixLabel.Root className={clsx(s.label, { [s.disabled]: disabled })} htmlFor={id}>
+      <Typography className={classNames.container} component={'div'} variant={'body2'}>
+        <RadixLabel.Root className={classNames.label} htmlFor={id}>
           <RadixCheckbox.Root
             checked={checked}
-            className={clsx(s.checkbox, {
-              [s.checked]: checked,
-              [s.disabled]: disabled,
-            })}
+            className={classNames.checkbox}
             disabled={disabled}
             id={id}
             ref={ref}
             {...rest}
           >
-            <RadixCheckbox.Indicator
-              className={clsx(s.indicator, {
-                [s.checked]: checked,
-                [s.disabled]: disabled,
-              })}
-            >
-              {checked && <Check />}
+            <RadixCheckbox.Indicator className={classNames.indicator}>
+              <Check />
             </RadixCheckbox.Indicator>
           </RadixCheckbox.Root>
           {label}
