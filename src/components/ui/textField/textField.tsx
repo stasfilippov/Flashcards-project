@@ -1,8 +1,7 @@
 import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, useId, useRef, useState } from 'react'
 
 import { CloseOutline, EyeOffOutline, EyeOutline, SearchOutline } from '@/assets/icons/components'
-import { getType } from '@/components/ui/textField/utils/getTypes'
-import { mergeRefs } from '@/components/ui/textField/utils/merge-refs'
+import { mergeRefs } from '@/components/ui/textField/utils'
 import { Typography } from '@/components/ui/typography'
 import clsx from 'clsx'
 
@@ -40,11 +39,11 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const isSearchField = type === 'search'
     const isPasswordField = type === 'password'
 
-    const toggleShowPasswordHandler = () => setIsShowPassword(prevState => !prevState)
+    const toggleShowPasswordHandler = () => setIsShowPassword(!isShowPassword)
 
     const generatedId = useId()
     const domainId = id ?? generatedId
-    const domainType = getType(type, isShowPassword)
+    const domainType = type === 'password' && isShowPassword ? 'text' : type
 
     const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
       inputChangeHandler?.(e.target.value)
@@ -61,11 +60,26 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       setIsActive(false)
     }
 
+    const classNames = {
+      buttonShowPassword: clsx(s.showPasswordIcon, disabled && s.iconDisabled),
+      fieldContainer: clsx(s.fieldContainer, className),
+      input: clsx(
+        s.field,
+        !!errorMessage && s.error,
+        isSearchField && s.hasSearchIcon,
+        disabled && s.fieldDisabled,
+        className
+      ),
+      searchIcon: clsx(s.searchIcon, isActive && s.searchIconActive, disabled && s.iconDisabled),
+      typography: clsx(s.label),
+      wrapper: clsx(s.wrapper, className),
+    }
+
     return (
-      <div className={clsx(s.wrapper, className)} {...rest}>
+      <div className={classNames.wrapper} {...rest}>
         {label && (
           <Typography
-            className={clsx(s.label)}
+            className={classNames.typography}
             component={'label'}
             htmlFor={domainId}
             variant={'body2'}
@@ -73,25 +87,10 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             {label}
           </Typography>
         )}
-        <div className={clsx(s.fieldContainer, className)} {...rest}>
-          {isSearchField && (
-            <SearchOutline
-              className={clsx(
-                s.searchIcon,
-                isActive && s.searchIconActive,
-                disabled && s.iconDisabled
-              )}
-              width={20}
-            />
-          )}
+        <div className={classNames.fieldContainer} {...rest}>
+          {isSearchField && <SearchOutline className={classNames.searchIcon} width={20} />}
           <input
-            className={clsx(
-              s.field,
-              !!errorMessage && s.error,
-              isSearchField && s.hasSearchIcon,
-              disabled && s.fieldDisabled,
-              className
-            )}
+            className={classNames.input}
             disabled={disabled}
             id={domainId}
             onBlur={blurHandler}
@@ -105,7 +104,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           />
           {isPasswordField && (
             <button
-              className={clsx(s.showPasswordIcon, disabled && s.iconDisabled)}
+              className={classNames.buttonShowPassword}
               disabled={disabled}
               onClick={toggleShowPasswordHandler}
             >
