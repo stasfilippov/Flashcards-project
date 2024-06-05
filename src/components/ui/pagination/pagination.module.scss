@@ -1,0 +1,82 @@
+button {
+  all: unset;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 2px;
+
+  &.disabled {
+    cursor: unset;
+  }
+}
+
+.paginationContainer {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.pagesContainer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  span {
+    cursor: default;
+  }
+}
+
+.backForwardButton {
+  padding: 4px 0;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-900);
+  }
+
+  &:hover:not(.disabled) {
+    background-color: var(--color-dark-500);
+  }
+
+  &.disabled {
+    color: var(--color-dark-100);
+  }
+}
+
+.page {
+  width: 24px;
+  height: 24px;
+
+  &:hover {
+    background-color: var(--color-dark-500);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-900);
+  }
+
+  &.active {
+    color: var(--color-dark-900);
+    background-color: var(--color-light-100);
+  }
+}
+
+.selectContainer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.select {
+  flex-shrink: 0;
+
+  width: 50px;
+  height: 24px;
+  padding: 0 2px 0 6px;
+
+  font-size: var(--font-size-s);
+}

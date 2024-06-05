@@ -8,11 +8,11 @@ import clsx from 'clsx'
 
 import s from './select.module.scss'
 
-type Option = { label: number | string; value: number | string }
+export type SelectOption = { label: number | string; value: number | string }
 type Props = {
   className?: string
   label?: string
-  options: Option[]
+  options: SelectOption[]
   placeholder?: string
   width?: CSSProperties['width']
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
