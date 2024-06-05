@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useId } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useId } from 'react'
 
 import { Check } from '@/assets/icons/components'
 import { Typography } from '@/components/ui'
@@ -8,41 +8,49 @@ import clsx from 'clsx'
 
 import s from './checkbox.module.scss'
 
-type CheckboxProps = {
+export type CheckboxProps = {
   label?: string
 } & ComponentPropsWithoutRef<typeof RadixCheckbox.Root>
 
-export const Checkbox = ({ checked, className, disabled, label, ...rest }: CheckboxProps) => {
-  let id = useId()
+export const Checkbox = forwardRef<ElementRef<typeof RadixCheckbox.Root>, CheckboxProps>(
+  ({ checked, className, disabled, label, ...rest }: CheckboxProps, ref) => {
+    let id = useId()
 
-  if (rest.id) {
-    id = rest.id
-  }
+    if (rest.id) {
+      id = rest.id
+    }
 
-  return (
-    <Typography className={clsx(s.container, className)} component={'div'} variant={'body2'}>
-      <RadixLabel.Root className={clsx(s.label, { [s.disabled]: disabled })} htmlFor={id}>
-        <RadixCheckbox.Root
-          checked={checked}
-          className={clsx(s.checkbox, {
-            [s.checked]: checked,
-            [s.disabled]: disabled,
-          })}
-          disabled={disabled}
-          id={id}
-          {...rest}
-        >
-          <RadixCheckbox.Indicator
-            className={clsx(s.indicator, {
-              [s.checked]: checked,
-              [s.disabled]: disabled,
-            })}
+    const classNames = {
+      checkbox: clsx(s.checkbox, {
+        [s.checked]: checked,
+        [s.disabled]: disabled,
+      }),
+      container: clsx(className, s.container),
+      indicator: clsx(s.indicator, {
+        [s.checked]: checked,
+        [s.disabled]: disabled,
+      }),
+      label: clsx(s.label, { [s.disabled]: disabled }),
+    }
+
+    return (
+      <Typography className={classNames.container} component={'div'} variant={'body2'}>
+        <RadixLabel.Root className={classNames.label} htmlFor={id}>
+          <RadixCheckbox.Root
+            checked={checked}
+            className={classNames.checkbox}
+            disabled={disabled}
+            id={id}
+            ref={ref}
+            {...rest}
           >
-            {checked && <Check />}
-          </RadixCheckbox.Indicator>
-        </RadixCheckbox.Root>
-        {label}
-      </RadixLabel.Root>
-    </Typography>
-  )
-}
+            <RadixCheckbox.Indicator className={classNames.indicator}>
+              <Check />
+            </RadixCheckbox.Indicator>
+          </RadixCheckbox.Root>
+          {label}
+        </RadixLabel.Root>
+      </Typography>
+    )
+  }
+)

@@ -88,7 +88,7 @@ button {
 }
 
 .disabled {
-  cursor: initial;
+  cursor: default;
   color: var(--color-dark-100);
   border-color: var(--color-dark-100);
 
