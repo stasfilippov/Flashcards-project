@@ -1,0 +1,18 @@
+.card {
+  h1 {
+    margin-bottom: 27px;
+  }
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 19px;
+}
+
+.description {
+  cursor: default;
+  text-align: center;
+  color: var(--color-light-900);
+  margin-bottom: 65px;
+}
