@@ -64,7 +64,7 @@ export const SignUpForm = () => {
           <ControlledTextField
             className={classNames.confirmPassword}
             control={control}
-            label={'ConfirmPassword'}
+            label={'Confirm Password'}
             name={'confirmPassword'}
             type={'password'}
           />
