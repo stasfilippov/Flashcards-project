@@ -6,7 +6,6 @@ import { withRouter } from 'storybook-addon-remix-react-router'
 import { SignInForm } from './'
 
 const meta = {
-  argTypes: {},
   component: SignInForm,
   decorators: [withRouter],
   tags: ['autodocs'],
