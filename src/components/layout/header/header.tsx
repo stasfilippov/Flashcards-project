@@ -24,7 +24,7 @@ type Props = {
 
 export const Header = ({ className, user, ...rest }: Props) => {
   const classNames = {
-    header: clsx(s.header, commonStyles.container, className),
+    header: clsx(s.header, commonStyles.pageContainer, className),
     userContainer: clsx(s.userContainer),
   }
 

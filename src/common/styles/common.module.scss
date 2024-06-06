@@ -1,7 +1,14 @@
-.container {
+.pageContainer {
   width: 100%;
   max-width: 1280px;
   min-height: 100%;
   margin: 0 auto;
   padding: 0 136px;
+}
+
+.cardContainer {
+  max-width: 420px;
+  margin-top: calc(36px + var(--header-height));
+  margin-right: auto;
+  margin-left: auto;
 }

@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: space-between;
 
-  min-height: 60px;
+  min-height: var(--header-height);
 }
 
 .userContainer {
