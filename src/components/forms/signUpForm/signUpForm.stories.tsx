@@ -8,7 +8,7 @@ const meta = {
   component: SignUpForm,
   decorators: [withRouter],
   tags: ['autodocs'],
-  title: 'Components/SignUpForm',
+  title: 'Forms/SignUpForm',
 } satisfies Meta<typeof SignUpForm>
 
 export default meta

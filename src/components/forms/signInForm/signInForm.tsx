@@ -15,18 +15,22 @@ import s from './signInForm.module.scss'
 
 const signInSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(3),
+  password: z.string().min(3).max(30),
   rememberMe: z.boolean().default(false),
 })
 
 type FormValues = z.infer<typeof signInSchema>
 
-export const SignInForm = () => {
+type Props = {
+  onSubmit: (args: FormValues) => void
+}
+
+export const SignInForm = ({ onSubmit }: Props) => {
   const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(signInSchema),
   })
   const submitHandler = handleSubmit(data => {
-    console.log(data)
+    onSubmit(data)
   })
 
   const classNames = {
