@@ -107,12 +107,13 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               className={classNames.buttonShowPassword}
               disabled={disabled}
               onClick={toggleShowPasswordHandler}
+              type={'button'}
             >
               {isShowPassword ? <EyeOffOutline width={20} /> : <EyeOutline width={20} />}
             </button>
           )}
           {isSearchField && isActive && (
-            <button className={s.clearInputIcon} onClick={clearHandler}>
+            <button className={s.clearInputIcon} onClick={clearHandler} type={'button'}>
               <CloseOutline height={16} width={16} />
             </button>
           )}
