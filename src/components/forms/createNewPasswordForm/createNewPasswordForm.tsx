@@ -12,18 +12,22 @@ import { z } from 'zod'
 import s from './createNewPasswordForm.module.scss'
 
 const createNewPasswordSchema = z.object({
-  password: z.string().min(3),
+  password: z.string().min(3).max(30),
 })
 
 type FormValues = z.infer<typeof createNewPasswordSchema>
 
-export const CreateNewPasswordForm = () => {
+type Props = {
+  onSubmit: (args: FormValues) => void
+}
+
+export const CreateNewPasswordForm = ({ onSubmit }: Props) => {
   const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(createNewPasswordSchema),
   })
 
   const submitHandler = handleSubmit(data => {
-    console.log(data)
+    onSubmit(data)
   })
 
   const classNames = {
