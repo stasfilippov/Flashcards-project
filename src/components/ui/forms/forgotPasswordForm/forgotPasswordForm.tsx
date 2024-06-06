@@ -46,7 +46,7 @@ export const ForgotPasswordForm = () => {
         <Typography className={s.questionText} variant={'body2'}>
           Did you remember your password?
         </Typography>
-        <Typography className={s.link} component={Link} to={ROUTES.signIn} variant={'link1'}>
+        <Typography className={s.link} component={Link} to={ROUTES.signIn} variant={'subtitle1'}>
           Try logging in
         </Typography>
       </Card>
