@@ -8,7 +8,7 @@ import clsx from 'clsx'
 
 import s from './select.module.scss'
 
-type Option = { label: number | string; value: string }
+export type Option = { label: number | string; value: string }
 export type SelectProps = {
   className?: string
   label?: string

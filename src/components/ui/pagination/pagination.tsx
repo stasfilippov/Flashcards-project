@@ -1,7 +1,7 @@
 import { ArrowIosBack, ArrowIosForward } from '@/assets/icons/components'
 import { Typography } from '@/components/ui'
 import { usePagination } from '@/components/ui/pagination/usePagination'
-import { Select, SelectOption } from '@/components/ui/select'
+import { Option, Select } from '@/components/ui/select'
 import clsx from 'clsx'
 
 import s from './pagination.module.scss'
@@ -96,7 +96,7 @@ export const Pagination = ({
   )
 }
 
-const usePaginationOptions = (paginationOptions: number[]): SelectOption[] => {
+const usePaginationOptions = (paginationOptions: number[]): Option[] => {
   return paginationOptions.map(option => {
     return { label: option, value: option.toString() }
   })
