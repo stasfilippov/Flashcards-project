@@ -41,8 +41,6 @@
 }
 
 .body2 {
-  @include reset;
-
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-regular);
 }
