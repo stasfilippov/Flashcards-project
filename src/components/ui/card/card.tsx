@@ -16,7 +16,7 @@ export const Card = <T extends ElementType = 'div'>(props: CardProps<T>) => {
   const { children, className, component: Component = 'div', title, ...rest } = props
 
   return (
-    <Component className={clsx(className, s.card)} {...rest}>
+    <Component className={clsx(s.card, className)} {...rest}>
       {title && (
         <Typography component={'h1'} variant={'h1'}>
           {title}

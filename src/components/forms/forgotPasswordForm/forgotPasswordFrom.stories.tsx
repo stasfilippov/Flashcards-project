@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { fn } from '@storybook/test'
 import { withRouter } from 'storybook-addon-remix-react-router'
 
 import { ForgotPasswordForm } from './index'
 
 const meta = {
-  argTypes: {},
   component: ForgotPasswordForm,
   decorators: [withRouter],
   tags: ['autodocs'],
@@ -15,4 +15,8 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const ForgotPassword: Story = {}
+export const ForgotPassword: Story = {
+  args: {
+    onSubmit: fn(),
+  },
+}
