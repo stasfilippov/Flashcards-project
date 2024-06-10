@@ -1,0 +1,52 @@
+.card {
+  h1 {
+    margin-bottom: 28px;
+  }
+
+  * {
+    align-self: center;
+  }
+}
+
+.avatar {
+  position: relative;
+  height: 96px;
+
+  .editPhoto {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    gap: 0;
+
+    padding: 4px;
+  }
+}
+
+.nicknameBox {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+
+  .editNickname {
+    cursor: pointer;
+  }
+}
+
+.email {
+  margin-bottom: 14px;
+  color: var(--color-dark-100);
+}
+
+.form {
+  align-self: stretch;
+
+  .input {
+    margin-top: 12px;
+    margin-bottom: 36px;
+  }
+
+  .saveBtn {
+    margin-bottom: 60px;
+  }
+}

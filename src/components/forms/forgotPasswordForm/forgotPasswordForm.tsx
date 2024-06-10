@@ -12,18 +12,21 @@ import clsx from 'clsx'
 import { z } from 'zod'
 
 import s from './forgotPasswordForm.module.scss'
+
 const forgotPasswordSchema = z.object({
   email: z.string().email(),
 })
 
-type FromValues = z.infer<typeof forgotPasswordSchema>
-
-export const ForgotPasswordForm = () => {
-  const { control, handleSubmit } = useForm<FromValues>({
+type FormValues = z.infer<typeof forgotPasswordSchema>
+type Props = {
+  onSubmit: (args: FormValues) => void
+}
+export const ForgotPasswordForm = ({ onSubmit }: Props) => {
+  const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(forgotPasswordSchema),
   })
   const submitHandler = handleSubmit(data => {
-    console.log(data)
+    onSubmit(data)
   })
 
   return (
