@@ -3,6 +3,8 @@ export type DecksListResponse = {
   pagination: Pagination
 }
 
+export type CreateUpdateDeckResponse = Omit<Deck, 'author' | 'isFavorite'>
+
 export type Deck = {
   author: Author
   cardsCount: number
@@ -52,4 +54,18 @@ export type GetDecksArgs = {
     | 'updated-asc'
     | 'updated-desc'
     | null
+}
+
+export type CreateDeckArgs = {
+  cover?: string
+  isPrivate?: boolean
+  name: string
+}
+
+export type UpdateDeckArgs = {
+  id: string
+} & Partial<CreateDeckArgs>
+
+export type RemoveDeckArgs = {
+  id: string
 }
