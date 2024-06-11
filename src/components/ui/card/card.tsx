@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
 
-import { Typography } from '@/components/ui/typography'
+import { Typography } from '@/components/ui'
 import clsx from 'clsx'
 
 import s from './card.module.scss'

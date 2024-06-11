@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 
 import { ControlledTextField } from '@/components/controlled'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
