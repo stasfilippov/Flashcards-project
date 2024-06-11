@@ -8,6 +8,7 @@ import {
 
 import { ROUTES } from '@/common/constants'
 import { CheckEmail } from '@/pages'
+import { DeckPage } from '@/pages/deckPage'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -46,7 +47,7 @@ const privateRoutes: RouteObject[] = [
     path: ROUTES.decks,
   },
   {
-    element: <div>Deck</div>,
+    element: <DeckPage />,
     path: `${ROUTES.decks}/:deckId`,
   },
   {
@@ -68,7 +69,7 @@ const router = createBrowserRouter([
 ])
 
 function PrivateRoutes() {
-  const isAuthenticated = false
+  const isAuthenticated = true
 
   return isAuthenticated ? <Outlet /> : <Navigate to={ROUTES.signIn} />
 }
