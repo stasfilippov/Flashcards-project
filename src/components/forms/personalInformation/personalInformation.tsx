@@ -2,22 +2,14 @@ import { ChangeEvent, useRef, useState } from 'react'
 
 import { Edit2Outline } from '@/assets/icons/components'
 import { commonStyles } from '@/common/styles'
-import {
-  ChangeNicknameForm,
-  NicknameFormValues,
-} from '@/components/forms/personalInformation/changeNicknameForm'
-import { PersonalInformationContent } from '@/components/forms/personalInformation/personalInformationContent'
-import { Avatar } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+import { User } from '@/components/layout'
+import { Avatar, Button, Card } from '@/components/ui'
 
 import s from './personalInformation.module.scss'
 
-type User = {
-  email: string
-  nickname: string
-  photo: { alt: string; src: string }
-}
+import { ChangeNicknameForm, NicknameFormValues } from './changeNicknameForm'
+import { PersonalInformationContent } from './personalInformationContent'
+
 type Props = {
   onSubmit: (args: NicknameFormValues) => void
   user: User
@@ -46,7 +38,7 @@ export const PersonalInformation = ({ onSubmit, user }: Props) => {
   ) : (
     <PersonalInformationContent
       email={user.email}
-      nickname={user.nickname}
+      nickname={user.name}
       openEditMode={openEditModeHandler}
     />
   )
@@ -55,7 +47,7 @@ export const PersonalInformation = ({ onSubmit, user }: Props) => {
     <div className={commonStyles.cardContainer}>
       <Card className={s.card} title={'Personal information'}>
         <div className={s.avatar}>
-          <Avatar size={'large'} src={user.photo.src} />
+          <Avatar size={'large'} src={user.avatar ?? undefined} />
           {!editMode && (
             <>
               <Button
