@@ -1,18 +1,21 @@
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-import { LogOutOutline, PersonOutline } from '@/assets/icons/components'
-import Logo from '@/assets/icons/components/logo'
+import { LogOutOutline, Logo, PersonOutline } from '@/assets/icons/components'
 import { commonStyles } from '@/common/styles'
-import { Typography } from '@/components/ui'
-import { Avatar } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { DropdownItem, DropdownMenu, DropdownSeparator } from '@/components/ui/dropdownMenu'
+import {
+  Avatar,
+  Button,
+  DropdownItem,
+  DropdownMenu,
+  DropdownSeparator,
+  Typography,
+} from '@/components/ui'
 import clsx from 'clsx'
 
 import s from './header.module.scss'
 
-type User = {
+export type User = {
   avatar?: null | string
   email: string
   name: string
