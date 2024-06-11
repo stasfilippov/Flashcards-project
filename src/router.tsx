@@ -7,30 +7,55 @@ import {
 } from 'react-router-dom'
 
 import { ROUTES } from '@/common/constants'
-import { ForgotPasswordForm, PersonalInformation, SignInForm, SignUpForm } from '@/components/forms'
+import { CheckEmail } from '@/pages'
 
 const publicRoutes: RouteObject[] = [
   {
-    element: <SignInForm onSubmit={() => {}} />,
+    element: <div>Sign in</div>,
     path: ROUTES.signIn,
   },
   {
-    element: <SignUpForm />,
+    element: <div>Sign up</div>,
     path: ROUTES.signUp,
   },
   {
-    element: <ForgotPasswordForm onSubmit={() => {}} />,
+    element: <div>Forgot Password</div>,
     path: ROUTES.forgotPassword,
   },
   {
-    element: <PersonalInformation onSubmit={() => {}} user={{ email: '', name: '' }} />,
+    element: <CheckEmail />,
+    path: ROUTES.checkEmail,
+  },
+  {
+    element: <div>Create New Password</div>,
+    path: ROUTES.createNewPassword,
+  },
+  {
+    element: <div>Error</div>,
+    path: ROUTES.other,
   },
 ]
 
 const privateRoutes: RouteObject[] = [
   {
-    element: <div>hello</div>,
-    path: '/',
+    element: <Navigate to={ROUTES.decks} />,
+    path: ROUTES.base,
+  },
+  {
+    element: <div>Decks</div>,
+    path: ROUTES.decks,
+  },
+  {
+    element: <div>Deck</div>,
+    path: `${ROUTES.decks}/:deckId`,
+  },
+  {
+    element: <div>Learn</div>,
+    path: `${ROUTES.decks}/:deckId${ROUTES.learn}`,
+  },
+  {
+    element: <div>Profile</div>,
+    path: ROUTES.profile,
   },
 ]
 
