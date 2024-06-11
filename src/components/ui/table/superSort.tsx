@@ -52,6 +52,12 @@ export const SuperSort = ({ onChange, sort, sortBy, sortable, title }: SuperSort
       </TableHeadCell>
     )
   } else {
-    return <TableHeadCell id={sortBy} />
+    return (
+      <TableHeadCell id={sortBy}>
+        <div className={clsx(s.tHeadCellWrapper)}>
+          <Typography variant={'subtitle2'}>{title}</Typography>
+        </div>
+      </TableHeadCell>
+    )
   }
 }
