@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { CheckEmail } from '@/components/forms/checkEmail/checkEmail'
 import { withRouter } from 'storybook-addon-remix-react-router'
+
+import { CheckEmail } from './'
 
 const meta = {
   argTypes: {},

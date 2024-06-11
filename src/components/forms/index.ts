@@ -1,4 +1,3 @@
-export * from './checkEmail'
 export * from './createNewPasswordForm'
 export * from './forgotPasswordForm'
 export * from './personalInformation'
