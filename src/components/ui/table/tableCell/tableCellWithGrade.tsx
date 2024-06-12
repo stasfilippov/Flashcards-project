@@ -2,14 +2,14 @@ import { ComponentPropsWithoutRef } from 'react'
 
 import { Star, StarOutline } from '@/assets/icons/components'
 import { TableCell } from '@/components/ui/table'
-import { QuestionAnswer } from '@/components/ui/table/types'
+import { Card } from '@/pages/cardsPage/cardsApi.types'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'
 
 type Props = {
   id: string
-  item: QuestionAnswer
+  item: Card
 } & ComponentPropsWithoutRef<'td'>
 export const TableCellWithGrade = ({ children, id, item, ...rest }: Props) => {
   const gradeCount = 5

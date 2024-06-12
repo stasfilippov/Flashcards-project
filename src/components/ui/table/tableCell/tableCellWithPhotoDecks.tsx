@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import defaultImage from '@/assets/img/defaultImageDeck.png'
 import { Typography } from '@/components/ui'
 import { TableCell } from '@/components/ui/table'
+import { Deck } from '@/pages/decksPage/decksApi.types'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'
@@ -30,22 +31,4 @@ export const TableCellWithPhotoDecks = ({ children, id, item, ...rest }: Props) 
       </Link>
     </TableCell>
   )
-}
-
-export type Author = {
-  id: string
-  name: string
-}
-
-export type Deck = {
-  author: Author
-  cardsCount: number
-  cover?: null | string
-  created: string
-  id: string
-  isFavorite: boolean
-  isPrivate: boolean
-  name: string
-  updated: string
-  userId: string
 }

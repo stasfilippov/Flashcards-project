@@ -26,8 +26,8 @@ export const pureChange = (sort: string, down: string, up: string) => {
   }
 }
 export const SuperSort = ({ onChange, sort, sortBy, sortable, title }: SuperSortProps) => {
-  const up = '0' + sortBy
-  const down = '1' + sortBy
+  const up = sortBy + '-asc'
+  const down = sortBy + '-desc'
   const sortHandler = () => {
     onChange(pureChange(sort, down, up))
   }

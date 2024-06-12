@@ -3,7 +3,7 @@ export type GetCardsArgs = {
   currentPage?: number
   id: string
   itemsPerPage?: number
-  orderBy?: ''
+  orderBy?: string
   question?: string
 }
 

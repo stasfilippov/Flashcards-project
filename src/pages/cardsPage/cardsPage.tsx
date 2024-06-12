@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 
 import { ArrowBackOutline } from '@/assets/icons/components'
@@ -5,6 +6,7 @@ import { ROUTES } from '@/common/constants'
 import { Page } from '@/components/layout'
 import {
   Button,
+  Modal,
   Pagination,
   Table,
   TableBody,
@@ -22,6 +24,8 @@ import s from '@/components/ui/table/table.module.scss'
 
 export const CardsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
+  const [open, setOpen] = useState<boolean>(false)
+  const [sort, setSort] = useState('')
 
   const search = searchParams.get('question') ?? ''
   const currentPage = searchParams.get('page') ?? '1'
@@ -30,6 +34,16 @@ export const CardsPage = () => {
   const deckId = 'clqxwvbol01ymzk2v43xn1vxx'
   const currentUser = '5b2174ce-9499-4693-9a73-026e01cd9ed4'
 
+  const openModalHandler = () => {
+    setOpen(true)
+  }
+  const closeModalHandler = () => {
+    setOpen(false)
+  }
+
+  const setOrderByHandler = (orderBy: string) => {
+    setSort(orderBy)
+  }
   const searchChangeHandler = (value: string) => {
     value.length ? searchParams.set('question', value) : searchParams.delete('question')
     setSearchParams(searchParams)
@@ -58,6 +72,7 @@ export const CardsPage = () => {
     currentPage: +currentPage,
     id: deckId,
     itemsPerPage: +itemsPerPage,
+    orderBy: sort,
     question: search,
   })
   const columns = [
@@ -99,7 +114,7 @@ export const CardsPage = () => {
       <div>
         <Typography variant={'h1'}>{deck?.name}</Typography>
         {deck?.userId === currentUser ? (
-          <Button>Add New Card</Button>
+          <Button onClick={openModalHandler}>Add New Card</Button>
         ) : (
           <Button as={Link} to={ROUTES.learn}>
             Learn to Deck
@@ -111,7 +126,7 @@ export const CardsPage = () => {
       <div>
         <div className={s.outerContainer}>
           <Table>
-            <TableHeader columns={columns} />
+            <TableHeader columns={columns} setOrderBy={setOrderByHandler} />
             <TableBody>
               {cardsOfDeck?.items.map(card => {
                 const updatedAt = new Date(card.updated).toLocaleDateString('ru-RU')
@@ -140,6 +155,12 @@ export const CardsPage = () => {
         onPageChange={currentPageChangeHandler}
         totalPages={cardsOfDeck?.pagination.totalPages}
       />
+      <Modal onClose={closeModalHandler} open={open}>
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consequuntur eos
+          laboriosam ullam. A aliquid aperiam consequuntur, delectus earum harum itaque laborum,
+        </div>
+      </Modal>
     </Page>
   )
 }

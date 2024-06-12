@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef } from 'react'
 
 import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets/icons/components'
 import { TableCell } from '@/components/ui/table'
-import { Deck } from '@/components/ui/table/tableCell/tableCellWithPhotoDecks'
+import { Deck } from '@/pages/decksPage/decksApi.types'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'
