@@ -20,10 +20,10 @@ type Props = {
 
 const classNames = {
   backForwardButton(isDisabled: boolean) {
-    return clsx(s.backForwardButton, { [s.disabled]: isDisabled })
+    return clsx(s.button, s.backForwardButton, { [s.disabled]: isDisabled })
   },
-  page(isActive?: boolean) {
-    return clsx(s.page, { [s.active]: isActive }, { [s.disabled]: isActive })
+  pageButton(isActive?: boolean) {
+    return clsx(s.button, s.page, { [s.active]: isActive }, { [s.disabled]: isActive })
   },
   pagesContainer: s.pagesContainer,
   paginationContainer(className?: string) {
@@ -124,7 +124,7 @@ const PaginationRange = ({
 
         return (
           <button
-            className={classNames.page(isActive)}
+            className={classNames.pageButton(isActive)}
             disabled={isActive}
             key={index}
             onClick={() => pageClickHandler(page)}
