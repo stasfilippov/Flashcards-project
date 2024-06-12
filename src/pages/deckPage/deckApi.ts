@@ -9,7 +9,7 @@ import { flashcardsApi } from '@/services/flashcardApi'
 const deckApi = flashcardsApi.injectEndpoints({
   endpoints: builder => ({
     getCards: builder.query<GetCardsResponse, GetCardsArgs>({
-      providesTags: ['Deck'],
+      providesTags: ['Cards'],
       query: ({ id, ...args }) => ({
         method: 'GET',
         params: args ?? undefined,
@@ -17,7 +17,7 @@ const deckApi = flashcardsApi.injectEndpoints({
       }),
     }),
     getDeckById: builder.query<GetDeckByIdResponse, GetDeckByIdArgs>({
-      providesTags: ['Deck'],
+      providesTags: ['Cards'],
       query: ({ id }) => ({
         method: 'GET',
         url: `/v1/decks/${id}`,
