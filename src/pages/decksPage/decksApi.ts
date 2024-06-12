@@ -13,6 +13,7 @@ const decksApi = flashcardsApi.injectEndpoints({
   endpoints: builder => {
     return {
       createDeck: builder.mutation<CreateUpdateDeckResponse, CreateDeckArgs>({
+        invalidatesTags: ['Deck'],
         query: args => {
           return {
             body: args,
@@ -22,6 +23,7 @@ const decksApi = flashcardsApi.injectEndpoints({
         },
       }),
       getDecks: builder.query<DecksListResponse, GetDecksArgs | void>({
+        providesTags: ['Deck'],
         query: args => {
           return {
             method: 'GET',
@@ -31,6 +33,7 @@ const decksApi = flashcardsApi.injectEndpoints({
         },
       }),
       removeDeck: builder.mutation<void, RemoveDeckArgs>({
+        invalidatesTags: ['Deck'],
         query: ({ id }) => {
           return {
             method: 'DELETE',
@@ -39,6 +42,7 @@ const decksApi = flashcardsApi.injectEndpoints({
         },
       }),
       updateDeck: builder.mutation<CreateUpdateDeckResponse, UpdateDeckArgs>({
+        invalidatesTags: ['Deck'],
         query: ({ id, ...body }) => {
           return {
             body,
