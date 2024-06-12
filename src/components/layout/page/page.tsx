@@ -7,11 +7,11 @@ type Props = {
   marginTop?: CSSProperties['marginTop']
 } & ComponentPropsWithoutRef<'div'>
 
-export const Page = ({ children, className, marginTop = '36px', ...rest }: Props) => {
+export const Page = ({ children, className, ...rest }: Props) => {
   const classNames = clsx(className, commonStyles.pageContainer)
 
   return (
-    <div className={classNames} {...rest} style={{ marginTop }}>
+    <div className={classNames} {...rest}>
       {children}
     </div>
   )
