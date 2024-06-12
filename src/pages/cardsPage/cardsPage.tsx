@@ -1,7 +1,10 @@
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
+import { ArrowBackOutline } from '@/assets/icons/components'
+import { ROUTES } from '@/common/constants'
 import { Page } from '@/components/layout'
 import {
+  Button,
   Pagination,
   Table,
   TableBody,
@@ -13,11 +16,11 @@ import {
   TextField,
   Typography,
 } from '@/components/ui'
-import { useGetCardsQuery, useGetDeckByIdQuery } from '@/pages/deckPage/deckApi'
+import { useGetCardsQuery, useGetDeckByIdQuery } from '@/pages/cardsPage/cardsApi'
 
 import s from '@/components/ui/table/table.module.scss'
 
-export const DeckPage = () => {
+export const CardsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const search = searchParams.get('question') ?? ''
@@ -88,7 +91,20 @@ export const DeckPage = () => {
   return (
     <Page>
       <div>
+        <ArrowBackOutline width={16} />
+        <Typography component={Link} to={ROUTES.base} variant={'body2'}>
+          Back to Decks List
+        </Typography>
+      </div>
+      <div>
         <Typography variant={'h1'}>{deck?.name}</Typography>
+        {deck?.userId === currentUser ? (
+          <Button>Add New Card</Button>
+        ) : (
+          <Button as={Link} to={ROUTES.learn}>
+            Learn to Deck
+          </Button>
+        )}
       </div>
       <img alt={'image'} src={deck?.cover} style={{ width: '170px' }} />
       <TextField inputChangeHandler={searchChangeHandler} value={search} />

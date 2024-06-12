@@ -8,7 +8,7 @@ import {
 
 import { ROUTES } from '@/common/constants'
 import { CheckEmail } from '@/pages'
-import { DeckPage } from '@/pages/deckPage'
+import { CardsPage } from '@/pages/cardsPage'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -47,7 +47,7 @@ const privateRoutes: RouteObject[] = [
     path: ROUTES.decks,
   },
   {
-    element: <DeckPage />,
+    element: <CardsPage />,
     path: `${ROUTES.decks}/:deckId`,
   },
   {
