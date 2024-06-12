@@ -1,39 +1,33 @@
 import { TrashOutline } from '@/assets/icons/components'
 import { Button, Slider, Tabs, TabsList, TabsTrigger, TextField, Typography } from '@/components/ui'
 
-import s from './DecksPage.module.scss'
+import s from './decksPage.module.scss'
 
 type Props = {
+  changeSearchValue: (searchValue: string) => void
   clearFilters: () => void
   currentTabValue: string
   decksRangeValue: number[]
   searchValue: string
   setCurrentTabValue: (currentTabValue: string) => void
   setDecksRangeValue: (decksRangeValue: number[]) => void
-  setSearchValue: (searchValue: string) => void
 }
 export const DecksPageFilters = (props: Props) => {
   const {
+    changeSearchValue,
     clearFilters,
     currentTabValue,
     decksRangeValue,
     searchValue,
     setCurrentTabValue,
     setDecksRangeValue,
-    setSearchValue,
   } = props
-  const changeSearchValueHandler = (searchValue: string) => {
-    setSearchValue(searchValue)
-  }
-  const changeDecksRangeHandler = (decksRange: number[]) => {
-    setDecksRangeValue(decksRange)
-  }
 
   return (
     <div className={s.filtersContainer}>
       <TextField
         className={s.searchInput}
-        inputChangeHandler={changeSearchValueHandler}
+        inputChangeHandler={changeSearchValue}
         placeholder={'Input search'}
         type={'search'}
         value={searchValue}
@@ -51,7 +45,7 @@ export const DecksPageFilters = (props: Props) => {
         <Typography variant={'body2'}>Number of cards</Typography>
         <Slider
           minStepsBetweenThumbs={1}
-          onValueChange={changeDecksRangeHandler}
+          onValueChange={setDecksRangeValue}
           value={decksRangeValue}
         />
       </div>

@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef } from 'react'
 
 import { SuperSort } from '@/components/ui/table/superSort'
 import { TableRow } from '@/components/ui/table/table'
-import { SortValues } from '@/pages/decksPage'
+import { SortValues } from '@/pages/decksPage/decksApi.types'
 import clsx from 'clsx'
 
 export type Column = {
@@ -15,21 +15,21 @@ export type Column = {
 }
 
 type PropsHeader = {
+  changeSortValue: (sortValue: SortValues) => void
   columns: Column[]
-  setSortValue: (sortValue: SortValues) => void
   sortValue: SortValues
 } & ComponentPropsWithoutRef<'thead'>
 
 export const TableHeader = ({
+  changeSortValue,
   className,
   columns,
-  setSortValue,
   sortValue,
   ...props
 }: PropsHeader) => {
   const changeSortHandler = (newSort: SortValues) => {
     console.log(newSort)
-    setSortValue(newSort)
+    changeSortValue(newSort)
   }
 
   return (

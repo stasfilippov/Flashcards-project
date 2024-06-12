@@ -4,8 +4,7 @@ import { TableCellWithPhotoDecks } from '@/components/ui/table/tableCell/tableCe
 import { TableCellWithText } from '@/components/ui/table/tableCell/tableCellWithText'
 import { TableHeader } from '@/components/ui/table/tableHeader'
 import { formatDateToDdMmYY } from '@/components/ui/table/utils/convertDate'
-import { Deck } from '@/pages/decksPage/decksApi.types'
-import { SortValues } from '@/pages/decksPage/decksPage'
+import { Deck, SortValues } from '@/pages/decksPage/decksApi.types'
 
 const columns = [
   {
@@ -32,14 +31,14 @@ const columns = [
 ]
 
 type Props = {
+  changeSortValue: (sortValue: SortValues) => void
   decks: Deck[] | undefined
-  setSortValue: (sortValue: SortValues) => void
   sortValue: SortValues
 }
-export const DecksPageTable = ({ decks, setSortValue, sortValue }: Props) => {
+export const DecksPageTable = ({ changeSortValue, decks, sortValue }: Props) => {
   return (
     <Table>
-      <TableHeader columns={columns} setSortValue={setSortValue} sortValue={sortValue} />
+      <TableHeader changeSortValue={changeSortValue} columns={columns} sortValue={sortValue} />
       <TableBody>
         {decks?.map(deck => (
           <TableRow key={deck.id}>
