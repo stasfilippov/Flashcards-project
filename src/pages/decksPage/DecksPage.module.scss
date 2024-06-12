@@ -1,0 +1,21 @@
+.filtersContainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 36px;
+
+  .searchInput {
+    width: 300px;
+  }
+
+  .clearFilterBtn {
+    white-space: nowrap;
+  }
+}
+
+.decksHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
