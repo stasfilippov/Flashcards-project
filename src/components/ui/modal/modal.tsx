@@ -6,7 +6,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import clsx from 'clsx'
 
 import s from './modal.module.scss'
-type Props = {
+export type ModalProps = {
   children: ReactNode
   className?: string
   onClose?: () => void
@@ -15,7 +15,7 @@ type Props = {
   withCloseBtn?: boolean
 } & ComponentPropsWithoutRef<typeof Dialog.Content>
 
-export const Modal = (props: Props) => {
+export const Modal = (props: ModalProps) => {
   const { children, className, onClose, open, title, withCloseBtn = true } = props
 
   const closeModalHandler = () => {
