@@ -17,19 +17,27 @@ export type RadioProps = {
 
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, RadioProps>(
   ({ children, className, defaultValue, options, ...rest }, ref) => {
+    const classNames = {
+      indicator: clsx(s.radioGroupIndicator),
+      item: clsx(s.radioGroupItem, s.button),
+      itemContainer: clsx(s.radioGroupItemContainer),
+      label: clsx(s.label),
+      root: clsx(s.radioGroupRoot, className),
+    }
+
     return (
       <RadioGroupRadix.Root
-        className={clsx(s.radioGroupRoot, className)}
+        className={classNames.root}
         defaultValue={defaultValue}
         ref={ref}
         {...rest}
       >
         {options.map((o, i) => {
           return (
-            <label className={s.label} key={`${o}-${i}`}>
-              <div className={s.radioGroupItemContainer}>
-                <RadioGroupRadix.Item className={s.radioGroupItem} value={o.value}>
-                  <RadioGroupRadix.Indicator className={s.radioGroupIndicator} />
+            <label className={classNames.label} key={`${o}-${i}`}>
+              <div className={classNames.itemContainer}>
+                <RadioGroupRadix.Item className={classNames.item} value={o.value}>
+                  <RadioGroupRadix.Indicator className={classNames.indicator} />
                 </RadioGroupRadix.Item>
 
                 <Typography variant={'body2'}>{o.label}</Typography>
