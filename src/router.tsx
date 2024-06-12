@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { ROUTES } from '@/common/constants'
-import { CheckEmail } from '@/pages'
+import { CheckEmail, Error } from '@/pages'
 import { CardsPage } from '@/pages/cardsPage'
 
 const publicRoutes: RouteObject[] = [
@@ -32,7 +32,7 @@ const publicRoutes: RouteObject[] = [
     path: ROUTES.createNewPassword,
   },
   {
-    element: <div>Error</div>,
+    element: <Error />,
     path: ROUTES.other,
   },
 ]
