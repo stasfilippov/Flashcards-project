@@ -1,9 +1,11 @@
+import { SortValues } from '@/pages/decksPage/api/decksApi.types'
+
 export type GetCardsArgs = {
   answer?: string
   currentPage?: number
   id: string
   itemsPerPage?: number
-  orderBy?: string
+  orderBy?: SortValues
   question?: string
 }
 
@@ -21,15 +23,15 @@ export type Pagination = {
 
 export type Card = {
   answer: string
-  answerImg: string
-  answerVideo: string
+  answerImg: null | string
+  answerVideo: null | string
   created: string
   deckId: string
   grade: number
   id: string
   question: string
   questionImg: string
-  questionVideo: string
+  questionVideo: null | string
   shots: number
   updated: string
   userId: string

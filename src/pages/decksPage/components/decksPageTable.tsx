@@ -1,4 +1,5 @@
 import { Table, TableBody, TableRow } from '@/components/ui'
+import { SortBy } from '@/components/ui/table/superSort'
 import { TableCellWithControls } from '@/components/ui/table/tableCell/tableCellWithControls'
 import { TableCellWithPhotoDecks } from '@/components/ui/table/tableCell/tableCellWithPhotoDecks'
 import { TableCellWithText } from '@/components/ui/table/tableCell/tableCellWithText'
@@ -6,39 +7,22 @@ import { TableHeader } from '@/components/ui/table/tableHeader'
 import { formatDateToDdMmYY } from '@/components/ui/table/utils/convertDate'
 import { Deck, SortValues } from '@/pages/decksPage/api/decksApi.types'
 
-const columns = [
-  {
-    id: 'name',
-    title: 'Name',
-  },
-  {
-    id: 'cardsCount',
-    title: 'Cards',
-  },
-  {
-    id: 'updated',
-    title: 'Last Updated',
-  },
-  {
-    id: 'created',
-    title: 'Created by',
-  },
-  {
-    id: 'controls',
-    sortable: false,
-    title: null,
-  },
-]
+const ids: SortBy[] = ['name', 'cardsCount', 'updated', 'created', 'controls']
+const titles = ['Name', 'Cards', 'Last Updated', 'Created by', '']
+
+const columns = ids.map(id => ({
+  id: id as SortBy,
+  title: titles[ids.indexOf(id)],
+}))
 
 type Props = {
-  changeSortValue: (sortValue: SortValues) => void
-  decks: Deck[] | undefined
+  decks: Deck[]
   sortValue: SortValues
 }
-export const DecksPageTable = ({ changeSortValue, decks, sortValue }: Props) => {
+export const DecksPageTable = ({ decks, sortValue }: Props) => {
   return (
     <Table>
-      <TableHeader changeSortValue={changeSortValue} columns={columns} sortValue={sortValue} />
+      <TableHeader columns={columns} sortValue={sortValue} />
       <TableBody>
         {decks?.map(deck => (
           <TableRow key={deck.id}>
@@ -50,7 +34,7 @@ export const DecksPageTable = ({ changeSortValue, decks, sortValue }: Props) => 
               {formatDateToDdMmYY(deck.updated)}
             </TableCellWithText>
             <TableCellWithText id={'created'}>{deck.author.name}</TableCellWithText>
-            <TableCellWithControls id={'controls'} item={deck} />
+            <TableCellWithControls id={'controls'} item={{ deck }} variant={'Deck'} />
           </TableRow>
         ))}
       </TableBody>

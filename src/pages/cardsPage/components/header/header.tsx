@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 import { ROUTES } from '@/common/constants'
 import { Button, Typography } from '@/components/ui'
-import { GetDeckByIdResponse } from '@/pages/cardsPage/cardsApi.types'
+import { GetDeckByIdResponse } from '@/pages/cardsPage/api/cardsApi.types'
 import clsx from 'clsx'
 
 import s from './header.module.scss'

@@ -3,7 +3,7 @@ import {
   GetCardsResponse,
   GetDeckByIdArgs,
   GetDeckByIdResponse,
-} from '@/pages/cardsPage/cardsApi.types'
+} from '@/pages/cardsPage/api/cardsApi.types'
 import { flashcardsApi } from '@/services/flashcardApi'
 
 const cardsApi = flashcardsApi.injectEndpoints({
