@@ -8,19 +8,19 @@ import s from './table.module.scss'
 export type SuperSortProps = {
   onChange: (newSort: string) => void
   sort: string
-  sortBy: string
+  sortBy: SortBy
   sortable: boolean
   title: null | string
 }
 
 export const pureChange = (sort: string, down: string, up: string) => {
   switch (sort) {
-    case '':
+    case null:
       return down
     case down:
       return up
     case up:
-      return ''
+      return 'null'
     default:
       return down
   }
@@ -61,3 +61,13 @@ export const SuperSort = ({ onChange, sort, sortBy, sortable, title }: SuperSort
     )
   }
 }
+
+export type SortBy =
+  | 'answer'
+  | 'author.name'
+  | 'cardsCount'
+  | 'created'
+  | 'grade'
+  | 'name'
+  | 'question'
+  | 'updated'

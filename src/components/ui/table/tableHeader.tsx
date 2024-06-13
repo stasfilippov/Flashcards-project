@@ -1,7 +1,7 @@
-import { ComponentPropsWithoutRef, useState } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { SuperSort } from '@/components/ui/table/superSort'
+import { SortBy, SuperSort } from '@/components/ui/table/superSort'
 import { TableRow } from '@/components/ui/table/table'
 import clsx from 'clsx'
 
@@ -9,29 +9,24 @@ export type Column = {
   /**
    * @param id - required for requests to the server for query-parameters, determines by which column the sorting is performed
    */
-  id: string
+  id: SortBy
   sortable?: boolean
   title: null | string
 }
 
 type PropsHeader = {
   columns: Column[]
-  setOrderByHandler: (orderBy: string) => void
+  sortValue: string
 } & ComponentPropsWithoutRef<'thead'>
 
-export const TableHeader = ({ className, columns, setOrderByHandler, ...props }: PropsHeader) => {
-  const [sort, setSort] = useState('')
+export const TableHeader = ({ className, columns, sortValue, ...props }: PropsHeader) => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const changeSortHandler = (newSort: string) => {
     searchParams.set('page', '1')
-
-    setSort(newSort)
-    setOrderByHandler(newSort)
+    searchParams.set('sort', newSort ?? '')
     setSearchParams(searchParams)
   }
-
-  console.log(sort)
 
   return (
     <thead className={clsx(className)} {...props}>
@@ -40,7 +35,7 @@ export const TableHeader = ({ className, columns, setOrderByHandler, ...props }:
           <SuperSort
             key={id}
             onChange={changeSortHandler}
-            sort={sort}
+            sort={sortValue}
             sortBy={id}
             sortable={sortable}
             title={title}
