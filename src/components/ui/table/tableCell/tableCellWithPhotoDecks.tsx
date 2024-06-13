@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import defaultImage from '@/assets/img/defaultImageDeck.png'
 import { Typography } from '@/components/ui'
 import { TableCell } from '@/components/ui/table'
-import { Deck } from '@/pages/decksPage/decksApi.types'
+import { Deck } from '@/pages/decksPage/api/decksApi.types'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'

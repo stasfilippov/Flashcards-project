@@ -10,9 +10,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui'
-import { SortBy } from '@/components/ui/table/superSort'
 import { TableCellWithControls } from '@/components/ui/table/tableCell/tableCellWithControls'
-import { useGetCardsQuery } from '@/pages/cardsPage/cardsApi'
+import { useGetCardsQuery } from '@/pages/cardsPage/api/cardsApi'
+import { SortBy, SortValues } from '@/pages/decksPage/api/decksApi.types'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'
@@ -30,9 +30,9 @@ type Props = {
   deckId: string
   isMy: boolean
   search: string
-  sort: string
+  sort: SortValues
 }
-export const TableWithCards = ({ className, deckId, isMy, search, sort }: Props) => {
+export const TableWithCards = ({ className, deckId, search, sort }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const currentPage = searchParams.get('page') ?? '1'
@@ -84,12 +84,7 @@ export const TableWithCards = ({ className, deckId, isMy, search, sort }: Props)
                     </TableCellWithPhotoQuestions>
                     <TableCellWithText id={'updatedQuestion'}>{updatedAt}</TableCellWithText>
                     <TableCellWithGrade id={'grade'} item={card} />
-                    <TableCellWithControls
-                      id={'control'}
-                      isMy={isMy}
-                      item={{ card }}
-                      variant={'Card'}
-                    />
+                    <TableCellWithControls id={'control'} item={{ card }} variant={'Card'} />
                   </TableRow>
                 )
               })}

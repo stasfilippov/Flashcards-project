@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef } from 'react'
 
 import { Star, StarOutline } from '@/assets/icons/components'
 import { TableCell } from '@/components/ui/table'
-import { Card } from '@/pages/cardsPage/cardsApi.types'
+import { Card } from '@/pages/cardsPage/api/cardsApi.types'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'

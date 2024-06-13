@@ -1,8 +1,9 @@
 import { ComponentPropsWithoutRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { SortBy, SuperSort } from '@/components/ui/table/superSort'
+import { SuperSort } from '@/components/ui/table/superSort'
 import { TableRow } from '@/components/ui/table/table'
+import { SortBy, SortValues } from '@/pages/decksPage/api/decksApi.types'
 import clsx from 'clsx'
 
 export type Column = {
@@ -16,7 +17,7 @@ export type Column = {
 
 type PropsHeader = {
   columns: Column[]
-  sortValue: string
+  sortValue: SortValues
 } & ComponentPropsWithoutRef<'thead'>
 
 export const TableHeader = ({ className, columns, sortValue, ...props }: PropsHeader) => {

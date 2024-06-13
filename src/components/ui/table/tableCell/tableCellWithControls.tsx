@@ -2,8 +2,8 @@ import { ComponentPropsWithoutRef } from 'react'
 
 import { Edit2Outline, PlayCircleOutline } from '@/assets/icons/components'
 import { TableCell } from '@/components/ui/table'
-import { Card } from '@/pages/cardsPage/cardsApi.types'
-import { Deck } from '@/pages/decksPage/decksApi.types'
+import { Card } from '@/pages/cardsPage/api/cardsApi.types'
+import { Deck } from '@/pages/decksPage/api/decksApi.types'
 import { RemoveItemModal } from '@/pages/decksPage/modals/removeItem/removeItemModal'
 import clsx from 'clsx'
 
@@ -12,11 +12,10 @@ import s from '@/components/ui/table/table.module.scss'
 type Props = {
   currentUser?: string
   id: string
-  isMy?: boolean
   item: { card: Card; deck?: never } | { card?: never; deck: Deck }
   variant: 'Card' | 'Deck'
 } & ComponentPropsWithoutRef<'td'>
-export const TableCellWithControls = ({ children, id, isMy, item, variant, ...rest }: Props) => {
+export const TableCellWithControls = ({ children, id, item, variant, ...rest }: Props) => {
   const currentUser = '5b2174ce-9499-4693-9a73-026e01cd9ed4'
   const { card, deck } = item
 
@@ -34,7 +33,7 @@ export const TableCellWithControls = ({ children, id, isMy, item, variant, ...re
         </div>
       ) : (
         <div className={classNames.tCellControlsWrapper}>
-          <CardVariant isMy={isMy} item={card} />
+          <CardVariant currentUser={currentUser} item={card} />
         </div>
       )}
     </TableCell>
@@ -48,7 +47,7 @@ type DeckVariantProps = {
 const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
   return (
     <>
-      {currentUser === item?.author.name ? (
+      {item && currentUser === item.author.id ? (
         <>
           <button>
             <Edit2Outline width={16} />
@@ -70,11 +69,11 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
 }
 
 type CardVariantProps = {
-  isMy: boolean | undefined
+  currentUser: string
   item: Card | undefined
 }
-const CardVariant = ({ isMy, item }: CardVariantProps) => {
-  return item && isMy ? (
+const CardVariant = ({ currentUser, item }: CardVariantProps) => {
+  return item && currentUser === item.userId ? (
     <>
       <button>
         <Edit2Outline width={16} />
