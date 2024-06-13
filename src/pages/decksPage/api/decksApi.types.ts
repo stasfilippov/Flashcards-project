@@ -30,6 +30,19 @@ export type Pagination = {
   totalPages: number
 }
 
+export type SortValues =
+  | 'author.name-asc'
+  | 'author.name-desc'
+  | 'cardsCount-asc'
+  | 'cardsCount-desc'
+  | 'created-asc'
+  | 'created-desc'
+  | 'name-asc'
+  | 'name-desc'
+  | 'updated-asc'
+  | 'updated-desc'
+  | null
+
 export type GetDecksArgs = {
   authorId?: string
 
@@ -42,18 +55,7 @@ export type GetDecksArgs = {
   minCardsCount?: number
 
   name?: string
-  orderBy?:
-    | 'author.name-asc'
-    | 'author.name-desc'
-    | 'cardsCount-asc'
-    | 'cardsCount-desc'
-    | 'created-asc'
-    | 'created-desc'
-    | 'name-asc'
-    | 'name-desc'
-    | 'updated-asc'
-    | 'updated-desc'
-    | null
+  orderBy?: SortValues
 }
 
 export type CreateDeckArgs = {

@@ -13,7 +13,7 @@ type Props = {
 } & ComponentPropsWithoutRef<'td'>
 export const TableCellWithControls = ({ children, id, item, ...rest }: Props) => {
   //later here we need to get the current user with useSelector
-  const currentUser = 'Пупсик'
+  const currentUser = 'Sweety'
 
   const classNames = {
     tCell: clsx(s.tCell),
