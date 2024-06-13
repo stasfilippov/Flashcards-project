@@ -9,7 +9,7 @@ import s from './removeItemModal.module.scss'
 type Props = {
   id: string
   name: string
-  onRemove: (id: string) => Promise<void>
+  onRemove?: (id: string) => Promise<void>
   type: 'Card' | 'Deck'
 } & Omit<ModalProps, 'children' | 'open'>
 
@@ -24,7 +24,7 @@ export const RemoveItemModal = ({ id, name, onRemove, type, ...props }: Props) =
   }
 
   const removeHandler = () => {
-    onRemove(id).then(() => closeModalHandler())
+    // onRemove(id).then(() => closeModalHandler())
   }
 
   const classNames = {

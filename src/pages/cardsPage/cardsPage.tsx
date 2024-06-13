@@ -4,19 +4,27 @@ import { useSearchParams } from 'react-router-dom'
 import { Page } from '@/components/layout'
 import { Modal, TextField } from '@/components/ui'
 import { useGetDeckByIdQuery } from '@/pages/cardsPage/cardsApi'
-import { BackNavigation } from '@/pages/cardsPage/components/backNavigation'
-import { Header } from '@/pages/cardsPage/components/header'
-import { TableWithCards } from '@/pages/cardsPage/components/tableWithCards'
+import { BackNavigation } from '@/pages/cardsPage/components/backNavigation/backNavigation'
+import { Header } from '@/pages/cardsPage/components/header/header'
+import { TableWithCards } from '@/pages/cardsPage/components/tableWithCards/tableWithCards'
+import clsx from 'clsx'
 
+import s from './cardsPage.module.scss'
 export const CardsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [open, setOpen] = useState<boolean>(false)
   const deckId = 'clqxwvbol01ymzk2v43xn1vxx'
+  const currentUser = '5b2174ce-9499-4693-9a73-026e01cd9ed4'
 
   const search = searchParams.get('question') ?? ''
 
-  const sort = searchParams.get('sort') ?? ''
+  const sort = searchParams.get('sort') ?? 'null'
 
+  const classNames = {
+    backNavigation: clsx(s.backNavigation),
+    table: clsx(s.table),
+    textField: clsx(s.textField),
+  }
   const openModalHandler = () => {
     setOpen(true)
   }
@@ -30,6 +38,8 @@ export const CardsPage = () => {
 
   const { data, error, isLoading } = useGetDeckByIdQuery({ id: deckId })
 
+  const isMyDeck = currentUser === data?.userId
+
   return (
     <Page>
       {error ? (
@@ -38,10 +48,22 @@ export const CardsPage = () => {
         <h1>Loading....</h1>
       ) : data ? (
         <>
-          <BackNavigation />
-          <Header callback={openModalHandler} deck={data} />
-          <TextField inputChangeHandler={searchChangeHandler} value={search} />
-          <TableWithCards deckId={deckId} search={search} sort={sort} />
+          <BackNavigation className={classNames.backNavigation} />
+          <Header callback={openModalHandler} deck={data} isMy={isMyDeck} />
+          <TextField
+            className={classNames.textField}
+            inputChangeHandler={searchChangeHandler}
+            placeholder={'Input search'}
+            type={'search'}
+            value={search}
+          />
+          <TableWithCards
+            className={classNames.table}
+            deckId={deckId}
+            isMy={isMyDeck}
+            search={search}
+            sort={sort}
+          />
           <Modal onClose={closeModalHandler} open={open}>
             <div>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consequuntur eos
