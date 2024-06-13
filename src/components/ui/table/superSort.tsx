@@ -1,19 +1,20 @@
 import { ArrowIosDownOutline, ArrowIosUp } from '@/assets/icons/components'
 import { Typography } from '@/components/ui'
 import { TableHeadCell } from '@/components/ui/table/table'
+import { SortBy, SortValues } from '@/pages/decksPage/api/decksApi.types'
 import clsx from 'clsx'
 
 import s from './table.module.scss'
 
 export type SuperSortProps = {
   onChange: (newSort: string) => void
-  sort: string
+  sort: SortValues
   sortBy: SortBy
   sortable: boolean
   title: null | string
 }
 
-export const pureChange = (sort: string, down: string, up: string) => {
+export const pureChange = (sort: SortValues, down: string, up: string) => {
   switch (sort) {
     case null:
       return down
@@ -61,14 +62,3 @@ export const SuperSort = ({ onChange, sort, sortBy, sortable, title }: SuperSort
     )
   }
 }
-
-export type SortBy =
-  | 'answer'
-  | 'author.name'
-  | 'cardsCount'
-  | 'controls'
-  | 'created'
-  | 'grade'
-  | 'name'
-  | 'question'
-  | 'updated'

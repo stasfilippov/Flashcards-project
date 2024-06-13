@@ -71,3 +71,14 @@ export type UpdateDeckArgs = {
 export type RemoveDeckArgs = {
   id: string
 }
+
+export type SortBy =
+  | 'answer'
+  | 'author.name'
+  | 'cardsCount'
+  | 'controls'
+  | 'created'
+  | 'grade'
+  | 'name'
+  | 'question'
+  | 'updated'
