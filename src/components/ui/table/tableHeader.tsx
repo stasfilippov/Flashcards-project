@@ -1,7 +1,8 @@
-import { ComponentPropsWithoutRef, useState } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
 import { SuperSort } from '@/components/ui/table/superSort'
 import { TableRow } from '@/components/ui/table/table'
+import { SortValues } from '@/pages/decksPage/api/decksApi.types'
 import clsx from 'clsx'
 
 export type Column = {
@@ -14,14 +15,20 @@ export type Column = {
 }
 
 type PropsHeader = {
+  changeSortValue: (sortValue: SortValues) => void
   columns: Column[]
+  sortValue: SortValues
 } & ComponentPropsWithoutRef<'thead'>
 
-export const TableHeader = ({ className, columns, ...props }: PropsHeader) => {
-  const [sort, setSort] = useState('')
-
-  const changeSortHandler = (newSort: string) => {
-    setSort(newSort)
+export const TableHeader = ({
+  changeSortValue,
+  className,
+  columns,
+  sortValue,
+  ...props
+}: PropsHeader) => {
+  const changeSortHandler = (newSort: SortValues) => {
+    changeSortValue(newSort)
   }
 
   return (
@@ -31,7 +38,7 @@ export const TableHeader = ({ className, columns, ...props }: PropsHeader) => {
           <SuperSort
             key={id}
             onChange={changeSortHandler}
-            sort={sort}
+            sort={sortValue}
             sortBy={id}
             sortable={sortable}
             title={title}
