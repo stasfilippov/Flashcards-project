@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
+import { useDebounce } from '@/common/hooks'
 import { Page } from '@/components/layout'
-import { Button, Pagination, Typography } from '@/components/ui'
-import { useGetDecksQuery } from '@/pages/decksPage/decksApi'
-import { SortValues } from '@/pages/decksPage/decksApi.types'
+import { Pagination, Typography } from '@/components/ui'
+import { useCreateDeckMutation, useGetDecksQuery } from '@/pages/decksPage/api/decksApi'
+import { CreateDeckArgs, SortValues } from '@/pages/decksPage/api/decksApi.types'
 import { DecksPageFilters } from '@/pages/decksPage/decksPageFilters'
 import { DecksPageTable } from '@/pages/decksPage/decksPageTable'
+import { AddDeckModal } from '@/pages/decksPage/modals'
 
 import s from './decksPage.module.scss'
 
@@ -20,6 +22,7 @@ export const DecksPage = () => {
 
   const [currentTab, setCurrentTab] = useState('')
   const [decksRange, setDecksRange] = useState<number[]>([0, 100])
+  const debouncedSearchValue = useDebounce(search, 500)
 
   const {
     data: decks,
@@ -31,44 +34,44 @@ export const DecksPage = () => {
     itemsPerPage: +itemsPerPage,
     maxCardsCount: decksRange[1],
     minCardsCount: decksRange[0],
-    name: search,
+    name: debouncedSearchValue,
     orderBy: sort || null,
   })
 
+  const [createDeck] = useCreateDeckMutation()
+
   const clearFiltersHandler = () => {
-    setSearchParams({ items: itemsPerPage, page: currentPage })
+    setSearchParams({ items: itemsPerPage })
     setCurrentTab('')
     setDecksRange([0, 100])
   }
   const changeItemsPerPageHandler = (itemsCount: number) => {
-    setSearchParams({
-      items: itemsCount.toString(),
-      name: search,
-      page: '1',
-      sort: sort ?? '',
-    })
+    searchParams.set('page', '1')
+    searchParams.set('items', itemsCount.toString())
+    setSearchParams(searchParams)
   }
   const changeCurrentPageHandler = (pageNumber: number) => {
-    setSearchParams({
-      items: itemsPerPage,
-      name: search,
-      page: pageNumber.toString(),
-      sort: sort ?? '',
-    })
+    searchParams.set('page', pageNumber.toString())
+    setSearchParams(searchParams)
   }
   const changeSearchValueHandler = (searchValue: string) => {
-    setSearchParams({
-      items: itemsPerPage,
-      name: searchValue,
-      sort: sort ?? '',
-    })
+    if (searchValue.length) {
+      searchParams.set('name', searchValue)
+      setSearchParams(searchParams)
+    } else {
+      searchParams.delete('name')
+      setSearchParams(searchParams)
+    }
   }
   const changeSortValueHandler = (sortValue: SortValues) => {
-    setSearchParams({
-      items: itemsPerPage,
-      name: search,
-      sort: sortValue ?? '',
-    })
+    searchParams.set('sort', sortValue ?? '')
+    searchParams.set('page', '1')
+    setSearchParams(searchParams)
+  }
+
+  const createDeckHandler = (formData: CreateDeckArgs) => {
+    createDeck(formData)
+    clearFiltersHandler()
   }
 
   if (isLoading) {
@@ -84,7 +87,7 @@ export const DecksPage = () => {
         <Typography component={'h1'} variant={'h1'}>
           Decks lists
         </Typography>
-        <Button>Add New Deck</Button>
+        <AddDeckModal createDeckHandler={createDeckHandler} />
       </div>
       <DecksPageFilters
         changeSearchValue={changeSearchValueHandler}

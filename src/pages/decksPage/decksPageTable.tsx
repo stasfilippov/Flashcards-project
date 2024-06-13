@@ -4,7 +4,7 @@ import { TableCellWithPhotoDecks } from '@/components/ui/table/tableCell/tableCe
 import { TableCellWithText } from '@/components/ui/table/tableCell/tableCellWithText'
 import { TableHeader } from '@/components/ui/table/tableHeader'
 import { formatDateToDdMmYY } from '@/components/ui/table/utils/convertDate'
-import { Deck, SortValues } from '@/pages/decksPage/decksApi.types'
+import { Deck, SortValues } from '@/pages/decksPage/api/decksApi.types'
 
 const columns = [
   {

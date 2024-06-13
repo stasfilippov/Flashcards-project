@@ -1,7 +1,7 @@
 import { ArrowIosDownOutline, ArrowIosUp } from '@/assets/icons/components'
 import { Typography } from '@/components/ui'
 import { TableHeadCell } from '@/components/ui/table/table'
-import { SortValues } from '@/pages/decksPage/decksApi.types'
+import { SortValues } from '@/pages/decksPage/api/decksApi.types'
 import clsx from 'clsx'
 
 import s from './table.module.scss'

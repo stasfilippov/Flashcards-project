@@ -36,7 +36,7 @@ export const DecksPageFilters = (props: Props) => {
         <Typography variant={'body2'}>Show decks cards</Typography>
         <Tabs onValueChange={setCurrentTabValue} value={currentTabValue}>
           <TabsList>
-            <TabsTrigger value={'7e299074-faab-44be-b840-05e7a8a77b14'}>My Cards</TabsTrigger>
+            <TabsTrigger value={'f2be95b9-4d07-4751-a775-bd612fc9553a'}>My Cards</TabsTrigger>
             <TabsTrigger value={''}>All Cards</TabsTrigger>
           </TabsList>
         </Tabs>
