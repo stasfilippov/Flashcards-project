@@ -66,6 +66,7 @@ export type SortBy =
   | 'answer'
   | 'author.name'
   | 'cardsCount'
+  | 'controls'
   | 'created'
   | 'grade'
   | 'name'
