@@ -8,7 +8,7 @@ export type CreateUpdateDeckResponse = Omit<Deck, 'author' | 'isFavorite'>
 export type Deck = {
   author: Author
   cardsCount: number
-  cover: string
+  cover: null | string
   created: string
   id: string
   isFavorite: boolean

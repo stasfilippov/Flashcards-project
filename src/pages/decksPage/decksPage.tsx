@@ -6,8 +6,7 @@ import { Page } from '@/components/layout'
 import { Pagination, Typography } from '@/components/ui'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/pages/decksPage/api/decksApi'
 import { CreateDeckArgs, SortValues } from '@/pages/decksPage/api/decksApi.types'
-import { DecksPageFilters } from '@/pages/decksPage/decksPageFilters'
-import { DecksPageTable } from '@/pages/decksPage/decksPageTable'
+import { DecksPageFilters, DecksPageTable } from '@/pages/decksPage/components'
 import { AddDeckModal } from '@/pages/decksPage/modals'
 
 import s from './decksPage.module.scss'
@@ -35,7 +34,7 @@ export const DecksPage = () => {
     maxCardsCount: decksRange[1],
     minCardsCount: decksRange[0],
     name: debouncedSearchValue,
-    orderBy: sort || null,
+    orderBy: sort,
   })
 
   const [createDeck] = useCreateDeckMutation()
@@ -63,22 +62,10 @@ export const DecksPage = () => {
       setSearchParams(searchParams)
     }
   }
-  const changeSortValueHandler = (sortValue: SortValues) => {
-    searchParams.set('sort', sortValue ?? '')
-    searchParams.set('page', '1')
-    setSearchParams(searchParams)
-  }
 
   const createDeckHandler = (formData: CreateDeckArgs) => {
     createDeck(formData)
     clearFiltersHandler()
-  }
-
-  if (isLoading) {
-    return <h1>Loading...</h1>
-  }
-  if (error) {
-    return <h1>Error: {JSON.stringify(error)}</h1>
   }
 
   return (
@@ -98,18 +85,22 @@ export const DecksPage = () => {
         setCurrentTabValue={setCurrentTab}
         setDecksRangeValue={setDecksRange}
       />
-      <DecksPageTable
-        changeSortValue={changeSortValueHandler}
-        decks={decks?.items}
-        sortValue={sort}
-      />
-      <Pagination
-        currentPage={+currentPage}
-        itemsPerPage={+itemsPerPage}
-        onItemsPerPageChange={changeItemsPerPageHandler}
-        onPageChange={changeCurrentPageHandler}
-        totalPages={decks?.pagination.totalPages}
-      />
+      {error ? (
+        <h1>Error: {JSON.stringify(error)}</h1>
+      ) : isLoading ? (
+        <h1>Loading...</h1>
+      ) : decks ? (
+        <>
+          <DecksPageTable decks={decks.items} sortValue={sort} />
+          <Pagination
+            currentPage={+currentPage}
+            itemsPerPage={+itemsPerPage}
+            onItemsPerPageChange={changeItemsPerPageHandler}
+            onPageChange={changeCurrentPageHandler}
+            totalPages={decks.pagination.totalPages}
+          />
+        </>
+      ) : null}
     </Page>
   )
 }
