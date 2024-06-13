@@ -1,38 +1,21 @@
 import { useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
-import { ArrowBackOutline } from '@/assets/icons/components'
-import { ROUTES } from '@/common/constants'
 import { Page } from '@/components/layout'
-import {
-  Button,
-  Modal,
-  Pagination,
-  Table,
-  TableBody,
-  TableCellWithGrade,
-  TableCellWithPhotoQuestions,
-  TableCellWithText,
-  TableHeader,
-  TableRow,
-  TextField,
-  Typography,
-} from '@/components/ui'
-import { useGetCardsQuery, useGetDeckByIdQuery } from '@/pages/cardsPage/cardsApi'
-
-import s from '@/components/ui/table/table.module.scss'
+import { Modal, TextField } from '@/components/ui'
+import { useGetDeckByIdQuery } from '@/pages/cardsPage/cardsApi'
+import { BackNavigation } from '@/pages/cardsPage/components/backNavigation'
+import { Header } from '@/pages/cardsPage/components/header'
+import { TableWithCards } from '@/pages/cardsPage/components/tableWithCards'
 
 export const CardsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [open, setOpen] = useState<boolean>(false)
-  const [sort, setSort] = useState('')
+  const deckId = 'clqxwvbol01ymzk2v43xn1vxx'
 
   const search = searchParams.get('question') ?? ''
-  const currentPage = searchParams.get('page') ?? '1'
-  const itemsPerPage = searchParams.get('items') ?? '10'
 
-  const deckId = 'clqxwvbol01ymzk2v43xn1vxx'
-  const currentUser = '5b2174ce-9499-4693-9a73-026e01cd9ed4'
+  const sort = searchParams.get('sort') ?? ''
 
   const openModalHandler = () => {
     setOpen(true)
@@ -40,127 +23,33 @@ export const CardsPage = () => {
   const closeModalHandler = () => {
     setOpen(false)
   }
-
-  const setOrderByHandler = (orderBy: string) => {
-    setSort(orderBy)
-  }
   const searchChangeHandler = (value: string) => {
     value.length ? searchParams.set('question', value) : searchParams.delete('question')
     setSearchParams(searchParams)
   }
 
-  const currentPageChangeHandler = (page: number) => {
-    searchParams.set('page', page.toString())
-    setSearchParams(searchParams)
-  }
-  const itemsPerPageChangeHandler = (itemsPerPage: number) => {
-    searchParams.set('page', '1')
-    searchParams.set('items', itemsPerPage.toString())
-    setSearchParams(searchParams)
-  }
-
-  const {
-    data: deck,
-    error: errorDeck,
-    isLoading: isLoadingDeck,
-  } = useGetDeckByIdQuery({ id: deckId })
-  const {
-    data: cardsOfDeck,
-    error: errorCardsOfDeck,
-    isLoading: isLoadingCardsOfDeck,
-  } = useGetCardsQuery({
-    currentPage: +currentPage,
-    id: deckId,
-    itemsPerPage: +itemsPerPage,
-    orderBy: sort,
-    question: search,
-  })
-  const columns = [
-    {
-      id: 'question',
-      title: 'Question',
-    },
-    {
-      id: 'answer',
-      title: 'Answer',
-    },
-    {
-      id: 'updated',
-      title: 'Last Updated',
-    },
-    {
-      id: 'grade',
-      sortable: false,
-      title: 'Grade',
-    },
-  ]
-
-  if (isLoadingDeck || isLoadingCardsOfDeck) {
-    return <h1>Loading....</h1>
-  }
-
-  if (errorCardsOfDeck || errorDeck) {
-    return <h1>Error {JSON.stringify(errorDeck)}</h1>
-  }
+  const { data, error, isLoading } = useGetDeckByIdQuery({ id: deckId })
 
   return (
     <Page>
-      <div>
-        <ArrowBackOutline width={16} />
-        <Typography component={Link} to={ROUTES.base} variant={'body2'}>
-          Back to Decks List
-        </Typography>
-      </div>
-      <div>
-        <Typography variant={'h1'}>{deck?.name}</Typography>
-        {deck?.userId === currentUser ? (
-          <Button onClick={openModalHandler}>Add New Card</Button>
-        ) : (
-          <Button as={Link} to={ROUTES.learn}>
-            Learn to Deck
-          </Button>
-        )}
-      </div>
-      <img alt={'image'} src={deck?.cover} style={{ width: '170px' }} />
-      <TextField inputChangeHandler={searchChangeHandler} value={search} />
-      <div>
-        <div className={s.outerContainer}>
-          <Table>
-            <TableHeader columns={columns} setOrderBy={setOrderByHandler} />
-            <TableBody>
-              {cardsOfDeck?.items.map(card => {
-                const updatedAt = new Date(card.updated).toLocaleDateString('ru-RU')
-
-                return (
-                  <TableRow key={card.id}>
-                    <TableCellWithPhotoQuestions id={'question'} item={card}>
-                      {card.question}
-                    </TableCellWithPhotoQuestions>
-                    <TableCellWithPhotoQuestions id={'answer'} item={card}>
-                      {card.answer}
-                    </TableCellWithPhotoQuestions>
-                    <TableCellWithText id={'updatedQuestion'}>{updatedAt}</TableCellWithText>
-                    <TableCellWithGrade id={'grade'} item={card} />
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </div>
-      </div>
-      <Pagination
-        currentPage={+currentPage}
-        itemsPerPage={+itemsPerPage}
-        onItemsPerPageChange={itemsPerPageChangeHandler}
-        onPageChange={currentPageChangeHandler}
-        totalPages={cardsOfDeck?.pagination.totalPages}
-      />
-      <Modal onClose={closeModalHandler} open={open}>
-        <div>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consequuntur eos
-          laboriosam ullam. A aliquid aperiam consequuntur, delectus earum harum itaque laborum,
-        </div>
-      </Modal>
+      {error ? (
+        <h1>Error {JSON.stringify(error)}</h1>
+      ) : isLoading ? (
+        <h1>Loading....</h1>
+      ) : data ? (
+        <>
+          <BackNavigation />
+          <Header callback={openModalHandler} deck={data} />
+          <TextField inputChangeHandler={searchChangeHandler} value={search} />
+          <TableWithCards deckId={deckId} search={search} sort={sort} />
+          <Modal onClose={closeModalHandler} open={open}>
+            <div>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consequuntur eos
+              laboriosam ullam. A aliquid aperiam consequuntur, delectus earum harum itaque laborum,
+            </div>
+          </Modal>
+        </>
+      ) : null}
     </Page>
   )
 }
