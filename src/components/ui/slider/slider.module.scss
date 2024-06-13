@@ -1,5 +1,5 @@
 .sliderContainer {
-  display: inline-flex;
+  display: flex;
   gap: 12px;
   align-items: center;
 }
@@ -24,8 +24,7 @@
   display: flex;
   align-items: center;
 
-  min-width: 200px;
-  height: 100%;
+  min-width: 156px;
 }
 
 .sliderTrack {
