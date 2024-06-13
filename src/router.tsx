@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom'
 
 import { ROUTES } from '@/common/constants'
-
 import { CheckEmail, Error } from '@/pages'
 import { CardsPage } from '@/pages/cardsPage'
 import { DecksPage } from '@/pages/decksPage'
