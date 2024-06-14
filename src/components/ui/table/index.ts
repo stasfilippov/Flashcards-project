@@ -1,1 +1,5 @@
 export * from './table'
+export * from './tableCell/tableCellWithGrade'
+export * from './tableCell/tableCellWithPhotoQuestions'
+export * from './tableCell/tableCellWithText'
+export * from './tableHeader'

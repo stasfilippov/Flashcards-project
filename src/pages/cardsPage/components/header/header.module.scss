@@ -1,0 +1,15 @@
+.wrapperWithControl {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+
+  .title {
+    cursor: default;
+  }
+}
+
+.image {
+  border-radius: 2px;
+  width: 170px;
+}

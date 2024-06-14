@@ -102,6 +102,9 @@ importers:
       '@storybook/addon-onboarding':
         specifier: ^8.1.4
         version: 8.1.5(react@18.3.1)
+      '@storybook/addon-queryparams':
+        specifier: 7.0.1
+        version: 7.0.1(@storybook/manager-api@8.1.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@storybook/preview-api@8.1.5)
       '@storybook/blocks':
         specifier: ^8.1.4
         version: 8.1.5(@types/react-dom@18.3.0)(@types/react@18.3.3)(prettier@3.2.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1712,6 +1715,12 @@ packages:
 
   '@storybook/addon-outline@8.1.5':
     resolution: {integrity: sha512-eCXnGN24ewfvUKKpzTJP7HtPJkAexIBnQdJCw9R9Jk8IyHh7xPWsrz+haY1FQHTXZGAevoBcI4/tpG2XOumBlw==}
+
+  '@storybook/addon-queryparams@7.0.1':
+    resolution: {integrity: sha512-hlOrjCbUdkg/f/7HaIBMvEp2oyNkBYaxifDdGNyUhdBzfuWUeWDTUwYDxUubbhuqNcSMbw5Cje34dE+hJaGR9A==}
+    peerDependencies:
+      '@storybook/manager-api': ^7.0.0 || ^8.0.0 || ^8.0.0-rc.0
+      '@storybook/preview-api': ^7.0.0 || ^8.0.0 || ^8.0.0-rc.0
 
   '@storybook/addon-toolbars@8.1.5':
     resolution: {integrity: sha512-UxEtb4ii0FORqUuPgLycPQ0MQ4Bq2YWBft6yT00xMjUuwkld27BlrvnpaBlx+disgWwOKGKVd02f/4dbZr2s1g==}
@@ -6965,6 +6974,11 @@ snapshots:
     dependencies:
       '@storybook/global': 5.0.0
       ts-dedent: 2.2.0
+
+  '@storybook/addon-queryparams@7.0.1(@storybook/manager-api@8.1.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@storybook/preview-api@8.1.5)':
+    dependencies:
+      '@storybook/manager-api': 8.1.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@storybook/preview-api': 8.1.5
 
   '@storybook/addon-toolbars@8.1.5': {}
 

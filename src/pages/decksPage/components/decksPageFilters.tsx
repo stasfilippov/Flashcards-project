@@ -1,7 +1,7 @@
 import { TrashOutline } from '@/assets/icons/components'
 import { Button, Slider, Tabs, TabsList, TabsTrigger, TextField, Typography } from '@/components/ui'
 
-import s from './decksPage.module.scss'
+import s from '../decksPage.module.scss'
 
 type Props = {
   changeSearchValue: (searchValue: string) => void
