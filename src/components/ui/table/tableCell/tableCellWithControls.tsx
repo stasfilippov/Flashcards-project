@@ -5,6 +5,7 @@ import { TableCell } from '@/components/ui/table'
 import { Card } from '@/pages/cardsPage/api/cardsApi.types'
 import { Deck } from '@/pages/decksPage/api/decksApi.types'
 import { RemoveItemModal } from '@/pages/decksPage/modals/removeItem/removeItemModal'
+import { UpdateDeckModal } from '@/pages/decksPage/modals/updateDeck/updateDeckModal'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'
@@ -49,9 +50,10 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
     <>
       {item && currentUser === item.author.id ? (
         <>
-          <button>
-            <Edit2Outline width={16} />
-          </button>
+          <UpdateDeckModal
+            id={item.id}
+            initialValues={{ isPrivate: item.isPrivate, name: item.name }}
+          />
           <button disabled={!item.cardsCount}>
             <PlayCircleOutline width={16} />
           </button>
