@@ -1,8 +1,7 @@
-import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Page } from '@/components/layout'
-import { Modal, TextField } from '@/components/ui'
+import { TextField } from '@/components/ui'
 import { useGetDeckByIdQuery } from '@/pages/cardsPage/api/cardsApi'
 import { BackNavigation } from '@/pages/cardsPage/components/backNavigation/backNavigation'
 import { Header } from '@/pages/cardsPage/components/header/header'
@@ -13,7 +12,6 @@ import clsx from 'clsx'
 import s from './cardsPage.module.scss'
 export const CardsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [open, setOpen] = useState<boolean>(false)
   const deckId = 'clqxwvbol01ymzk2v43xn1vxx'
   const currentUser = '5b2174ce-9499-4693-9a73-026e01cd9ed4'
 
@@ -24,12 +22,6 @@ export const CardsPage = () => {
     backNavigation: clsx(s.backNavigation),
     table: clsx(s.table),
     textField: clsx(s.textField),
-  }
-  const openModalHandler = () => {
-    setOpen(true)
-  }
-  const closeModalHandler = () => {
-    setOpen(false)
   }
   const searchChangeHandler = (value: string) => {
     value.length ? searchParams.set('question', value) : searchParams.delete('question')
@@ -49,7 +41,7 @@ export const CardsPage = () => {
       ) : data ? (
         <>
           <BackNavigation className={classNames.backNavigation} />
-          <Header callback={openModalHandler} deck={data} isMy={isMyDeck} />
+          <Header deck={data} isMy={isMyDeck} />
           <TextField
             className={classNames.textField}
             inputChangeHandler={searchChangeHandler}
@@ -64,12 +56,6 @@ export const CardsPage = () => {
             search={search}
             sort={sort}
           />
-          <Modal onClose={closeModalHandler} open={open}>
-            <div>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consequuntur eos
-              laboriosam ullam. A aliquid aperiam consequuntur, delectus earum harum itaque laborum,
-            </div>
-          </Modal>
         </>
       ) : null}
     </Page>

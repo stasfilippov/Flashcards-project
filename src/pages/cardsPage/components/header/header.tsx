@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom'
 import { ROUTES } from '@/common/constants'
 import { Button, Typography } from '@/components/ui'
 import { GetDeckByIdResponse } from '@/pages/cardsPage/api/cardsApi.types'
+import { AddNewCardModal } from '@/pages/cardsPage/modals/addNewCard/addNewCardModal'
 import clsx from 'clsx'
 
 import s from './header.module.scss'
 
 type Props = {
-  callback: () => void
   deck: GetDeckByIdResponse
   isMy: boolean
 }
 
-export const Header = ({ callback, deck, isMy }: Props) => {
+export const Header = ({ deck, isMy }: Props) => {
   const classNames = {
     image: clsx(s.image),
     title: clsx(s.title),
@@ -27,7 +27,7 @@ export const Header = ({ callback, deck, isMy }: Props) => {
           {deck?.name}
         </Typography>
         {isMy ? (
-          <Button onClick={callback}>Add New Card</Button>
+          <AddNewCardModal addCardHandler={() => {}} title={'Add New Card'} />
         ) : (
           <Button as={Link} to={ROUTES.learn}>
             Learn to Deck
