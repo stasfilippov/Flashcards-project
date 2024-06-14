@@ -1,34 +1,32 @@
 import { ComponentPropsWithoutRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import { SuperSort } from '@/components/ui/table/superSort'
 import { TableRow } from '@/components/ui/table/table'
-import { SortValues } from '@/pages/decksPage/api/decksApi.types'
+import { SortBy, SortValues } from '@/pages/decksPage/api/decksApi.types'
 import clsx from 'clsx'
 
 export type Column = {
   /**
    * @param id - required for requests to the server for query-parameters, determines by which column the sorting is performed
    */
-  id: string
+  id: SortBy
   sortable?: boolean
   title: null | string
 }
 
 type PropsHeader = {
-  changeSortValue: (sortValue: SortValues) => void
   columns: Column[]
   sortValue: SortValues
 } & ComponentPropsWithoutRef<'thead'>
 
-export const TableHeader = ({
-  changeSortValue,
-  className,
-  columns,
-  sortValue,
-  ...props
-}: PropsHeader) => {
-  const changeSortHandler = (newSort: SortValues) => {
-    changeSortValue(newSort)
+export const TableHeader = ({ className, columns, sortValue, ...props }: PropsHeader) => {
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const changeSortHandler = (newSort: string) => {
+    searchParams.set('page', '1')
+    searchParams.set('sort', newSort ?? '')
+    setSearchParams(searchParams)
   }
 
   return (

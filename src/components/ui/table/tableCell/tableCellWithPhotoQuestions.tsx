@@ -3,14 +3,14 @@ import { ComponentPropsWithoutRef } from 'react'
 import defaultImage from '@/assets/img/defaultImageDeck.png'
 import { Typography } from '@/components/ui'
 import { TableCell } from '@/components/ui/table'
-import { QuestionAnswer } from '@/components/ui/table/types'
+import { Card } from '@/pages/cardsPage/api/cardsApi.types'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'
 
 type Props = {
   id: string
-  item: QuestionAnswer
+  item: Card
 } & ComponentPropsWithoutRef<'td'>
 export const TableCellWithPhotoQuestions = ({ children, id, item, ...rest }: Props) => {
   const classNames = {

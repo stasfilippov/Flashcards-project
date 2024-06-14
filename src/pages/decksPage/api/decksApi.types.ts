@@ -8,7 +8,7 @@ export type CreateUpdateDeckResponse = Omit<Deck, 'author' | 'isFavorite'>
 export type Deck = {
   author: Author
   cardsCount: number
-  cover: string
+  cover: null | string
   created: string
   id: string
   isFavorite: boolean
@@ -71,3 +71,14 @@ export type UpdateDeckArgs = {
 export type RemoveDeckArgs = {
   id: string
 }
+
+export type SortBy =
+  | 'answer'
+  | 'author.name'
+  | 'cardsCount'
+  | 'controls'
+  | 'created'
+  | 'grade'
+  | 'name'
+  | 'question'
+  | 'updated'

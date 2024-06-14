@@ -1,34 +1,34 @@
 import { ArrowIosDownOutline, ArrowIosUp } from '@/assets/icons/components'
 import { Typography } from '@/components/ui'
 import { TableHeadCell } from '@/components/ui/table/table'
-import { SortValues } from '@/pages/decksPage/api/decksApi.types'
+import { SortBy, SortValues } from '@/pages/decksPage/api/decksApi.types'
 import clsx from 'clsx'
 
 import s from './table.module.scss'
 
 export type SuperSortProps = {
-  onChange: (newSort: SortValues) => void
+  onChange: (newSort: string) => void
   sort: SortValues
-  sortBy: string
+  sortBy: SortBy
   sortable: boolean
   title: null | string
 }
 
-export const pureChange = (sort: SortValues, down: SortValues, up: SortValues) => {
+export const pureChange = (sort: SortValues, down: string, up: string) => {
   switch (sort) {
     case null:
       return down
     case down:
       return up
     case up:
-      return null
+      return 'null'
     default:
       return down
   }
 }
 export const SuperSort = ({ onChange, sort, sortBy, sortable, title }: SuperSortProps) => {
-  const up = (sortBy + '-asc') as SortValues
-  const down = (sortBy + '-desc') as SortValues
+  const up = sortBy + '-asc'
+  const down = sortBy + '-desc'
   const sortHandler = () => {
     onChange(pureChange(sort, down, up))
   }
@@ -53,6 +53,12 @@ export const SuperSort = ({ onChange, sort, sortBy, sortable, title }: SuperSort
       </TableHeadCell>
     )
   } else {
-    return <TableHeadCell id={sortBy} />
+    return (
+      <TableHeadCell id={sortBy}>
+        <div className={clsx(s.tHeadCellWrapper)}>
+          <Typography variant={'subtitle2'}>{title}</Typography>
+        </div>
+      </TableHeadCell>
+    )
   }
 }
