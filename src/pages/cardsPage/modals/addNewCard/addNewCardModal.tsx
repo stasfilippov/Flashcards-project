@@ -12,12 +12,12 @@ import s from './addNewCardModal.module.scss'
 
 const addCardSchema = z.object({
   answer: z.string().min(3).max(30),
-  answerImg: z.string(),
+  answerImg: z.string().optional(),
   question: z.string().min(3).max(30),
-  questionImg: z.string(),
+  questionImg: z.string().optional(),
 })
 
-type FormValues = z.infer<typeof addCardSchema>
+export type FormValues = z.infer<typeof addCardSchema>
 type Props = {
   addCardHandler: (data: any) => void
 } & Omit<ModalProps, 'children' | 'open'>
@@ -61,7 +61,7 @@ export const AddNewCardModal = ({ addCardHandler, title, ...props }: Props) => {
               label={'Question'}
               name={'question'}
             />
-            <InputTypeFile {...register('questionImg')} name={'questionImg'} />
+            <InputTypeFile label={'questionImg'} register={register} />
           </div>
           <div className={classNames.inputWrapper}>
             <ControlledTextField
@@ -70,7 +70,7 @@ export const AddNewCardModal = ({ addCardHandler, title, ...props }: Props) => {
               label={'Answer'}
               name={'answer'}
             />
-            <InputTypeFile {...register('answerImg')} name={'answerImg'} />
+            <InputTypeFile label={'answerImg'} register={register} />
           </div>
           <div className={classNames.buttonsWrapper}>
             <Button onClick={closeModalHandler} variant={'secondary'}>
