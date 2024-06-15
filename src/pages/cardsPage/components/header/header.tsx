@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 
+import defaultImg from '@/assets/img/defaultImageDeck.png'
 import { ROUTES } from '@/common/constants'
 import { Button, Typography } from '@/components/ui'
 import { GetDeckByIdResponse } from '@/pages/cardsPage/api/cardsApi.types'
@@ -24,17 +25,17 @@ export const Header = ({ deck, isMy }: Props) => {
     <div>
       <div className={classNames.wrapperWithControl}>
         <Typography className={classNames.title} variant={'h1'}>
-          {deck?.name}
+          {deck.name}
         </Typography>
         {isMy ? (
-          <AddNewCardModal addCardHandler={() => {}} title={'Add New Card'} />
+          <AddNewCardModal addCardHandler={() => {}} deckId={deck.id} title={'Add New Card'} />
         ) : (
           <Button as={Link} to={ROUTES.learn}>
             Learn to Deck
           </Button>
         )}
       </div>
-      <img alt={'image deck'} className={classNames.image} src={deck?.cover} />
+      <img alt={'image deck'} className={classNames.image} src={deck.cover || defaultImg} />
     </div>
   )
 }

@@ -5,6 +5,7 @@ import { ControlledTextField } from '@/components/controlled'
 import { Button, Modal, ModalProps } from '@/components/ui'
 import { InputTypeFile } from '@/components/ui/inputTypeFile/inputTypeFile'
 import { useCreateNewCardMutation } from '@/pages/cardsPage/api/cardsApi'
+import { CreateCardArgs } from '@/pages/cardsPage/api/cardsApi.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { z } from 'zod'
@@ -19,21 +20,23 @@ const addCardSchema = z.object({
 export type FormValues = z.infer<typeof addCardSchema>
 type Props = {
   addCardHandler: (data: any) => void
+  deckId: string
 } & Omit<ModalProps, 'children' | 'open'>
-export const AddNewCardModal = ({ addCardHandler, title, ...props }: Props) => {
+export const AddNewCardModal = ({ addCardHandler, deckId, title, ...props }: Props) => {
   const [open, setOpen] = useState(false)
   const [questionImg, setQuestionImg] = useState('')
   const [answerImg, setAnswerImg] = useState('')
 
-  const [] = useCreateNewCardMutation()
+  const [createCard] = useCreateNewCardMutation()
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: { answer: '', question: '' },
     resolver: zodResolver(addCardSchema),
   })
   const submitHandler = handleSubmit(({ answer, question }) => {
-    // addCardHandler(data)
-    console.log({ answer, answerImg, question, questionImg })
+    const newCard: CreateCardArgs = { answer, answerImg, id: deckId, question, questionImg }
+
+    createCard(newCard)
     reset()
     setOpen(false)
   })

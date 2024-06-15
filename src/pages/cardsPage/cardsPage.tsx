@@ -15,7 +15,7 @@ export const CardsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   //!- сделать получение currentUser
-  const currentUser = '5b2174ce-9499-4693-9a73-026e01cd9ed4'
+  const currentUser = '32c3f2f9-5fc9-4e34-b60c-a34a2f72727e'
 
   const { data, error, isLoading } = useGetDeckByIdQuery({ id: deckId ?? '' })
 
@@ -54,8 +54,7 @@ export const CardsPage = () => {
           <TableWithCards
             className={classNames.table}
             currentUser={currentUser}
-            deckId={deckId}
-            isMy={isMyDeck}
+            deckId={deckId ?? ''}
             search={search}
             sort={sort}
           />
