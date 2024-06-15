@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
 
+import { useDebounce } from '@/common/hooks'
 import {
   Pagination,
   Table,
@@ -34,6 +35,7 @@ type Props = {
 }
 export const TableWithCards = ({ className, currentUser, deckId, search, sort }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams()
+  const debouncedSearchValue = useDebounce(search, 500)
 
   const currentPage = searchParams.get('page') ?? '1'
   const itemsPerPage = searchParams.get('items') ?? '10'
@@ -43,7 +45,7 @@ export const TableWithCards = ({ className, currentUser, deckId, search, sort }:
     id: deckId,
     itemsPerPage: +itemsPerPage,
     orderBy: sort,
-    question: search,
+    question: debouncedSearchValue,
   })
 
   const currentPageChangeHandler = (page: number) => {
