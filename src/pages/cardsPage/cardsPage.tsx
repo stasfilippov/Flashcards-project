@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { Page } from '@/components/layout'
 import { TextField } from '@/components/ui'
@@ -11,9 +11,15 @@ import clsx from 'clsx'
 
 import s from './cardsPage.module.scss'
 export const CardsPage = () => {
+  const { deckId } = useParams<{ deckId: string }>()
   const [searchParams, setSearchParams] = useSearchParams()
-  const deckId = 'clqxwvbol01ymzk2v43xn1vxx'
+
+  //!- сделать получение currentUser
   const currentUser = '5b2174ce-9499-4693-9a73-026e01cd9ed4'
+
+  const { data, error, isLoading } = useGetDeckByIdQuery({ id: deckId ?? '' })
+
+  const isMyDeck = currentUser === data?.userId
 
   const search = searchParams.get('question') ?? ''
   const sort = searchParams.get('sort') as SortValues
@@ -27,10 +33,6 @@ export const CardsPage = () => {
     value.length ? searchParams.set('question', value) : searchParams.delete('question')
     setSearchParams(searchParams)
   }
-
-  const { data, error, isLoading } = useGetDeckByIdQuery({ id: deckId })
-
-  const isMyDeck = currentUser === data?.userId
 
   return (
     <Page>
@@ -51,6 +53,7 @@ export const CardsPage = () => {
           />
           <TableWithCards
             className={classNames.table}
+            currentUser={currentUser}
             deckId={deckId}
             isMy={isMyDeck}
             search={search}

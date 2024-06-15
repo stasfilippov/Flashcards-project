@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { ControlledTextField } from '@/components/controlled'
 import { Button, Modal, ModalProps } from '@/components/ui'
 import { InputTypeFile } from '@/components/ui/inputTypeFile/inputTypeFile'
+import { useCreateNewCardMutation } from '@/pages/cardsPage/api/cardsApi'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { z } from 'zod'
@@ -23,6 +24,8 @@ export const AddNewCardModal = ({ addCardHandler, title, ...props }: Props) => {
   const [open, setOpen] = useState(false)
   const [questionImg, setQuestionImg] = useState('')
   const [answerImg, setAnswerImg] = useState('')
+
+  const [] = useCreateNewCardMutation()
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: { answer: '', question: '' },

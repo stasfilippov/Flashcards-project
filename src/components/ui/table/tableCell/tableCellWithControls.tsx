@@ -10,13 +10,19 @@ import clsx from 'clsx'
 import s from '@/components/ui/table/table.module.scss'
 
 type Props = {
-  currentUser?: string
+  currentUser: string
   id: string
   item: { card: Card; deck?: never } | { card?: never; deck: Deck }
   variant: 'Card' | 'Deck'
 } & ComponentPropsWithoutRef<'td'>
-export const TableCellWithControls = ({ children, id, item, variant, ...rest }: Props) => {
-  const currentUser = '5b2174ce-9499-4693-9a73-026e01cd9ed4'
+export const TableCellWithControls = ({
+  children,
+  currentUser,
+  id,
+  item,
+  variant,
+  ...rest
+}: Props) => {
   const { card, deck } = item
 
   const classNames = {
