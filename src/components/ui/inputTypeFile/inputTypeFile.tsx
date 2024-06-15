@@ -1,46 +1,33 @@
-import { ChangeEvent, useRef, useState } from 'react'
-import { UseFormRegister } from 'react-hook-form'
+import { ComponentPropsWithoutRef, useRef, useState } from 'react'
 
 import { ImageOutline } from '@/assets/icons/components'
+import defaultImg from '@/assets/img/defaultImageDeck.png'
 import { Button } from '@/components/ui'
-import { FormValues } from '@/pages/cardsPage/modals/addNewCard/addNewCardModal'
+import { upload } from '@/components/ui/inputTypeFile/utils/upload'
 import clsx from 'clsx'
 
 import s from './inputTypeFile.module.scss'
 
 type Props = {
-  label: 'answer' | 'answerImg' | 'question' | 'questionImg'
-  register: UseFormRegister<FormValues>
-}
-export const InputTypeFile = ({ label, register }: Props) => {
-  const [previewSource, setPreviewSource] = useState('')
+  label: string
+  setUploadImgHandler: (file64: string) => void
+} & ComponentPropsWithoutRef<'input'>
+export const InputTypeFile = ({ setUploadImgHandler }: Props) => {
+  const [previewSource, setPreviewSource] = useState(defaultImg)
+  const [isBroken, setIsBroken] = useState(false)
   const internalRef = useRef<HTMLInputElement>(null)
 
-  const { ref: registerRef, ...rest } = register(label)
   const selectFileHandler = () => {
     internalRef && internalRef.current?.click()
   }
-  const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length) {
-      const file = e.target.files[0]
-
-      if (file) {
-        const reader = new FileReader()
-
-        reader.readAsDataURL(file)
-        reader.onloadend = () => {
-          if (typeof reader.result === 'string') {
-            setPreviewSource(reader.result)
-          } else {
-            console.error('Result is not a string:', reader.result)
-          }
-        }
-      }
-    }
-  }
 
   const deleteImageHandler = () => {
-    setPreviewSource('')
+    setPreviewSource(defaultImg)
+  }
+
+  const errorHandler = () => {
+    setIsBroken(true)
+    alert('Кривая картинка')
   }
 
   const classNames = {
@@ -53,23 +40,24 @@ export const InputTypeFile = ({ label, register }: Props) => {
     <label>
       {previewSource && (
         <div className={classNames.imgWrapper}>
-          <img alt={'chosen'} src={previewSource} />
+          <img alt={'preview'} onError={errorHandler} src={isBroken ? defaultImg : previewSource} />
         </div>
       )}
       <input
         accept={'image/png, image/gif, image/jpeg'}
         className={classNames.input}
+        onChange={e => upload(e, setPreviewSource, setUploadImgHandler)}
+        ref={internalRef}
         type={'file'}
-        {...rest}
-        onChange={uploadHandler}
-        ref={e => {
-          registerRef(e)
-          internalRef.current = e
-        }}
       />
       <div className={classNames.buttonsWrapper}>
         {previewSource && (
-          <Button onClick={deleteImageHandler} type={'button'} variant={'secondary'}>
+          <Button
+            disabled={previewSource === defaultImg}
+            onClick={deleteImageHandler}
+            type={'button'}
+            variant={'secondary'}
+          >
             Delete
           </Button>
         )}

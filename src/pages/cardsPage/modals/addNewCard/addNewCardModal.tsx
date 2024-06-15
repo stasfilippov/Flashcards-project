@@ -12,9 +12,7 @@ import s from './addNewCardModal.module.scss'
 
 const addCardSchema = z.object({
   answer: z.string().min(3).max(30),
-  answerImg: z.string().optional(),
   question: z.string().min(3).max(30),
-  questionImg: z.string().optional(),
 })
 
 export type FormValues = z.infer<typeof addCardSchema>
@@ -23,13 +21,16 @@ type Props = {
 } & Omit<ModalProps, 'children' | 'open'>
 export const AddNewCardModal = ({ addCardHandler, title, ...props }: Props) => {
   const [open, setOpen] = useState(false)
+  const [questionImg, setQuestionImg] = useState('')
+  const [answerImg, setAnswerImg] = useState('')
 
-  const { control, handleSubmit, register, reset } = useForm<FormValues>({
+  const { control, handleSubmit, reset } = useForm<FormValues>({
+    defaultValues: { answer: '', question: '' },
     resolver: zodResolver(addCardSchema),
   })
-  const submitHandler = handleSubmit(data => {
+  const submitHandler = handleSubmit(({ answer, question }) => {
     // addCardHandler(data)
-    console.log(data)
+    console.log({ answer, answerImg, question, questionImg })
     reset()
     setOpen(false)
   })
@@ -45,6 +46,7 @@ export const AddNewCardModal = ({ addCardHandler, title, ...props }: Props) => {
     buttonsWrapper: clsx(s.buttonsWrapper),
     input: clsx(s.input),
     inputWrapper: clsx(s.inputWrapper),
+    modal: clsx(s.modal),
   }
 
   return (
@@ -52,7 +54,13 @@ export const AddNewCardModal = ({ addCardHandler, title, ...props }: Props) => {
       <Button onClick={openModalHandler} type={'button'}>
         {title}
       </Button>
-      <Modal onClose={closeModalHandler} open={open} title={'Add New Card'} {...props}>
+      <Modal
+        className={classNames.modal}
+        onClose={closeModalHandler}
+        open={open}
+        title={'Add New Card'}
+        {...props}
+      >
         <form onSubmit={submitHandler}>
           <div className={classNames.inputWrapper}>
             <ControlledTextField
@@ -61,7 +69,7 @@ export const AddNewCardModal = ({ addCardHandler, title, ...props }: Props) => {
               label={'Question'}
               name={'question'}
             />
-            <InputTypeFile label={'questionImg'} register={register} />
+            <InputTypeFile label={'questionImg'} setUploadImgHandler={setQuestionImg} />
           </div>
           <div className={classNames.inputWrapper}>
             <ControlledTextField
@@ -70,7 +78,7 @@ export const AddNewCardModal = ({ addCardHandler, title, ...props }: Props) => {
               label={'Answer'}
               name={'answer'}
             />
-            <InputTypeFile label={'answerImg'} register={register} />
+            <InputTypeFile label={'answerImg'} setUploadImgHandler={setAnswerImg} />
           </div>
           <div className={classNames.buttonsWrapper}>
             <Button onClick={closeModalHandler} variant={'secondary'}>
