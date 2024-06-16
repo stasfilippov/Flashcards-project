@@ -1,4 +1,8 @@
 import {
+  Card,
+  EditCardArgs,
+  EditCardResponse,
+  GetCardByIdArgs,
   GetCardsArgs,
   GetCardsResponse,
   GetDeckByIdArgs,
@@ -23,11 +27,17 @@ const cardsApi = flashcardsApi.injectEndpoints({
         url: `/v1/cards/${id}`,
       }),
     }),
-    editCard: builder.mutation<any, any>({
+    editCard: builder.mutation<EditCardResponse, EditCardArgs>({
       invalidatesTags: ['Cards'],
       query: ({ id, ...args }) => ({
         body: args,
         method: 'PATCH',
+        url: `/v1/cards/${id}`,
+      }),
+    }),
+    getCardById: builder.query<Card, GetCardByIdArgs>({
+      query: ({ id }) => ({
+        method: 'GET',
         url: `/v1/cards/${id}`,
       }),
     }),
@@ -49,4 +59,4 @@ const cardsApi = flashcardsApi.injectEndpoints({
   }),
 })
 
-export const { useGetCardsQuery, useGetDeckByIdQuery } = cardsApi
+export const { useEditCardMutation, useGetCardsQuery, useGetDeckByIdQuery } = cardsApi
