@@ -7,7 +7,10 @@ import { Button, Modal, ModalProps } from '@/components/ui'
 import { useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
 import { Card, EditCardArgs } from '@/pages/cardsPage/api/cardsApi.types'
 import { zodResolver } from '@hookform/resolvers/zod'
+import clsx from 'clsx'
 import { z } from 'zod'
+
+import s from './editCardModal.module.scss'
 
 const addCardSchema = z.object({
   answer: z.string().min(3).max(30),
@@ -49,22 +52,29 @@ export const EditCardModal = ({ item, ...props }: Props) => {
     setOpen(false)
   }
 
+  const classNames = {
+    buttonsWrapper: clsx(s.buttonsWrapper),
+    input: clsx(s.input),
+    inputWrapper: clsx(s.inputWrapper),
+    modal: clsx(s.modal),
+  }
+
   return (
     <div>
       <button onClick={openModalHandler}>
         <Edit2Outline width={16} />
       </button>
       <Modal
-        // className={classNames.modal}
+        className={classNames.modal}
         onClose={closeModalHandler}
         open={open}
         title={'Edit Card'}
         {...props}
       >
         <form onSubmit={submitHandler}>
-          <div>
+          <div className={classNames.inputWrapper}>
             <ControlledTextField
-              // className={classNames.input}
+              className={classNames.input}
               control={control}
               label={'Question'}
               name={'question'}
@@ -72,18 +82,16 @@ export const EditCardModal = ({ item, ...props }: Props) => {
             {/*добавить defaultValue*/}
             <InputTypeFile label={'questionImg'} setUploadImgHandler={setQuestionImg} />
           </div>
-          {/*className={classNames.inputWrapper}*/}
-          <div>
+          <div className={classNames.inputWrapper}>
             <ControlledTextField
-              // className={classNames.input}
+              className={classNames.input}
               control={control}
               label={'Answer'}
               name={'answer'}
             />
             <InputTypeFile label={'answerImg'} setUploadImgHandler={setAnswerImg} />
           </div>
-          {/*className={classNames.buttonsWrapper}*/}
-          <div>
+          <div className={classNames.buttonsWrapper}>
             <Button onClick={closeModalHandler} variant={'secondary'}>
               Cancel
             </Button>
