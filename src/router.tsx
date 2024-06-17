@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { ROUTES } from '@/common/constants'
+import { Layout, useIsAuthenticated } from '@/components/layout/layout'
 import { CheckEmail, Error } from '@/pages'
 import { CardsPage } from '@/pages/cardsPage'
 import { DecksPage } from '@/pages/decksPage'
@@ -63,14 +64,19 @@ const privateRoutes: RouteObject[] = [
 
 const router = createBrowserRouter([
   {
-    children: privateRoutes,
-    element: <PrivateRoutes />,
+    children: [
+      {
+        children: privateRoutes,
+        element: <PrivateRoutes />,
+      },
+      ...publicRoutes,
+    ],
+    element: <Layout />,
   },
-  ...publicRoutes,
 ])
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const { isAuthenticated } = useIsAuthenticated()
 
   return isAuthenticated ? <Outlet /> : <Navigate to={ROUTES.signIn} />
 }
