@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
 
+import { useDebounce } from '@/common/hooks'
 import {
   Pagination,
   Table,
@@ -27,13 +28,14 @@ const columns = ids.map(id => ({
 
 type Props = {
   className: string
+  currentUser: string
   deckId: string
-  isMy: boolean
   search: string
   sort: SortValues
 }
-export const TableWithCards = ({ className, deckId, search, sort }: Props) => {
+export const TableWithCards = ({ className, currentUser, deckId, search, sort }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams()
+  const debouncedSearchValue = useDebounce(search, 500)
 
   const currentPage = searchParams.get('page') ?? '1'
   const itemsPerPage = searchParams.get('items') ?? '10'
@@ -43,7 +45,7 @@ export const TableWithCards = ({ className, deckId, search, sort }: Props) => {
     id: deckId,
     itemsPerPage: +itemsPerPage,
     orderBy: sort,
-    question: search,
+    question: debouncedSearchValue,
   })
 
   const currentPageChangeHandler = (page: number) => {
@@ -84,7 +86,12 @@ export const TableWithCards = ({ className, deckId, search, sort }: Props) => {
                     </TableCellWithPhotoQuestions>
                     <TableCellWithText id={'updatedQuestion'}>{updatedAt}</TableCellWithText>
                     <TableCellWithGrade id={'grade'} item={card} />
-                    <TableCellWithControls id={'control'} item={{ card }} variant={'Card'} />
+                    <TableCellWithControls
+                      currentUser={currentUser}
+                      id={'control'}
+                      item={{ card }}
+                      variant={'Card'}
+                    />
                   </TableRow>
                 )
               })}
