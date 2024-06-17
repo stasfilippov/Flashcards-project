@@ -5,6 +5,7 @@ import { ROUTES } from '@/common/constants'
 import { commonStyles } from '@/common/styles'
 import { ControlledTextField } from '@/components/controlled'
 import { Button, Card, Typography } from '@/components/ui'
+import { SignUpArgs } from '@/pages/auth/api/authApi.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { z } from 'zod'
@@ -24,11 +25,14 @@ const signInSchema = z
 
 type FormValues = z.infer<typeof signInSchema>
 
-export const SignUpForm = () => {
+type SignUpFormProps = {
+  onSubmit: (data: SignUpArgs) => void
+}
+export const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
   const { control, handleSubmit } = useForm<FormValues>({ resolver: zodResolver(signInSchema) })
 
   const submitHandler = handleSubmit(data => {
-    console.log(data.email, data.password)
+    onSubmit({ email: data.email, password: data.password })
   })
 
   const classNames = {
