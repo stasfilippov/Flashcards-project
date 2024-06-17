@@ -13,6 +13,16 @@ const authApi = flashcardsApi.injectEndpoints({
   endpoints: builder => ({
     login: builder.mutation<LoginResponse, LoginArgs>({
       invalidatesTags: ['Auth'],
+      async onQueryStarted(_, { queryFulfilled }) {
+        const { data } = await queryFulfilled
+
+        if (!data) {
+          return
+        }
+
+        localStorage.setItem('accessToken', data.accessToken)
+        localStorage.setItem('refreshToken', data.refreshToken)
+      },
       query: args => ({
         body: args,
         method: 'POST',
