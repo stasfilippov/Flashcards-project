@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
 import { LogOutOutline, Logo, PersonOutline } from '@/assets/icons/components'
-import { commonStyles } from '@/common/styles'
+import { ROUTES } from '@/common/constants'
 import {
   Avatar,
   Button,
@@ -21,13 +21,16 @@ export type User = {
   name: string
 }
 
-type Props = {
+export type HeaderProps = {
+  isLoggedIn: boolean
+  onLogout: () => void
   user?: User
 } & ComponentPropsWithoutRef<'header'>
 
-export const Header = ({ className, user, ...rest }: Props) => {
+export const Header = ({ className, isLoggedIn, onLogout, user, ...rest }: HeaderProps) => {
   const classNames = {
-    header: clsx(s.header, commonStyles.pageContainer, className),
+    header: clsx(s.header, className),
+    headerWrapper: clsx(s.headerWrapper),
     userContainer: clsx(s.userContainer),
   }
 
@@ -40,27 +43,30 @@ export const Header = ({ className, user, ...rest }: Props) => {
   )
 
   return (
-    <header className={classNames.header} {...rest}>
-      <Link to={'/'}>
-        <Logo height={36} width={156} />
-      </Link>
-      {user ? (
-        <HeaderDropDown trigger={dropDownTrigger} user={user} />
-      ) : (
-        <Button as={Link} to={'/'} variant={'secondary'}>
-          Sign In
-        </Button>
-      )}
-    </header>
+    <div className={classNames.headerWrapper}>
+      <header className={classNames.header} {...rest}>
+        <Link to={ROUTES.base}>
+          <Logo height={36} width={156} />
+        </Link>
+        {isLoggedIn && user ? (
+          <HeaderDropDown onLogout={onLogout} trigger={dropDownTrigger} user={user} />
+        ) : (
+          <Button as={Link} to={ROUTES.signIn} variant={'secondary'}>
+            Sign In
+          </Button>
+        )}
+      </header>
+    </div>
   )
 }
 
 type HeaderDropDownProps = {
+  onLogout: () => void
   trigger: ReactNode
   user: User
 }
 
-const HeaderDropDown = ({ trigger, user }: HeaderDropDownProps) => {
+const HeaderDropDown = ({ onLogout, trigger, user }: HeaderDropDownProps) => {
   return (
     <DropdownMenu trigger={trigger}>
       <DropdownItem>
@@ -77,12 +83,16 @@ const HeaderDropDown = ({ trigger, user }: HeaderDropDownProps) => {
       <DropdownSeparator />
       <DropdownItem className={s.dropDownItem}>
         <PersonOutline width={16} />
-        <Typography variant={'caption'}>My Profile</Typography>
+        <Typography component={Link} to={ROUTES.profile} variant={'caption'}>
+          My Profile
+        </Typography>
       </DropdownItem>
       <DropdownSeparator />
       <DropdownItem className={s.dropDownItem}>
         <LogOutOutline width={16} />
-        <Typography variant={'caption'}>Sign Out</Typography>
+        <Typography onClick={() => onLogout} variant={'caption'}>
+          Sign Out
+        </Typography>
       </DropdownItem>
     </DropdownMenu>
   )
