@@ -1,4 +1,6 @@
 import {
+  Card,
+  CreateCardArgs,
   GetCardsArgs,
   GetCardsResponse,
   GetDeckByIdArgs,
@@ -8,7 +10,7 @@ import { flashcardsApi } from '@/services/flashcardApi'
 
 const cardsApi = flashcardsApi.injectEndpoints({
   endpoints: builder => ({
-    createNewCard: builder.mutation<any, any>({
+    createNewCard: builder.mutation<Card, CreateCardArgs>({
       invalidatesTags: ['Cards'],
       query: ({ id, ...args }) => ({
         body: args,
@@ -49,4 +51,4 @@ const cardsApi = flashcardsApi.injectEndpoints({
   }),
 })
 
-export const { useGetCardsQuery, useGetDeckByIdQuery } = cardsApi
+export const { useCreateNewCardMutation, useGetCardsQuery, useGetDeckByIdQuery } = cardsApi
