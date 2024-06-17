@@ -11,6 +11,7 @@ import { Layout, useIsAuthenticated } from '@/components/layout/layout'
 import { CheckEmail, Error } from '@/pages'
 import { CardsPage } from '@/pages/cardsPage'
 import { DecksPage } from '@/pages/decksPage'
+import { SignUpPage } from '@/pages/signUpPage/signUpPage'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -18,7 +19,7 @@ const publicRoutes: RouteObject[] = [
     path: ROUTES.signIn,
   },
   {
-    element: <div>Sign up</div>,
+    element: <SignUpPage />,
     path: ROUTES.signUp,
   },
   {

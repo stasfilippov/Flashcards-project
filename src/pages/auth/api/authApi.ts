@@ -44,4 +44,5 @@ const authApi = flashcardsApi.injectEndpoints({
   }),
 })
 
-export const { useLoginMutation, useMeQuery, useUpdateUserDataMutation } = authApi
+export const { useLoginMutation, useMeQuery, useSignUpMutation, useUpdateUserDataMutation } =
+  authApi
