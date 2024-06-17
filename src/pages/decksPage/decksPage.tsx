@@ -63,8 +63,8 @@ export const DecksPage = () => {
     }
   }
 
-  const createDeckHandler = (formData: CreateDeckArgs) => {
-    createDeck(formData)
+  const createDeckHandler = (data: CreateDeckArgs) => {
+    createDeck(data)
     clearFiltersHandler()
   }
 
