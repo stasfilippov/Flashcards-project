@@ -5,6 +5,7 @@ import { ROUTES } from '@/common/constants'
 import { commonStyles } from '@/common/styles'
 import { ControlledCheckbox, ControlledTextField } from '@/components/controlled'
 import { Button, Card, Typography } from '@/components/ui'
+import { LoginArgs } from '@/pages/auth/api/authApi.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { z } from 'zod'
@@ -20,7 +21,7 @@ const signInSchema = z.object({
 type FormValues = z.infer<typeof signInSchema>
 
 type Props = {
-  onSubmit: (args: FormValues) => void
+  onSubmit: (args: LoginArgs) => void
 }
 
 export const SignInForm = ({ onSubmit }: Props) => {

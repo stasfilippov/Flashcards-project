@@ -11,16 +11,17 @@ import { Layout, useIsAuthenticated } from '@/components/layout/layout'
 import { CheckEmail, Error } from '@/pages'
 import { CardsPage } from '@/pages/cardsPage'
 import { DecksPage } from '@/pages/decksPage'
+import { SignInPage } from '@/pages/signInPage'
 import { SignUpPage } from '@/pages/signUpPage/signUpPage'
 
 const publicRoutes: RouteObject[] = [
   {
-    element: <div>Sign in</div>,
-    path: ROUTES.signIn,
-  },
-  {
     element: <SignUpPage />,
     path: ROUTES.signUp,
+  },
+  {
+    element: <SignInPage />,
+    path: ROUTES.signIn,
   },
   {
     element: <div>Forgot Password</div>,
@@ -63,7 +64,7 @@ const privateRoutes: RouteObject[] = [
   },
 ]
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     children: [
       {
@@ -73,6 +74,7 @@ const router = createBrowserRouter([
       ...publicRoutes,
     ],
     element: <Layout />,
+    path: ROUTES.base,
   },
 ])
 
