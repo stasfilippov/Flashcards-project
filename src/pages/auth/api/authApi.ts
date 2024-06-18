@@ -20,11 +20,11 @@ const authApi = flashcardsApi.injectEndpoints({
           return
         }
 
-        localStorage.setItem('accessToken', data.accessToken)
-        localStorage.setItem('refreshToken', data.refreshToken)
+        localStorage.setItem('accessToken', data.accessToken.trim())
+        localStorage.setItem('refreshToken', data.refreshToken.trim())
       },
-      query: args => ({
-        body: args,
+      query: body => ({
+        body,
         method: 'POST',
         url: `/v1/auth/login`,
       }),
