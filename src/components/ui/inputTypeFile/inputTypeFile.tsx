@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, useRef, useState } from 'react'
 
 import { ImageOutline } from '@/assets/icons/components'
-import defaultImg from '@/assets/img/defaultImageDeck.png'
+import defaultImg from '@/assets/img/no-image.jpg'
 import { Button } from '@/components/ui'
 import { upload } from '@/components/ui/inputTypeFile/utils/upload'
 import clsx from 'clsx'
@@ -9,10 +9,11 @@ import clsx from 'clsx'
 import s from './inputTypeFile.module.scss'
 
 type Props = {
+  className: string
   label: string
-  setUploadImgHandler: (file64: string) => void
+  setUploadImgHandler: (file: File | null) => void
 } & ComponentPropsWithoutRef<'input'>
-export const InputTypeFile = ({ setUploadImgHandler }: Props) => {
+export const InputTypeFile = ({ className, setUploadImgHandler }: Props) => {
   const [previewSource, setPreviewSource] = useState(defaultImg)
   const [isBroken, setIsBroken] = useState(false)
   const internalRef = useRef<HTMLInputElement>(null)
@@ -22,6 +23,7 @@ export const InputTypeFile = ({ setUploadImgHandler }: Props) => {
   }
 
   const deleteImageHandler = () => {
+    setUploadImgHandler(null)
     setPreviewSource(defaultImg)
   }
 
@@ -37,7 +39,7 @@ export const InputTypeFile = ({ setUploadImgHandler }: Props) => {
   }
 
   return (
-    <label>
+    <label className={className}>
       {previewSource && (
         <div className={classNames.imgWrapper}>
           <img alt={'preview'} onError={errorHandler} src={isBroken ? defaultImg : previewSource} />
