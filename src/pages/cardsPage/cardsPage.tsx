@@ -1,5 +1,6 @@
 import { useParams, useSearchParams } from 'react-router-dom'
 
+import { ROUTES } from '@/common/constants'
 import { Page } from '@/components/layout'
 import { TextField } from '@/components/ui'
 import { useGetDeckByIdQuery } from '@/pages/cardsPage/api/cardsApi'
@@ -42,7 +43,11 @@ export const CardsPage = () => {
         <h1>Loading....</h1>
       ) : data ? (
         <>
-          <BackNavigation className={classNames.backNavigation} />
+          <BackNavigation
+            className={classNames.backNavigation}
+            pageName={'Decks Page'}
+            route={ROUTES.base}
+          />
           <Header deck={data} isMy={isMyDeck} />
           <TextField
             className={classNames.textField}

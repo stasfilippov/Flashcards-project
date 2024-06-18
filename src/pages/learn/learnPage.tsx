@@ -1,43 +1,24 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-
+import { ROUTES } from '@/common/constants'
 import { Page } from '@/components/layout'
-import { Button } from '@/components/ui'
-import { Card } from '@/pages/cardsPage/api/cardsApi.types'
+import { BackNavigation } from '@/pages/cardsPage/components'
 
-import { useGetRandomCardQuery, useSaveTheGradeMutation } from './api'
+import { useLearnPage } from './hooks/useLearnPage'
+import { LearnCard } from './learnCard'
 
 export const LearnPage = () => {
-  const { deckId } = useParams<{ deckId: string }>()
-
-  const { data: card, error, isLoading } = useGetRandomCardQuery({ deckId: deckId ?? '' })
-  const [saveTheGrade, newCard] = useSaveTheGradeMutation()
-
-  const [currentCard, setCurrentCard] = useState<Card | undefined>(undefined)
-
-  useEffect(() => {
-    if (card) {
-      setCurrentCard(card)
-    }
-  }, [card])
-
-  const nextQuestionClickHandler = async () => {
-    if (currentCard) {
-      await saveTheGrade({ cardId: currentCard.id, grade: 2 })
-    }
-    if (newCard.data) {
-      setCurrentCard(newCard.data)
-    }
-  }
+  const { cardError, cardIsLoading, currentCard, deck, deckError, deckIsLoading } = useLearnPage()
 
   return (
     <Page>
-      {error ? (
-        <h1>Error: {JSON.stringify(error)}</h1>
-      ) : isLoading ? (
+      {cardError || deckError ? (
+        <h1>Error: {JSON.stringify(cardError || deckError)}</h1>
+      ) : cardIsLoading || deckIsLoading ? (
         <h1>Loading...</h1>
-      ) : currentCard ? (
-        <></>
+      ) : currentCard && deck ? (
+        <>
+          <BackNavigation pageName={deck.name} route={`${ROUTES.decks}/${deck.id}`} />
+          <LearnCard />
+        </>
       ) : null}
     </Page>
   )
