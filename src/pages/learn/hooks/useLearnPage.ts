@@ -19,7 +19,7 @@ export const useLearnPage = () => {
     isLoading: deckIsLoading,
   } = useGetDeckByIdQuery({ id: deckId ?? '' })
 
-  const [saveTheGrade, newCard] = useSaveTheGradeMutation()
+  const [saveTheGrade] = useSaveTheGradeMutation()
 
   const [currentCard, setCurrentCard] = useState<Card | undefined>(undefined)
 
@@ -30,11 +30,10 @@ export const useLearnPage = () => {
   }, [card])
 
   const getNextQuestion = async (grade: number) => {
-    if (card) {
-      await saveTheGrade({ cardId: card.id, grade })
-    }
-    if (newCard.data) {
-      setCurrentCard(newCard.data)
+    if (currentCard) {
+      const newCard = await saveTheGrade({ cardId: currentCard.id, grade }).unwrap()
+
+      setCurrentCard(newCard)
     }
   }
 
