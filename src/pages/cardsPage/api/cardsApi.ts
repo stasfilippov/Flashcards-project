@@ -15,11 +15,35 @@ const cardsApi = flashcardsApi.injectEndpoints({
   endpoints: builder => ({
     createNewCard: builder.mutation<Card, CreateCardArgs>({
       invalidatesTags: ['Cards'],
-      query: ({ id, ...args }) => ({
-        body: args,
-        method: 'POST',
-        url: `/v1/decks/${id}/cards`,
-      }),
+      query: ({ answer, answerImg, id, question, questionImg }) => {
+        const formData = new FormData()
+
+        if (answer) {
+          formData.append('answer', answer)
+        }
+
+        if (question) {
+          formData.append('question', question)
+        }
+
+        if (answerImg) {
+          formData.append('answerImg', answerImg)
+        } else if (answerImg === null) {
+          formData.append('answerImg', '')
+        }
+
+        if (questionImg) {
+          formData.append('questionImg', questionImg)
+        } else if (questionImg === null) {
+          formData.append('questionImg', '')
+        }
+
+        return {
+          body: formData,
+          method: 'POST',
+          url: `/v1/decks/${id}/cards`,
+        }
+      },
     }),
     deleteCard: builder.mutation<any, any>({
       invalidatesTags: ['Cards'],
@@ -30,11 +54,35 @@ const cardsApi = flashcardsApi.injectEndpoints({
     }),
     editCard: builder.mutation<EditCardResponse, EditCardArgs>({
       invalidatesTags: ['Cards'],
-      query: ({ id, ...args }) => ({
-        body: args,
-        method: 'PATCH',
-        url: `/v1/cards/${id}`,
-      }),
+      query: ({ answer, answerImg, id, question, questionImg }) => {
+        const formData = new FormData()
+
+        if (answer) {
+          formData.append('answer', answer)
+        }
+
+        if (question) {
+          formData.append('question', question)
+        }
+
+        if (answerImg) {
+          formData.append('answerImg', answerImg)
+        } else if (answerImg === null) {
+          formData.append('answerImg', '')
+        }
+
+        if (questionImg) {
+          formData.append('questionImg', questionImg)
+        } else if (questionImg === null) {
+          formData.append('questionImg', '')
+        }
+
+        return {
+          body: formData,
+          method: 'PATCH',
+          url: `/v1/cards/${id}`,
+        }
+      },
     }),
     getCardById: builder.query<Card, GetCardByIdArgs>({
       query: ({ id }) => ({

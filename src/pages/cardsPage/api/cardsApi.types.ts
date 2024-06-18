@@ -39,11 +39,11 @@ export type Card = {
 
 export type EditCardArgs = {
   answer: string
-  answerImg?: string
+  answerImg?: File | null
   answerVideo?: string
   id: string
   question: string
-  questionImg?: string
+  questionImg?: File | null
   questionVideo?: string
 }
 
@@ -69,10 +69,10 @@ export type GetCardByIdArgs = GetDeckByIdArgs
 
 export type CreateCardArgs = {
   answer: string
-  answerImg?: string
+  answerImg?: File | null
   answerVideo?: string
   id: string
   question: string
-  questionImg?: string
+  questionImg?: File | null
   questionVideo?: string
 }

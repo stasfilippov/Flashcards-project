@@ -1,10 +1,10 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { Edit2Outline, PlayCircleOutline } from '@/assets/icons/components'
+import { PlayCircleOutline } from '@/assets/icons/components'
 import { TableCell } from '@/components/ui/table'
-import { useCreateNewCardMutation, useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
-import { Card } from '@/pages/cardsPage/api/cardsApi.types'
-import { CardModal } from '@/pages/cardsPage/modals/addNewCard/cardModal'
+import { useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
+import { Card, EditCardArgs } from '@/pages/cardsPage/api/cardsApi.types'
+import { CardModal } from '@/pages/cardsPage/modals/cardModal/cardModal'
 import { useUpdateDeckMutation } from '@/pages/decksPage/api/decksApi'
 import { CreateDeckArgs, Deck } from '@/pages/decksPage/api/decksApi.types'
 import { DeckModal } from '@/pages/decksPage/modals/deckModal/deckModal'
@@ -14,19 +14,12 @@ import clsx from 'clsx'
 import s from '@/components/ui/table/table.module.scss'
 
 type Props = {
-  currentUser: string
   id: string
   item: { card: Card; deck?: never } | { card?: never; deck: Deck }
+  userId: string
   variant: 'Card' | 'Deck'
 } & ComponentPropsWithoutRef<'td'>
-export const TableCellWithControls = ({
-  children,
-  currentUser,
-  id,
-  item,
-  variant,
-  ...rest
-}: Props) => {
+export const TableCellWithControls = ({ children, id, item, userId, variant, ...rest }: Props) => {
   const { card, deck } = item
 
   const classNames = {
@@ -39,11 +32,11 @@ export const TableCellWithControls = ({
     <TableCell className={classNames.tCell} {...rest}>
       {variant === 'Deck' ? (
         <div className={classNames.tCellControlsWrapper}>
-          <DeckVariant currentUser={currentUser} item={deck} />
+          <DeckVariant currentUser={userId} item={deck} />
         </div>
       ) : (
         <div className={classNames.tCellControlsWrapper}>
-          <CardVariant currentUser={currentUser} item={card} />
+          <CardVariant currentUser={userId} item={card} />
         </div>
       )}
     </TableCell>
@@ -93,13 +86,22 @@ type CardVariantProps = {
 const CardVariant = ({ currentUser, item }: CardVariantProps) => {
   const [updateCard] = useEditCardMutation()
 
-  const updateDeckHandler = () => {
-    updateCard()
+  const updateDeckHandler = (data: Omit<EditCardArgs, 'id'>) => {
+    updateCard({ ...data, id: item?.id ?? '' })
   }
 
   return item && currentUser === item.userId ? (
     <>
-      <CardModal confirmHandler={updateDeckHandler} />
+      <CardModal
+        confirmHandler={updateDeckHandler}
+        defaultValue={{
+          answer: item.answer,
+          previewImgAnswer: item.answerImg,
+          previewImgQuestion: item.questionImg,
+          question: item.question,
+        }}
+        title={'Edit card'}
+      />
       <RemoveItemModal id={item.id} name={item.question} type={'Card'} />
     </>
   ) : (

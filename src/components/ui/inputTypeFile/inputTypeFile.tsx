@@ -9,9 +9,9 @@ import clsx from 'clsx'
 import s from './inputTypeFile.module.scss'
 
 type Props = {
-  className: string
+  className?: string
   label: string
-  previewImg: null | string | undefined
+  previewImg?: null | string
   setUploadImgHandler: (file: File | null) => void
 } & ComponentPropsWithoutRef<'input'>
 export const InputTypeFile = ({ className, previewImg, setUploadImgHandler }: Props) => {

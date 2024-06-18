@@ -5,13 +5,12 @@ import { Edit2Outline } from '@/assets/icons/components'
 import { ControlledTextField } from '@/components/controlled'
 import { Button, Modal, ModalProps } from '@/components/ui'
 import { InputTypeFile } from '@/components/ui/inputTypeFile/inputTypeFile'
-import { useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
-import { Card, EditCardArgs } from '@/pages/cardsPage/api/cardsApi.types'
+import { CreateCardArgs } from '@/pages/cardsPage/api/cardsApi.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { z } from 'zod'
 
-import s from './editCardModal.module.scss'
+import s from './cardModal.module.scss'
 
 const addCardSchema = z.object({
   answer: z.string().min(3).max(30),
@@ -19,29 +18,30 @@ const addCardSchema = z.object({
 })
 
 export type FormValues = z.infer<typeof addCardSchema>
+
 type Props = {
-  item: Card
+  confirmHandler: (data: Omit<CreateCardArgs, 'id'>) => void
+  defaultValue?:
+    | {
+        answer: string
+        previewImgAnswer: null | string
+        previewImgQuestion: null | string
+        question: string
+      }
+    | undefined
 } & Omit<ModalProps, 'children' | 'open'>
-export const EditCardModal = ({ item, ...props }: Props) => {
+export const CardModal = ({ confirmHandler, defaultValue, title, ...props }: Props) => {
   const [open, setOpen] = useState(false)
-  const [questionImg, setQuestionImg] = useState(item.questionImg)
-  const [answerImg, setAnswerImg] = useState(item.answerImg)
-  const [updateCard] = useEditCardMutation()
+  const [questionImg, setQuestionImg] = useState<File | null>(null)
+  const [answerImg, setAnswerImg] = useState<File | null>(null)
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
-    defaultValues: { answer: item.answer, question: item.question },
+    defaultValues: defaultValue,
     resolver: zodResolver(addCardSchema),
   })
-  const submitHandler = handleSubmit(({ answer, question }) => {
-    const updatedCard: EditCardArgs = {
-      answer,
-      answerImg: answerImg ?? '',
-      id: item.id,
-      question,
-      questionImg: questionImg ?? '',
-    }
 
-    updateCard(updatedCard)
+  const submitHandler = handleSubmit(({ answer, question }) => {
+    confirmHandler({ answer, answerImg, question, questionImg })
     reset()
     setOpen(false)
   })
@@ -62,14 +62,20 @@ export const EditCardModal = ({ item, ...props }: Props) => {
 
   return (
     <div>
-      <button onClick={openModalHandler}>
-        <Edit2Outline width={16} />
-      </button>
+      {defaultValue ? (
+        <button onClick={openModalHandler}>
+          <Edit2Outline width={16} />
+        </button>
+      ) : (
+        <Button onClick={openModalHandler} type={'button'}>
+          {title}
+        </Button>
+      )}
       <Modal
         className={classNames.modal}
         onClose={closeModalHandler}
         open={open}
-        title={'Edit Card'}
+        title={title}
         {...props}
       >
         <form onSubmit={submitHandler}>
@@ -80,8 +86,11 @@ export const EditCardModal = ({ item, ...props }: Props) => {
               label={'Question'}
               name={'question'}
             />
-            {/*добавить defaultValue*/}
-            <InputTypeFile label={'questionImg'} setUploadImgHandler={setQuestionImg} />
+            <InputTypeFile
+              label={'questionImg'}
+              previewImg={defaultValue?.previewImgQuestion}
+              setUploadImgHandler={setQuestionImg}
+            />
           </div>
           <div className={classNames.inputWrapper}>
             <ControlledTextField
@@ -90,7 +99,11 @@ export const EditCardModal = ({ item, ...props }: Props) => {
               label={'Answer'}
               name={'answer'}
             />
-            <InputTypeFile label={'answerImg'} setUploadImgHandler={setAnswerImg} />
+            <InputTypeFile
+              label={'answerImg'}
+              previewImg={defaultValue?.previewImgAnswer}
+              setUploadImgHandler={setAnswerImg}
+            />
           </div>
           <div className={classNames.buttonsWrapper}>
             <Button onClick={closeModalHandler} variant={'secondary'}>

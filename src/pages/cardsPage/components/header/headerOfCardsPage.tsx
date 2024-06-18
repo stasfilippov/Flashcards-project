@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import defaultImg from '@/assets/img/defaultImageDeck.png'
 import { ROUTES } from '@/common/constants'
 import { Button, Typography } from '@/components/ui'
-import { GetDeckByIdResponse } from '@/pages/cardsPage/api/cardsApi.types'
-import { cardModal } from '@/pages/cardsPage/modals/addNewCard/cardModal'
+import { useCreateNewCardMutation } from '@/pages/cardsPage/api/cardsApi'
+import { CreateCardArgs, GetDeckByIdResponse } from '@/pages/cardsPage/api/cardsApi.types'
+import { CardModal } from '@/pages/cardsPage/modals/cardModal/cardModal'
 import clsx from 'clsx'
 
 import s from './header.module.scss'
@@ -14,11 +15,19 @@ type Props = {
   isMy: boolean
 }
 
-export const Header = ({ deck, isMy }: Props) => {
+export const HeaderOfCardsPage = ({ deck, isMy }: Props) => {
   const classNames = {
     image: clsx(s.image),
     title: clsx(s.title),
     wrapperWithControl: clsx(s.wrapperWithControl),
+  }
+
+  const [createCard] = useCreateNewCardMutation()
+
+  const createCardHandler = (data: Omit<CreateCardArgs, 'id'>) => {
+    const newCard: CreateCardArgs = { ...data, id: deck.id }
+
+    createCard(newCard)
   }
 
   return (
@@ -28,7 +37,7 @@ export const Header = ({ deck, isMy }: Props) => {
           {deck.name}
         </Typography>
         {isMy ? (
-          <cardModal addCardHandler={() => {}} deckId={deck.id} title={'Add New Card'} />
+          <CardModal confirmHandler={createCardHandler} title={'Add New Card'} />
         ) : (
           <Button as={Link} to={ROUTES.learn}>
             Learn to Deck

@@ -37,9 +37,9 @@ export const DecksPageTable = ({ decks, sortValue, userId }: Props) => {
             </TableCellWithText>
             <TableCellWithText id={'created'}>{deck.author.name}</TableCellWithText>
             <TableCellWithControls
-              currentUser={userId}
               id={'controls'}
               item={{ deck }}
+              userId={userId}
               variant={'Deck'}
             />
           </TableRow>

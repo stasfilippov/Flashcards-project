@@ -8,11 +8,9 @@ import {
 
 import { ROUTES } from '@/common/constants'
 import { Layout, useIsAuthenticated } from '@/components/layout/layout'
-import { CheckEmail, Error } from '@/pages'
+import { CheckEmail, Error, SignInPage, SignUpPage } from '@/pages'
 import { CardsPage } from '@/pages/cardsPage'
 import { DecksPage } from '@/pages/decksPage'
-import { SignInPage } from '@/pages/signInPage'
-import { SignUpPage } from '@/pages/signUpPage/signUpPage'
 
 const publicRoutes: RouteObject[] = [
   {
