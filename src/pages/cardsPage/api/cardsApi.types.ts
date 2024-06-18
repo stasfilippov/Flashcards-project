@@ -30,12 +30,24 @@ export type Card = {
   grade: number
   id: string
   question: string
-  questionImg: string
+  questionImg: null | string
   questionVideo: null | string
   shots: number
   updated: string
   userId: string
 }
+
+export type EditCardArgs = {
+  answer: string
+  answerImg?: string
+  answerVideo?: string
+  id: string
+  question: string
+  questionImg?: string
+  questionVideo?: string
+}
+
+export type EditCardResponse = Omit<Card, 'grade'>
 
 export type GetDeckByIdResponse = {
   cardsCount: number
@@ -52,3 +64,17 @@ export type GetDeckByIdResponse = {
 export type GetDeckByIdArgs = {
   id: string
 }
+
+
+export type GetCardByIdArgs = GetDeckByIdArgs
+
+export type CreateCardArgs = {
+  answer: string
+  answerImg?: string
+  answerVideo?: string
+  id: string
+  question: string
+  questionImg?: string
+  questionVideo?: string
+}
+

@@ -1,34 +1,47 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { ImageOutline } from '@/assets/icons/components'
+import { Edit2Outline, ImageOutline } from '@/assets/icons/components'
 import { ControlledCheckbox, ControlledTextField } from '@/components/controlled'
 import { Button, Modal, ModalProps } from '@/components/ui'
+import { useUpdateDeckMutation } from '@/pages/decksPage/api/decksApi'
+import { UpdateDeckArgs } from '@/pages/decksPage/api/decksApi.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './addDeckModal.module.scss'
+import s from './updateDeckModal.module.scss'
 
-const addDeckSchema = z.object({
+const updateDeckSchema = z.object({
   isPrivate: z.boolean().default(false),
-  name: z.string().min(3).max(30),
+  name: z.string().min(3).max(30).optional(),
 })
 
-type FormValues = z.infer<typeof addDeckSchema>
+type FormValues = z.infer<typeof updateDeckSchema>
 type Props = {
-  createDeckHandler: (formData: FormValues) => void
+  id: string
+  initialValues?: Omit<UpdateDeckArgs, 'id'>
 } & Omit<ModalProps, 'children' | 'open'>
 
-export const AddDeckModal = ({ createDeckHandler, ...props }: Props) => {
+export const UpdateDeckModal = ({ id, initialValues = {}, ...props }: Props) => {
   const [open, setOpen] = useState(false)
-
+  const [updateDeck] = useUpdateDeckMutation()
   const { control, handleSubmit, reset } = useForm<FormValues>({
-    resolver: zodResolver(addDeckSchema),
+    defaultValues: initialValues,
+    resolver: zodResolver(updateDeckSchema),
   })
-  const submitHandler = handleSubmit(data => {
-    createDeckHandler(data)
-    reset()
-    setOpen(false)
+
+  useEffect(() => {
+    open && reset(initialValues)
+  }, [open, initialValues, reset])
+
+  const submitHandler = handleSubmit(async data => {
+    try {
+      await updateDeck({ id, ...data })
+      reset()
+      setOpen(false)
+    } catch (error) {
+      console.log(error)
+    }
   })
 
   const openModalHandler = () => {
@@ -40,8 +53,10 @@ export const AddDeckModal = ({ createDeckHandler, ...props }: Props) => {
   }
 
   return (
-    <div className={s.container}>
-      <Button onClick={openModalHandler}>Add new Deck</Button>
+    <>
+      <button onClick={openModalHandler}>
+        <Edit2Outline width={16} />
+      </button>
       <Modal onClose={closeModalHandler} open={open} title={'Add New Deck'} {...props}>
         <form onSubmit={submitHandler}>
           <ControlledTextField control={control} label={'Name Pack'} name={'name'} />
@@ -59,11 +74,11 @@ export const AddDeckModal = ({ createDeckHandler, ...props }: Props) => {
               Cancel
             </Button>
             <Button type={'submit'} variant={'primary'}>
-              Add new Pack
+              Update Deck
             </Button>
           </div>
         </form>
       </Modal>
-    </div>
+    </>
   )
 }
