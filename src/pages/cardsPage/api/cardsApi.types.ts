@@ -65,7 +65,6 @@ export type GetDeckByIdArgs = {
   id: string
 }
 
-
 export type GetCardByIdArgs = GetDeckByIdArgs
 
 export type CreateCardArgs = {
@@ -77,4 +76,3 @@ export type CreateCardArgs = {
   questionImg?: string
   questionVideo?: string
 }
-

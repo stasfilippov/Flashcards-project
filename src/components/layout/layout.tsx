@@ -15,7 +15,7 @@ export const Layout = () => {
   }
 
   return (
-    <LayoutWrapper isLoggedIn={isAuthenticated} onLogout={() => {}} user={data}>
+    <LayoutWrapper onLogout={() => {}} user={data}>
       <Outlet context={{ isAuthenticated } satisfies AuthContextType} />
     </LayoutWrapper>
   )

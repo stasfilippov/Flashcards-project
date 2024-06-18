@@ -1,9 +1,9 @@
 import {
   Card,
+  CreateCardArgs,
   EditCardArgs,
   EditCardResponse,
   GetCardByIdArgs,
-  CreateCardArgs,
   GetCardsArgs,
   GetCardsResponse,
   GetDeckByIdArgs,
@@ -60,5 +60,9 @@ const cardsApi = flashcardsApi.injectEndpoints({
   }),
 })
 
-
-export const {useEditCardMutation, useCreateNewCardMutation, useGetCardsQuery, useGetDeckByIdQuery } = cardsApi
+export const {
+  useCreateNewCardMutation,
+  useEditCardMutation,
+  useGetCardsQuery,
+  useGetDeckByIdQuery,
+} = cardsApi

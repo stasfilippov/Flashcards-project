@@ -4,7 +4,7 @@ import defaultImg from '@/assets/img/defaultImageDeck.png'
 import { ROUTES } from '@/common/constants'
 import { Button, Typography } from '@/components/ui'
 import { GetDeckByIdResponse } from '@/pages/cardsPage/api/cardsApi.types'
-import { AddNewCardModal } from '@/pages/cardsPage/modals/addNewCard/addNewCardModal'
+import { cardModal } from '@/pages/cardsPage/modals/addNewCard/cardModal'
 import clsx from 'clsx'
 
 import s from './header.module.scss'
@@ -28,7 +28,7 @@ export const Header = ({ deck, isMy }: Props) => {
           {deck.name}
         </Typography>
         {isMy ? (
-          <AddNewCardModal addCardHandler={() => {}} deckId={deck.id} title={'Add New Card'} />
+          <cardModal addCardHandler={() => {}} deckId={deck.id} title={'Add New Card'} />
         ) : (
           <Button as={Link} to={ROUTES.learn}>
             Learn to Deck

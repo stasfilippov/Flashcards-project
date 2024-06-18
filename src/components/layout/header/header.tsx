@@ -22,12 +22,11 @@ export type User = {
 }
 
 export type HeaderProps = {
-  isLoggedIn: boolean
   onLogout: () => void
   user?: User
 } & ComponentPropsWithoutRef<'header'>
 
-export const Header = ({ className, isLoggedIn, onLogout, user, ...rest }: HeaderProps) => {
+export const Header = ({ className, onLogout, user, ...rest }: HeaderProps) => {
   const classNames = {
     header: clsx(s.header, className),
     headerWrapper: clsx(s.headerWrapper),
@@ -48,7 +47,7 @@ export const Header = ({ className, isLoggedIn, onLogout, user, ...rest }: Heade
         <Link to={ROUTES.base}>
           <Logo height={36} width={156} />
         </Link>
-        {isLoggedIn && user ? (
+        {user ? (
           <HeaderDropDown onLogout={onLogout} trigger={dropDownTrigger} user={user} />
         ) : (
           <Button as={Link} to={ROUTES.signIn} variant={'secondary'}>

@@ -58,6 +58,13 @@ export type GetDecksArgs = {
   orderBy?: SortValues
 }
 
+export type DeckArg = {
+  cover?: File | null
+  id?: string
+  isPrivate?: boolean
+  name: string
+}
+
 export type CreateDeckArgs = {
   cover?: File | null
   isPrivate?: boolean

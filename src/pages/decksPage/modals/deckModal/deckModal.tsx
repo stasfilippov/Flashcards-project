@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { Edit2Outline } from '@/assets/icons/components'
 import { ControlledCheckbox, ControlledTextField } from '@/components/controlled'
 import { Button, Modal, ModalProps } from '@/components/ui'
 import { InputTypeFile } from '@/components/ui/inputTypeFile/inputTypeFile'
-import { CreateDeckArgs } from '@/pages/decksPage/api/decksApi.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { z } from 'zod'
 
-import s from './addDeckModal.module.scss'
+import s from './deckModal.module.scss'
 
 const addDeckSchema = z.object({
   isPrivate: z.boolean().default(false),
@@ -18,18 +18,20 @@ const addDeckSchema = z.object({
 
 type FormValues = z.infer<typeof addDeckSchema>
 type Props = {
-  createDeckHandler: (data: CreateDeckArgs) => void
+  confirmHandler: (data: { cover?: File | null } & FormValues) => void
+  defaultValues?: { cover: null | string } & FormValues
 } & Omit<ModalProps, 'children' | 'open'>
 
-export const AddDeckModal = ({ createDeckHandler, ...props }: Props) => {
+export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) => {
   const [open, setOpen] = useState(false)
   const [cover, setCover] = useState<File | null>(null)
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
+    defaultValues: defaultValues,
     resolver: zodResolver(addDeckSchema),
   })
   const submitHandler = handleSubmit(data => {
-    createDeckHandler({ ...data, cover })
+    confirmHandler({ ...data, cover })
     reset()
     setOpen(false)
   })
@@ -50,7 +52,13 @@ export const AddDeckModal = ({ createDeckHandler, ...props }: Props) => {
 
   return (
     <div className={classNames.container}>
-      <Button onClick={openModalHandler}>Add new Deck</Button>
+      {defaultValues ? (
+        <button onClick={openModalHandler}>
+          <Edit2Outline width={16} />
+        </button>
+      ) : (
+        <Button onClick={openModalHandler}>Add new Deck</Button>
+      )}
       <Modal onClose={closeModalHandler} open={open} title={'Add New Deck'} {...props}>
         <form onSubmit={submitHandler}>
           <ControlledTextField
@@ -62,6 +70,7 @@ export const AddDeckModal = ({ createDeckHandler, ...props }: Props) => {
           <InputTypeFile
             className={classNames.inputTypeFileWrapper}
             label={'deckImg'}
+            previewImg={defaultValues?.cover}
             setUploadImgHandler={setCover}
           />
           <ControlledCheckbox control={control} label={'Private pack'} name={'isPrivate'} />

@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { AddNewCardModal } from '@/pages/cardsPage/modals/addNewCard/addNewCardModal'
+import { cardModal } from '@/pages/cardsPage/modals/addNewCard/cardModal'
 import { withRouter } from 'storybook-addon-remix-react-router'
 
 const meta = {
   argTypes: {},
-  component: AddNewCardModal,
+  component: cardModal,
   decorators: [withRouter],
   tags: ['autodocs'],
   title: 'Modals/AddNewCardModal',
-} satisfies Meta<typeof AddNewCardModal>
+} satisfies Meta<typeof cardModal>
 
 export default meta
 type Story = StoryObj<typeof meta>

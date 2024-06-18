@@ -4,13 +4,12 @@ import { useForm } from 'react-hook-form'
 import { ControlledTextField } from '@/components/controlled'
 import { Button, Modal, ModalProps } from '@/components/ui'
 import { InputTypeFile } from '@/components/ui/inputTypeFile/inputTypeFile'
-import { useCreateNewCardMutation } from '@/pages/cardsPage/api/cardsApi'
 import { CreateCardArgs } from '@/pages/cardsPage/api/cardsApi.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { z } from 'zod'
 
-import s from './addNewCardModal.module.scss'
+import s from './cardModal.module.scss'
 
 const addCardSchema = z.object({
   answer: z.string().min(3).max(30),
@@ -19,15 +18,13 @@ const addCardSchema = z.object({
 
 export type FormValues = z.infer<typeof addCardSchema>
 type Props = {
-  addCardHandler: (data: any) => void
-  deckId: string
+  confirmHandler: (data: any) => void
+  defaultValue: any
 } & Omit<ModalProps, 'children' | 'open'>
-export const AddNewCardModal = ({ addCardHandler, deckId, title, ...props }: Props) => {
+export const CardModal = ({ confirmHandler, defaultValue, ...props }: Props) => {
   const [open, setOpen] = useState(false)
-  const [questionImg, setQuestionImg] = useState('')
-  const [answerImg, setAnswerImg] = useState('')
-
-  const [createCard] = useCreateNewCardMutation()
+  const [questionImg, setQuestionImg] = useState<File | null>(null)
+  const [answerImg, setAnswerImg] = useState<File | null>(null)
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: { answer: '', question: '' },

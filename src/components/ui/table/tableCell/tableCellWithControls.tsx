@@ -2,10 +2,13 @@ import { ComponentPropsWithoutRef } from 'react'
 
 import { Edit2Outline, PlayCircleOutline } from '@/assets/icons/components'
 import { TableCell } from '@/components/ui/table'
+import { useCreateNewCardMutation, useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
 import { Card } from '@/pages/cardsPage/api/cardsApi.types'
-import { Deck } from '@/pages/decksPage/api/decksApi.types'
+import { CardModal } from '@/pages/cardsPage/modals/addNewCard/cardModal'
+import { useUpdateDeckMutation } from '@/pages/decksPage/api/decksApi'
+import { CreateDeckArgs, Deck } from '@/pages/decksPage/api/decksApi.types'
+import { DeckModal } from '@/pages/decksPage/modals/deckModal/deckModal'
 import { RemoveItemModal } from '@/pages/decksPage/modals/removeItem/removeItemModal'
-import { UpdateDeckModal } from '@/pages/decksPage/modals/updateDeck/updateDeckModal'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'
@@ -52,13 +55,20 @@ type DeckVariantProps = {
   item: Deck | undefined
 }
 const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
+  const [updateDeck] = useUpdateDeckMutation()
+
+  const updateDeckHandler = (data: Partial<CreateDeckArgs>) => {
+    updateDeck({ ...data, id: item?.id ?? '' })
+  }
+
   return (
     <>
       {item && currentUser === item.author.id ? (
         <>
-          <UpdateDeckModal
+          <DeckModal
+            confirmHandler={updateDeckHandler}
+            defaultValues={{ cover: item.cover, isPrivate: item.isPrivate, name: item.name }}
             id={item.id}
-            initialValues={{ isPrivate: item.isPrivate, name: item.name }}
           />
           <button disabled={!item.cardsCount}>
             <PlayCircleOutline width={16} />
@@ -81,11 +91,15 @@ type CardVariantProps = {
   item: Card | undefined
 }
 const CardVariant = ({ currentUser, item }: CardVariantProps) => {
+  const [updateCard] = useEditCardMutation()
+
+  const updateDeckHandler = () => {
+    updateCard()
+  }
+
   return item && currentUser === item.userId ? (
     <>
-      <button>
-        <Edit2Outline width={16} />
-      </button>
+      <CardModal confirmHandler={updateDeckHandler} />
       <RemoveItemModal id={item.id} name={item.question} type={'Card'} />
     </>
   ) : (

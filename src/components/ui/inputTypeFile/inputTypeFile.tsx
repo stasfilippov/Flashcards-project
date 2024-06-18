@@ -11,10 +11,11 @@ import s from './inputTypeFile.module.scss'
 type Props = {
   className: string
   label: string
+  previewImg: null | string | undefined
   setUploadImgHandler: (file: File | null) => void
 } & ComponentPropsWithoutRef<'input'>
-export const InputTypeFile = ({ className, setUploadImgHandler }: Props) => {
-  const [previewSource, setPreviewSource] = useState(defaultImg)
+export const InputTypeFile = ({ className, previewImg, setUploadImgHandler }: Props) => {
+  const [previewSource, setPreviewSource] = useState(previewImg ?? defaultImg)
   const [isBroken, setIsBroken] = useState(false)
   const internalRef = useRef<HTMLInputElement>(null)
 

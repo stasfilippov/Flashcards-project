@@ -4,15 +4,17 @@ import { useSearchParams } from 'react-router-dom'
 import { useDebounce } from '@/common/hooks'
 import { Page } from '@/components/layout'
 import { Pagination, Typography } from '@/components/ui'
+import { useMeQuery } from '@/pages/auth/api/authApi'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/pages/decksPage/api/decksApi'
 import { CreateDeckArgs, SortValues } from '@/pages/decksPage/api/decksApi.types'
 import { DecksPageFilters, DecksPageTable } from '@/pages/decksPage/components'
-import { AddDeckModal } from '@/pages/decksPage/modals'
+import { DeckModal } from '@/pages/decksPage/modals/deckModal/deckModal'
 
 import s from './decksPage.module.scss'
 
 export const DecksPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
+  const { data: user } = useMeQuery()
 
   const search = searchParams.get('name') ?? ''
   const sort = searchParams.get('sort') as SortValues
@@ -74,7 +76,7 @@ export const DecksPage = () => {
         <Typography component={'h1'} variant={'h1'}>
           Decks lists
         </Typography>
-        <AddDeckModal createDeckHandler={createDeckHandler} />
+        <DeckModal confirmHandler={createDeckHandler} />
       </div>
       <DecksPageFilters
         changeSearchValue={changeSearchValueHandler}
@@ -91,7 +93,7 @@ export const DecksPage = () => {
         <h1>Loading...</h1>
       ) : decks ? (
         <>
-          <DecksPageTable decks={decks.items} sortValue={sort} />
+          <DecksPageTable decks={decks.items} sortValue={sort} userId={user?.id ?? ''} />
           <Pagination
             currentPage={+currentPage}
             itemsPerPage={+itemsPerPage}
