@@ -16,12 +16,12 @@ import { SignUpPage } from '@/pages/signUpPage/signUpPage'
 
 const publicRoutes: RouteObject[] = [
   {
-    element: <SignInPage />,
-    path: ROUTES.signIn,
-  },
-  {
     element: <SignUpPage />,
     path: ROUTES.signUp,
+  },
+  {
+    element: <SignInPage />,
+    path: ROUTES.signIn,
   },
   {
     element: <div>Forgot Password</div>,
@@ -74,6 +74,7 @@ export const router = createBrowserRouter([
       ...publicRoutes,
     ],
     element: <Layout />,
+    path: ROUTES.base,
   },
 ])
 

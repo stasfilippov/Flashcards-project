@@ -8,18 +8,19 @@ import {
 } from '@reduxjs/toolkit/query/react'
 import { Mutex } from 'async-mutex'
 
-// create a new mutex
 const mutex = new Mutex()
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://api.flashcards.andrii.es',
   prepareHeaders: headers => {
     const token = localStorage.getItem('accessToken')
 
+    if (headers.get('Authorization')) {
+      return headers
+    }
+
     if (token) {
       headers.set('Authorization', `Bearer ${token}`)
     }
-
-    return headers
   },
 })
 
@@ -48,15 +49,13 @@ export const baseQueryWithReauth: BaseQueryFn<
           extraOptions
         )) as any
 
-        console.log(refreshResult)
-
         if (refreshResult.data) {
           localStorage.setItem('accessToken', refreshResult.data.accessToken.trim())
           localStorage.setItem('refreshToken', refreshResult.data.refreshToken.trim())
 
           result = await baseQuery(args, api, extraOptions)
         } else {
-          router.navigate(ROUTES.signIn)
+          await router.navigate(ROUTES.signIn)
         }
       } finally {
         release()
