@@ -6,7 +6,7 @@ import { GetRandomCardArgs, SaveTheGradeArgs } from './'
 const learnApi = flashcardsApi.injectEndpoints({
   endpoints: builder => ({
     getRandomCard: builder.query<Card, GetRandomCardArgs>({
-      query: ({ deckId }) => `/v1/decks/${deckId}/learn}`,
+      query: ({ deckId }) => ({ method: 'GET', url: `/v1/decks/${deckId}/learn` }),
     }),
     saveTheGrade: builder.mutation<Card, SaveTheGradeArgs>({
       query: args => ({
