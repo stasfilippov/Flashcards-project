@@ -1,24 +1,25 @@
-import { useNavigate } from 'react-router-dom'
-
 import { ROUTES } from '@/common/constants'
 import { SignUpForm } from '@/components/forms'
 import { Page } from '@/components/layout'
+import { useIsAuthenticated } from '@/components/layout/layout'
 import { useSignUpMutation } from '@/pages/auth/api/authApi'
 import { SignUpArgs } from '@/pages/auth/api/authApi.types'
+import { router } from '@/router'
 
 export const SignUpPage = () => {
-  const [signUp] = useSignUpMutation()
-  const navigate = useNavigate()
+  const [signUp, { error }] = useSignUpMutation()
+  const { isAuthenticated } = useIsAuthenticated()
 
-  const signUpHandler = (data: SignUpArgs) => {
-    signUp(data)
-      .unwrap()
-      .then(() => {
-        navigate(ROUTES.base)
-      })
-      .catch((error: any) => {
-        console.log(error.messages)
-      })
+  const signUpHandler = async (data: SignUpArgs) => {
+    await signUp(data).unwrap()
+    await router.navigate(ROUTES.decks)
+
+    //TODO - add error handler
+    console.log(error)
+  }
+
+  if (isAuthenticated) {
+    router.navigate(ROUTES.decks)
   }
 
   return (
