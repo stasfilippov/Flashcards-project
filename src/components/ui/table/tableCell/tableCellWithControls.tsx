@@ -4,7 +4,7 @@ import { PlayCircleOutline } from '@/assets/icons/components'
 import { TableCell } from '@/components/ui/table'
 import { useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
 import { Card, EditCardArgs } from '@/pages/cardsPage/api/cardsApi.types'
-import { CardModal } from '@/pages/cardsPage/modals/cardModal/cardModal'
+import { CardModal, DefaultValueOfModal } from '@/pages/cardsPage/modals/cardModal/cardModal'
 import { useUpdateDeckMutation } from '@/pages/decksPage/api/decksApi'
 import { CreateDeckArgs, Deck } from '@/pages/decksPage/api/decksApi.types'
 import { DeckModal } from '@/pages/decksPage/modals/deckModal/deckModal'
@@ -94,12 +94,14 @@ const CardVariant = ({ currentUser, item }: CardVariantProps) => {
     <>
       <CardModal
         confirmHandler={updateDeckHandler}
-        defaultValue={{
-          answer: item.answer,
-          previewImgAnswer: item.answerImg,
-          previewImgQuestion: item.questionImg,
-          question: item.question,
-        }}
+        defaultValueOfModal={
+          {
+            answer: item.answer,
+            previewImgAnswer: item.answerImg,
+            previewImgQuestion: item.questionImg,
+            question: item.question,
+          } as DefaultValueOfModal
+        }
         title={'Edit card'}
       />
       <RemoveItemModal id={item.id} name={item.question} type={'Card'} />

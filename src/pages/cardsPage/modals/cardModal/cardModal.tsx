@@ -19,24 +19,24 @@ const addCardSchema = z.object({
 
 export type FormValues = z.infer<typeof addCardSchema>
 
+export type DefaultValueOfModal = {
+  answer: string
+  previewImgAnswer: null | string
+  previewImgQuestion: null | string
+  question: string
+}
+
 type Props = {
   confirmHandler: (data: Omit<CreateCardArgs, 'id'>) => void
-  defaultValue?:
-    | {
-        answer: string
-        previewImgAnswer: null | string
-        previewImgQuestion: null | string
-        question: string
-      }
-    | undefined
+  defaultValueOfModal: DefaultValueOfModal
 } & Omit<ModalProps, 'children' | 'open'>
-export const CardModal = ({ confirmHandler, defaultValue, title, ...props }: Props) => {
+export const CardModal = ({ confirmHandler, defaultValueOfModal, title, ...props }: Props) => {
   const [open, setOpen] = useState(false)
   const [questionImg, setQuestionImg] = useState<File | null>(null)
   const [answerImg, setAnswerImg] = useState<File | null>(null)
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
-    defaultValues: defaultValue,
+    defaultValues: defaultValueOfModal,
     resolver: zodResolver(addCardSchema),
   })
 
@@ -62,7 +62,7 @@ export const CardModal = ({ confirmHandler, defaultValue, title, ...props }: Pro
 
   return (
     <div>
-      {defaultValue ? (
+      {defaultValueOfModal ? (
         <button onClick={openModalHandler}>
           <Edit2Outline width={16} />
         </button>
@@ -88,7 +88,7 @@ export const CardModal = ({ confirmHandler, defaultValue, title, ...props }: Pro
             />
             <InputTypeFile
               label={'questionImg'}
-              previewImg={defaultValue?.previewImgQuestion}
+              previewImg={defaultValueOfModal?.previewImgQuestion}
               setUploadImgHandler={setQuestionImg}
             />
           </div>
@@ -101,7 +101,7 @@ export const CardModal = ({ confirmHandler, defaultValue, title, ...props }: Pro
             />
             <InputTypeFile
               label={'answerImg'}
-              previewImg={defaultValue?.previewImgAnswer}
+              previewImg={defaultValueOfModal?.previewImgAnswer}
               setUploadImgHandler={setAnswerImg}
             />
           </div>
