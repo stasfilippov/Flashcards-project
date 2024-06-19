@@ -1,10 +1,13 @@
 import { useForm } from 'react-hook-form'
 
 import { ControlledRadioGroup } from '@/components/controlled'
-import { Button, RadioGroupOptions } from '@/components/ui'
+import { Button, RadioGroupOptions, Typography } from '@/components/ui'
 import { GRADE } from '@/pages/learn/api'
 import { zodResolver } from '@hookform/resolvers/zod'
+import clsx from 'clsx'
 import { z } from 'zod'
+
+import s from './rateYourselfForm.module.scss'
 
 type Props = {
   onSubmit: (value: string) => void
@@ -34,10 +37,22 @@ export const RateYourselfForm = ({ onSubmit }: Props) => {
     reset()
   }
 
+  const classNames = {
+    radioGroup: clsx(s.radioGroup),
+    subtitle: clsx(s.subtitle),
+  }
+
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
-      Rate yourself:
-      <ControlledRadioGroup control={control} name={'rating'} options={options} />
+      <Typography className={classNames.subtitle} variant={'subtitle1'}>
+        Rate yourself:
+      </Typography>
+      <ControlledRadioGroup
+        className={classNames.radioGroup}
+        control={control}
+        name={'rating'}
+        options={options}
+      />
       <Button fullWidth type={'submit'}>
         Next Question
       </Button>
