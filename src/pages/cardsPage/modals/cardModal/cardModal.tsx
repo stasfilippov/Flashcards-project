@@ -28,7 +28,7 @@ export type DefaultValueOfModal = {
 
 type Props = {
   confirmHandler: (data: Omit<CreateCardArgs, 'id'>) => void
-  defaultValueOfModal: DefaultValueOfModal
+  defaultValueOfModal?: DefaultValueOfModal
 } & Omit<ModalProps, 'children' | 'open'>
 export const CardModal = ({ confirmHandler, defaultValueOfModal, title, ...props }: Props) => {
   const [open, setOpen] = useState(false)
