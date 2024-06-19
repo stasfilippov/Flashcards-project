@@ -13,6 +13,7 @@ import { CardsPage } from '@/pages/cardsPage'
 import { DecksPage } from '@/pages/decksPage'
 import { LearnPage } from '@/pages/learn'
 import { SignInPage } from '@/pages/signInPage'
+import { SignUpPage } from '@/pages/signUpPage'
 
 const publicRoutes: RouteObject[] = [
   {
