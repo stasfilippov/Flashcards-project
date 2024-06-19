@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 
 import { PlayCircleOutline } from '@/assets/icons/components'
+import { ROUTES } from '@/common/constants'
 import { TableCell } from '@/components/ui/table'
 import { useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
 import { Card, EditCardArgs } from '@/pages/cardsPage/api/cardsApi.types'
@@ -9,6 +10,7 @@ import { useUpdateDeckMutation } from '@/pages/decksPage/api/decksApi'
 import { CreateDeckArgs, Deck } from '@/pages/decksPage/api/decksApi.types'
 import { DeckModal } from '@/pages/decksPage/modals/deckModal/deckModal'
 import { RemoveItemModal } from '@/pages/decksPage/modals/removeItem/removeItemModal'
+import { router } from '@/router'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'
@@ -54,6 +56,10 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
     updateDeck({ ...data, id: item?.id ?? '' })
   }
 
+  const learnHandler = () => {
+    router.navigate(`${ROUTES.decks}/${item?.id}${ROUTES.learn}`)
+  }
+
   return (
     <>
       {item && currentUser === item.author.id ? (
@@ -70,7 +76,7 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
         </>
       ) : (
         <>
-          <button disabled={!item?.cardsCount}>
+          <button disabled={!item?.cardsCount} onClick={learnHandler}>
             <PlayCircleOutline width={16} />
           </button>
         </>

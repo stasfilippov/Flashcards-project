@@ -11,6 +11,7 @@ import { Layout, useIsAuthenticated } from '@/components/layout/layout'
 import { CheckEmail, Error, SignInPage, SignUpPage } from '@/pages'
 import { CardsPage } from '@/pages/cardsPage'
 import { DecksPage } from '@/pages/decksPage'
+import { LearnPage } from '@/pages/learn'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -53,7 +54,7 @@ const privateRoutes: RouteObject[] = [
     path: `${ROUTES.decks}/:deckId`,
   },
   {
-    element: <div>Learn</div>,
+    element: <LearnPage />,
     path: `${ROUTES.decks}/:deckId${ROUTES.learn}`,
   },
   {
