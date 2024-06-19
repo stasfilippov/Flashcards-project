@@ -12,16 +12,16 @@ import { CheckEmail, Error } from '@/pages'
 import { CardsPage } from '@/pages/cardsPage'
 import { DecksPage } from '@/pages/decksPage'
 import { LearnPage } from '@/pages/learn'
-import { SignUpPage } from '@/pages/signUpPage/signUpPage'
+import { SignInPage } from '@/pages/signInPage'
 
 const publicRoutes: RouteObject[] = [
   {
-    element: <div>Sign in</div>,
-    path: ROUTES.signIn,
-  },
-  {
     element: <SignUpPage />,
     path: ROUTES.signUp,
+  },
+  {
+    element: <SignInPage />,
+    path: ROUTES.signIn,
   },
   {
     element: <div>Forgot Password</div>,
@@ -74,6 +74,7 @@ export const router = createBrowserRouter([
       ...publicRoutes,
     ],
     element: <Layout />,
+    path: ROUTES.base,
   },
 ])
 
