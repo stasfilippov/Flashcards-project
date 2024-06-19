@@ -108,3 +108,8 @@
 .label {
   cursor: pointer;
 }
+
+// TODO make nice
+.errorMessage {
+  color: var(--color-danger-300);
+}

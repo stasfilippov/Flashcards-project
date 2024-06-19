@@ -30,7 +30,7 @@ export const Header = ({ deck, isMy }: Props) => {
         {isMy ? (
           <AddNewCardModal addCardHandler={() => {}} deckId={deck.id} title={'Add New Card'} />
         ) : (
-          <Button as={Link} to={ROUTES.learn}>
+          <Button as={Link} to={`${ROUTES.decks}/${deck.id}${ROUTES.learn}`}>
             Learn to Deck
           </Button>
         )}

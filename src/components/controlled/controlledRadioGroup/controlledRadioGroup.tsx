@@ -19,6 +19,7 @@ export const ControlledRadioGroup = <T extends FieldValues>({
 }: ControlledRadioProps<T>) => {
   const {
     field: { onChange, ...field },
+    fieldState: { error },
   } = useController({
     control,
     defaultValue,
@@ -28,5 +29,5 @@ export const ControlledRadioGroup = <T extends FieldValues>({
     shouldUnregister,
   })
 
-  return <RadioGroup {...rest} {...field} onValueChange={onChange} />
+  return <RadioGroup error={error?.message} {...rest} {...field} onValueChange={onChange} />
 }

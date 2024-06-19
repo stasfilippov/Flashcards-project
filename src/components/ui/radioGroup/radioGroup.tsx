@@ -6,18 +6,20 @@ import clsx from 'clsx'
 
 import s from './radioGroup.module.scss'
 
-type Options = {
+export type RadioGroupOptions = {
   label: string
   value: string
 }
 
 export type RadioProps = {
-  options: Options[]
+  error?: string
+  options: RadioGroupOptions[]
 } & RadioGroupRadix.RadioGroupProps
 
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, RadioProps>(
-  ({ children, className, defaultValue, options, ...rest }, ref) => {
+  ({ children, className, defaultValue, error, options, ...rest }, ref) => {
     const classNames = {
+      error: clsx(s.errorMessage),
       indicator: clsx(s.radioGroupIndicator),
       item: clsx(s.radioGroupItem, s.button),
       itemContainer: clsx(s.radioGroupItemContainer),
@@ -45,6 +47,9 @@ export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Ra
             </label>
           )
         })}
+        <Typography className={classNames.error} component={'div'} variant={'body2'}>
+          {error}
+        </Typography>
       </RadioGroupRadix.Root>
     )
   }

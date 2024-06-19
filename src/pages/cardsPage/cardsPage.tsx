@@ -1,9 +1,10 @@
 import { useParams, useSearchParams } from 'react-router-dom'
 
+import { ROUTES } from '@/common/constants'
 import { Page } from '@/components/layout'
 import { TextField } from '@/components/ui'
+import { BackNavigation } from '@/components/ui/backNavigation/backNavigation'
 import { useGetDeckByIdQuery } from '@/pages/cardsPage/api/cardsApi'
-import { BackNavigation } from '@/pages/cardsPage/components/backNavigation/backNavigation'
 import { Header } from '@/pages/cardsPage/components/header/header'
 import { TableWithCards } from '@/pages/cardsPage/components/tableWithCards/tableWithCards'
 import { SortValues } from '@/pages/decksPage/api/decksApi.types'
@@ -42,7 +43,11 @@ export const CardsPage = () => {
         <h1>Loading....</h1>
       ) : data ? (
         <>
-          <BackNavigation className={classNames.backNavigation} />
+          <BackNavigation
+            className={classNames.backNavigation}
+            pageName={'Decks Page'}
+            route={ROUTES.base}
+          />
           <Header deck={data} isMy={isMyDeck} />
           <TextField
             className={classNames.textField}
