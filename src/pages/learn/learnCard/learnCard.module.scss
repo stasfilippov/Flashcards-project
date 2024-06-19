@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.card {
+  width: 420px;
+}
+
+.question {
+  display: inline-block;
+  margin: 45px 0 18px;
+}
+
+.img {
+  object-fit: cover;
+
+  &.questionImg {
+    margin-bottom: 20px;
+  }
+
+  &.answerImg {
+    margin-bottom: 30px;
+  }
+}
+
+.attempts {
+  margin-bottom: 18px;
+  color: var(--color-dark-100);
+}
+
+.answer {
+  margin-bottom: 18px;
+}
