@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Edit2Outline } from '@/assets/icons/components'
@@ -19,12 +19,32 @@ const addDeckSchema = z.object({
 type FormValues = z.infer<typeof addDeckSchema>
 type Props = {
   confirmHandler: (data: { cover?: File | null } & FormValues) => void
-  defaultValues?: { cover: null | string } & FormValues
+  defaultValues?: { cover?: null | string } & FormValues
 } & Omit<ModalProps, 'children' | 'open'>
 
 export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) => {
   const [open, setOpen] = useState(false)
   const [cover, setCover] = useState<File | null>(null)
+  const [previewSource, setPreviewSource] = useState<null | string>('')
+
+  useEffect(() => {
+    if (defaultValues?.cover) {
+      setPreviewSource(defaultValues?.cover)
+    }
+  }, [defaultValues?.cover])
+
+  useEffect(() => {
+    if (cover) {
+      const newPreview = URL.createObjectURL(cover)
+
+      if (previewSource) {
+        URL.revokeObjectURL(previewSource)
+      }
+      setPreviewSource(newPreview)
+
+      return () => URL.revokeObjectURL(newPreview)
+    }
+  }, [cover])
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: defaultValues,
@@ -69,9 +89,11 @@ export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) =>
           />
           <InputTypeFile
             className={classNames.inputTypeFileWrapper}
+            cover={cover}
             label={'deckImg'}
-            previewImg={defaultValues?.cover}
-            setUploadImgHandler={setCover}
+            previewImg={previewSource}
+            setCover={setCover}
+            setPreview={setPreviewSource}
           />
           <ControlledCheckbox control={control} label={'Private pack'} name={'isPrivate'} />
           <div className={s.buttonsContainer}>

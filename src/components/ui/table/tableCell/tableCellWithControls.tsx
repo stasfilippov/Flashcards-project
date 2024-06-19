@@ -56,8 +56,8 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
     updateDeck({ ...data, id: item?.id ?? '' })
   }
 
-  const learnHandler = () => {
-    router.navigate(`${ROUTES.decks}/${item?.id}${ROUTES.learn}`)
+  const learnHandler = async () => {
+    await router.navigate(`${ROUTES.decks}/${item?.id}${ROUTES.learn}`)
   }
 
   return (
@@ -100,7 +100,7 @@ const CardVariant = ({ currentUser, item }: CardVariantProps) => {
     <>
       <CardModal
         confirmHandler={updateDeckHandler}
-        defaultValueOfModal={
+        defaultValues={
           {
             answer: item.answer,
             previewImgAnswer: item.answerImg,

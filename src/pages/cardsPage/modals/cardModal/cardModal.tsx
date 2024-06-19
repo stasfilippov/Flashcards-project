@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Edit2Outline } from '@/assets/icons/components'
@@ -28,15 +28,50 @@ export type DefaultValueOfModal = {
 
 type Props = {
   confirmHandler: (data: Omit<CreateCardArgs, 'id'>) => void
-  defaultValueOfModal?: DefaultValueOfModal
+  defaultValues?: DefaultValueOfModal
 } & Omit<ModalProps, 'children' | 'open'>
-export const CardModal = ({ confirmHandler, defaultValueOfModal, title, ...props }: Props) => {
+export const CardModal = ({ confirmHandler, defaultValues, title, ...props }: Props) => {
   const [open, setOpen] = useState(false)
   const [questionImg, setQuestionImg] = useState<File | null>(null)
+  const [questionImgPreview, setQuestionImgPreview] = useState<null | string>('')
   const [answerImg, setAnswerImg] = useState<File | null>(null)
+  const [answerImgPreview, setAnswerImgPreview] = useState<null | string>('')
+
+  useEffect(() => {
+    if (defaultValues?.previewImgQuestion || defaultValues?.previewImgAnswer) {
+      setQuestionImgPreview(defaultValues?.previewImgQuestion)
+      setAnswerImgPreview(defaultValues?.previewImgAnswer)
+    }
+  }, [defaultValues?.previewImgAnswer, defaultValues?.previewImgQuestion])
+
+  useEffect(() => {
+    if (questionImg) {
+      const newPreview = URL.createObjectURL(questionImg)
+
+      if (questionImgPreview) {
+        URL.revokeObjectURL(questionImgPreview)
+      }
+      setQuestionImgPreview(newPreview)
+
+      return () => URL.revokeObjectURL(newPreview)
+    }
+  }, [questionImg])
+
+  useEffect(() => {
+    if (answerImg) {
+      const newPreview = URL.createObjectURL(answerImg)
+
+      if (answerImgPreview) {
+        URL.revokeObjectURL(answerImgPreview)
+      }
+      setAnswerImgPreview(newPreview)
+
+      return () => URL.revokeObjectURL(newPreview)
+    }
+  }, [answerImg])
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
-    defaultValues: defaultValueOfModal,
+    defaultValues: defaultValues,
     resolver: zodResolver(addCardSchema),
   })
 
@@ -62,7 +97,7 @@ export const CardModal = ({ confirmHandler, defaultValueOfModal, title, ...props
 
   return (
     <div>
-      {defaultValueOfModal ? (
+      {defaultValues ? (
         <button onClick={openModalHandler}>
           <Edit2Outline width={16} />
         </button>
@@ -87,9 +122,11 @@ export const CardModal = ({ confirmHandler, defaultValueOfModal, title, ...props
               name={'question'}
             />
             <InputTypeFile
+              cover={questionImg}
               label={'questionImg'}
-              previewImg={defaultValueOfModal?.previewImgQuestion}
-              setUploadImgHandler={setQuestionImg}
+              previewImg={questionImgPreview}
+              setCover={setQuestionImg}
+              setPreview={setQuestionImgPreview}
             />
           </div>
           <div className={classNames.inputWrapper}>
@@ -100,9 +137,11 @@ export const CardModal = ({ confirmHandler, defaultValueOfModal, title, ...props
               name={'answer'}
             />
             <InputTypeFile
+              cover={answerImg}
               label={'answerImg'}
-              previewImg={defaultValueOfModal?.previewImgAnswer}
-              setUploadImgHandler={setAnswerImg}
+              previewImg={answerImgPreview}
+              setCover={setAnswerImg}
+              setPreview={setAnswerImgPreview}
             />
           </div>
           <div className={classNames.buttonsWrapper}>

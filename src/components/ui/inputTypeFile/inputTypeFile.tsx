@@ -10,12 +10,13 @@ import s from './inputTypeFile.module.scss'
 
 type Props = {
   className?: string
+  cover: File | null
   label: string
   previewImg?: null | string
-  setUploadImgHandler: (file: File | null) => void
+  setCover: (file: File | null) => void
+  setPreview: (file: null | string) => void
 } & ComponentPropsWithoutRef<'input'>
-export const InputTypeFile = ({ className, previewImg, setUploadImgHandler }: Props) => {
-  const [previewSource, setPreviewSource] = useState(previewImg ?? defaultImg)
+export const InputTypeFile = ({ className, cover, previewImg, setCover, setPreview }: Props) => {
   const [isBroken, setIsBroken] = useState(false)
   const internalRef = useRef<HTMLInputElement>(null)
 
@@ -24,8 +25,8 @@ export const InputTypeFile = ({ className, previewImg, setUploadImgHandler }: Pr
   }
 
   const deleteImageHandler = () => {
-    setUploadImgHandler(null)
-    setPreviewSource(defaultImg)
+    setCover(null)
+    setPreview(null)
   }
 
   const errorHandler = () => {
@@ -41,31 +42,30 @@ export const InputTypeFile = ({ className, previewImg, setUploadImgHandler }: Pr
 
   return (
     <label className={className}>
-      {previewSource && (
+      {previewImg && (
         <div className={classNames.imgWrapper}>
-          <img alt={'preview'} onError={errorHandler} src={isBroken ? defaultImg : previewSource} />
+          <img
+            alt={'preview'}
+            onError={errorHandler}
+            src={isBroken ? defaultImg : previewImg.toString()}
+          />
         </div>
       )}
       <input
         accept={'image/png, image/gif, image/jpeg'}
         className={classNames.input}
-        onChange={e => upload(e, setPreviewSource, setUploadImgHandler)}
+        onChange={e => upload(e, setCover)}
         ref={internalRef}
         type={'file'}
       />
       <div className={classNames.buttonsWrapper}>
-        {previewSource && (
-          <Button
-            disabled={previewSource === defaultImg}
-            onClick={deleteImageHandler}
-            type={'button'}
-            variant={'secondary'}
-          >
+        {(cover || previewImg) && (
+          <Button onClick={deleteImageHandler} type={'button'} variant={'secondary'}>
             Delete
           </Button>
         )}
         <Button
-          fullWidth={!previewSource}
+          fullWidth={!previewImg}
           icon={<ImageOutline width={16} />}
           onClick={selectFileHandler}
           type={'button'}
