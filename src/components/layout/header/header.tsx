@@ -1,7 +1,8 @@
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-import { LogOutOutline, Logo, PersonOutline } from '@/assets/icons/components'
+import { LogOutOutline, PersonOutline } from '@/assets/icons/components'
+import logo from '@/assets/img/logo.png'
 import { ROUTES } from '@/common/constants'
 import {
   Avatar,
@@ -30,6 +31,7 @@ export const Header = ({ className, onLogout, user, ...rest }: HeaderProps) => {
   const classNames = {
     header: clsx(s.header, className),
     headerWrapper: clsx(s.headerWrapper),
+    imgWrapper: clsx(s.imgWrapper),
     userContainer: clsx(s.userContainer),
   }
 
@@ -45,7 +47,9 @@ export const Header = ({ className, onLogout, user, ...rest }: HeaderProps) => {
     <div className={classNames.headerWrapper}>
       <header className={classNames.header} {...rest}>
         <Link to={ROUTES.base}>
-          <Logo height={36} width={156} />
+          <div className={classNames.imgWrapper}>
+            <img alt={'logo'} src={logo} />
+          </div>
         </Link>
         {user ? (
           <HeaderDropDown onLogout={onLogout} trigger={dropDownTrigger} user={user} />
