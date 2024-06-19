@@ -69,7 +69,7 @@ type HeaderDropDownProps = {
 const HeaderDropDown = ({ onLogout, trigger, user }: HeaderDropDownProps) => {
   return (
     <DropdownMenu trigger={trigger}>
-      <DropdownItem>
+      <DropdownItem className={s.dropDownItem}>
         <div className={s.userInfo}>
           <Avatar src={user.avatar ?? undefined} />
           <div className={s.infoBlock}>
@@ -90,7 +90,7 @@ const HeaderDropDown = ({ onLogout, trigger, user }: HeaderDropDownProps) => {
       <DropdownSeparator />
       <DropdownItem className={s.dropDownItem}>
         <LogOutOutline width={16} />
-        <Typography onClick={() => onLogout} variant={'caption'}>
+        <Typography onClick={onLogout} variant={'caption'}>
           Sign Out
         </Typography>
       </DropdownItem>

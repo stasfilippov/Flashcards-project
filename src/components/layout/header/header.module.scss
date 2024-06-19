@@ -5,19 +5,20 @@
   right: 0;
   left: 0;
 
+  min-height: var(--header-height);
+
   background-color: var(--color-dark-700);
   border-bottom: 1px solid var(--color-dark-500);
-
-  min-height: var(--header-height);
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: var(--header-height);
+
   width: 100%;
   max-width: 1280px;
+  min-height: var(--header-height);
   margin: 0 auto;
 }
 
@@ -52,4 +53,9 @@
 
 .dropDownItem {
   cursor: pointer;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
