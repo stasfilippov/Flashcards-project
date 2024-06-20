@@ -18,7 +18,7 @@ export const CardsPage = () => {
 
   const { data: user } = useMeQuery()
 
-  const { data: deck, error, isLoading } = useGetDeckByIdQuery({ id: deckId ?? '' })
+  const { data: deck, error } = useGetDeckByIdQuery({ id: deckId ?? '' })
 
   const isMyDeck = user?.id === deck?.userId
 
@@ -39,8 +39,6 @@ export const CardsPage = () => {
     <Page>
       {error ? (
         <h1>Error {JSON.stringify(error)}</h1>
-      ) : isLoading ? (
-        <h1>Loading....</h1>
       ) : deck ? (
         <>
           <BackNavigation

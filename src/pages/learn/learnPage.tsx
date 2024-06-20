@@ -9,7 +9,7 @@ import { useLearnPage } from './hooks/useLearnPage'
 import { LearnCard } from './learnCard'
 
 export const LearnPage = () => {
-  const { cardError, cardIsLoading, currentCard, deck, deckError, deckIsLoading } = useLearnPage()
+  const { cardError, currentCard, deck, deckError } = useLearnPage()
 
   const classNames = {
     backNavigation: clsx(s.backNavigationLink),
@@ -19,8 +19,6 @@ export const LearnPage = () => {
     <Page>
       {cardError || deckError ? (
         <h1>Error: {JSON.stringify(cardError || deckError)}</h1>
-      ) : cardIsLoading || deckIsLoading ? (
-        <h1>Loading...</h1>
       ) : currentCard && deck ? (
         <>
           <BackNavigation
