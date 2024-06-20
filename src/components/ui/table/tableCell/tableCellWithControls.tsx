@@ -3,11 +3,11 @@ import { ComponentPropsWithoutRef } from 'react'
 import { PlayCircleOutline } from '@/assets/icons/components'
 import { ROUTES } from '@/common/constants'
 import { TableCell } from '@/components/ui/table'
-import { useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
+import { useDeleteCardMutation, useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
 import { Card, EditCardArgs } from '@/pages/cardsPage/api/cardsApi.types'
 import { CardModal, DefaultValueOfModal } from '@/pages/cardsPage/modals/cardModal/cardModal'
-import { useUpdateDeckMutation } from '@/pages/decksPage/api/decksApi'
-import { CreateDeckArgs, Deck } from '@/pages/decksPage/api/decksApi.types'
+import { useRemoveDeckMutation, useUpdateDeckMutation } from '@/pages/decksPage/api/decksApi'
+import { CreateDeckArgs, Deck, RemoveItemArgs } from '@/pages/decksPage/api/decksApi.types'
 import { DeckModal } from '@/pages/decksPage/modals/deckModal/deckModal'
 import { RemoveItemModal } from '@/pages/decksPage/modals/removeItem/removeItemModal'
 import { router } from '@/router'
@@ -51,9 +51,14 @@ type DeckVariantProps = {
 }
 const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
   const [updateDeck] = useUpdateDeckMutation()
+  const [removeDeck] = useRemoveDeckMutation()
 
   const updateDeckHandler = (data: Partial<CreateDeckArgs>) => {
     updateDeck({ ...data, id: item?.id ?? '' })
+  }
+
+  const removeDeckHandler = ({ id }: RemoveItemArgs) => {
+    removeDeck({ id })
   }
 
   const learnHandler = async () => {
@@ -72,7 +77,12 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
           <button disabled={!item.cardsCount}>
             <PlayCircleOutline width={16} />
           </button>
-          <RemoveItemModal id={item.id} name={item.name} type={'Deck'} />
+          <RemoveItemModal
+            id={item.id}
+            name={item.name}
+            onRemove={removeDeckHandler}
+            type={'Deck'}
+          />
         </>
       ) : (
         <>
@@ -91,9 +101,14 @@ type CardVariantProps = {
 }
 const CardVariant = ({ currentUser, item }: CardVariantProps) => {
   const [updateCard] = useEditCardMutation()
+  const [deleteCard] = useDeleteCardMutation()
 
   const updateDeckHandler = (data: Omit<EditCardArgs, 'id'>) => {
     updateCard({ ...data, id: item?.id ?? '' })
+  }
+
+  const removeCardHandler = ({ id }: RemoveItemArgs) => {
+    deleteCard({ id })
   }
 
   return item && currentUser === item.userId ? (
@@ -110,7 +125,12 @@ const CardVariant = ({ currentUser, item }: CardVariantProps) => {
         }
         title={'Edit card'}
       />
-      <RemoveItemModal id={item.id} name={item.question} type={'Card'} />
+      <RemoveItemModal
+        id={item.id}
+        name={item.question}
+        onRemove={removeCardHandler}
+        type={'Card'}
+      />
     </>
   ) : (
     <></>
