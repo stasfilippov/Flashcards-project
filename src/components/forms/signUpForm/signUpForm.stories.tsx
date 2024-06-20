@@ -1,10 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { SignUpForm } from '@/components/forms/signUpForm/signUpForm'
+import { fn } from '@storybook/test'
 import { withRouter } from 'storybook-addon-remix-react-router'
 
 const meta = {
-  argTypes: {},
+  args: {
+    onSubmit: fn(),
+  },
   component: SignUpForm,
   decorators: [withRouter],
   tags: ['autodocs'],

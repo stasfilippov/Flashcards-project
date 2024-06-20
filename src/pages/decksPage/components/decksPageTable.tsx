@@ -17,8 +17,11 @@ const columns = ids.map(id => ({
 type Props = {
   decks: Deck[]
   sortValue: SortValues
+  userId: string
 }
-export const DecksPageTable = ({ decks, sortValue }: Props) => {
+export const DecksPageTable = ({ decks, sortValue, userId }: Props) => {
+  // const currentUser=
+
   return (
     <Table>
       <TableHeader columns={columns} sortValue={sortValue} />
@@ -33,7 +36,12 @@ export const DecksPageTable = ({ decks, sortValue }: Props) => {
               {formatDateToDdMmYY(deck.updated)}
             </TableCellWithText>
             <TableCellWithText id={'created'}>{deck.author.name}</TableCellWithText>
-            <TableCellWithControls id={'controls'} item={{ deck }} variant={'Deck'} />
+            <TableCellWithControls
+              id={'controls'}
+              item={{ deck }}
+              userId={userId}
+              variant={'Deck'}
+            />
           </TableRow>
         ))}
       </TableBody>

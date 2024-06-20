@@ -1,3 +1,4 @@
 export * from './checkEmail'
 export * from './error'
-export * from './signUpPage'
+export * from './signInPage/signInPage'
+export * from './signUpPage/signUpPage'
