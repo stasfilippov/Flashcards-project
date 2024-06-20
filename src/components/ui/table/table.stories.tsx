@@ -45,6 +45,8 @@ export const TableHeaderWithSearchParamsExample: Story = {
 
 export const TableCellWithControlsOfDeckExample: Story = {
   render: () => {
+    const currentUserId = 'f2be95b9-4d07-4751-a775-bd612fc955a'
+
     const deck: Deck = {
       author: {
         id: 'f2be95b9-4d07-4751-a775-bd612fc9553a',
@@ -64,7 +66,12 @@ export const TableCellWithControlsOfDeckExample: Story = {
     return (
       <Table>
         <TableRow>
-          <TableCellWithControls id={'controls'} item={{ deck }} variant={'Deck'} />
+          <TableCellWithControls
+            id={'controls'}
+            item={{ deck }}
+            userId={currentUserId}
+            variant={'Deck'}
+          />
         </TableRow>
       </Table>
     )
@@ -73,6 +80,8 @@ export const TableCellWithControlsOfDeckExample: Story = {
 
 export const TableCellWithControlsOfOwnDeckOwnExample: Story = {
   render: () => {
+    const currentUserId = '5b2174ce-9499-4693-9a73-026e01cd9ed4'
+
     const deck: Deck = {
       author: {
         id: '5b2174ce-9499-4693-9a73-026e01cd9ed4',
@@ -92,7 +101,12 @@ export const TableCellWithControlsOfOwnDeckOwnExample: Story = {
     return (
       <Table>
         <TableRow>
-          <TableCellWithControls id={'controls'} item={{ deck }} variant={'Deck'} />
+          <TableCellWithControls
+            id={'controls'}
+            item={{ deck }}
+            userId={currentUserId}
+            variant={'Deck'}
+          />
         </TableRow>
       </Table>
     )
@@ -101,6 +115,8 @@ export const TableCellWithControlsOfOwnDeckOwnExample: Story = {
 
 export const TableCellWithControlsOfOwnCardExample: Story = {
   render: () => {
+    const currentUserId = '5b2174ce-9499-4693-9a73-026e01cd9ed4'
+
     const card: Card = {
       answer: 'Ответ:  false true',
       answerImg: null,
@@ -121,7 +137,12 @@ export const TableCellWithControlsOfOwnCardExample: Story = {
     return (
       <Table>
         <TableRow>
-          <TableCellWithControls id={'controls'} item={{ card }} variant={'Card'} />
+          <TableCellWithControls
+            id={'controls'}
+            item={{ card }}
+            userId={currentUserId}
+            variant={'Card'}
+          />
         </TableRow>
       </Table>
     )

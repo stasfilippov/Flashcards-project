@@ -1,1 +1,2 @@
-export { AddDeckModal } from './addDeck/addDeckModal'
+export * from './deckModal/deckModal'
+export * from './removeItem/removeItemModal'

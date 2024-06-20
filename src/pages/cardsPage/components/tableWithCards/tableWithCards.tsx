@@ -28,12 +28,12 @@ const columns = ids.map(id => ({
 
 type Props = {
   className: string
-  currentUser: string
   deckId: string
   search: string
   sort: SortValues
+  userId: string
 }
-export const TableWithCards = ({ className, currentUser, deckId, search, sort }: Props) => {
+export const TableWithCards = ({ className, deckId, search, sort, userId }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const debouncedSearchValue = useDebounce(search, 500)
 
@@ -87,9 +87,9 @@ export const TableWithCards = ({ className, currentUser, deckId, search, sort }:
                     <TableCellWithText id={'updatedQuestion'}>{updatedAt}</TableCellWithText>
                     <TableCellWithGrade id={'grade'} item={card} />
                     <TableCellWithControls
-                      currentUser={currentUser}
                       id={'control'}
                       item={{ card }}
+                      userId={userId}
                       variant={'Card'}
                     />
                   </TableRow>

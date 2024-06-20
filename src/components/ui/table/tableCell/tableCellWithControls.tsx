@@ -1,31 +1,27 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { Edit2Outline, PlayCircleOutline } from '@/assets/icons/components'
+import { PlayCircleOutline } from '@/assets/icons/components'
 import { ROUTES } from '@/common/constants'
 import { TableCell } from '@/components/ui/table'
-import { Card } from '@/pages/cardsPage/api/cardsApi.types'
-import { Deck } from '@/pages/decksPage/api/decksApi.types'
+import { useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
+import { Card, EditCardArgs } from '@/pages/cardsPage/api/cardsApi.types'
+import { CardModal, DefaultValueOfModal } from '@/pages/cardsPage/modals/cardModal/cardModal'
+import { useUpdateDeckMutation } from '@/pages/decksPage/api/decksApi'
+import { CreateDeckArgs, Deck } from '@/pages/decksPage/api/decksApi.types'
+import { DeckModal } from '@/pages/decksPage/modals/deckModal/deckModal'
 import { RemoveItemModal } from '@/pages/decksPage/modals/removeItem/removeItemModal'
-import { UpdateDeckModal } from '@/pages/decksPage/modals/updateDeck/updateDeckModal'
 import { router } from '@/router'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'
 
 type Props = {
-  currentUser: string
   id: string
   item: { card: Card; deck?: never } | { card?: never; deck: Deck }
+  userId: string
   variant: 'Card' | 'Deck'
 } & ComponentPropsWithoutRef<'td'>
-export const TableCellWithControls = ({
-  children,
-  currentUser,
-  id,
-  item,
-  variant,
-  ...rest
-}: Props) => {
+export const TableCellWithControls = ({ children, id, item, userId, variant, ...rest }: Props) => {
   const { card, deck } = item
 
   const classNames = {
@@ -38,11 +34,11 @@ export const TableCellWithControls = ({
     <TableCell className={classNames.tCell} {...rest}>
       {variant === 'Deck' ? (
         <div className={classNames.tCellControlsWrapper}>
-          <DeckVariant currentUser={currentUser} item={deck} />
+          <DeckVariant currentUser={userId} item={deck} />
         </div>
       ) : (
         <div className={classNames.tCellControlsWrapper}>
-          <CardVariant currentUser={currentUser} item={card} />
+          <CardVariant currentUser={userId} item={card} />
         </div>
       )}
     </TableCell>
@@ -54,17 +50,24 @@ type DeckVariantProps = {
   item: Deck | undefined
 }
 const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
-  const learnHandler = () => {
-    router.navigate(`${ROUTES.decks}/${item?.id}${ROUTES.learn}`)
+  const [updateDeck] = useUpdateDeckMutation()
+
+  const updateDeckHandler = (data: Partial<CreateDeckArgs>) => {
+    updateDeck({ ...data, id: item?.id ?? '' })
+  }
+
+  const learnHandler = async () => {
+    await router.navigate(`${ROUTES.decks}/${item?.id}${ROUTES.learn}`)
   }
 
   return (
     <>
       {item && currentUser === item.author.id ? (
         <>
-          <UpdateDeckModal
+          <DeckModal
+            confirmHandler={updateDeckHandler}
+            defaultValues={{ cover: item.cover, isPrivate: item.isPrivate, name: item.name }}
             id={item.id}
-            initialValues={{ isPrivate: item.isPrivate, name: item.name }}
           />
           <button disabled={!item.cardsCount}>
             <PlayCircleOutline width={16} />
@@ -87,11 +90,26 @@ type CardVariantProps = {
   item: Card | undefined
 }
 const CardVariant = ({ currentUser, item }: CardVariantProps) => {
+  const [updateCard] = useEditCardMutation()
+
+  const updateDeckHandler = (data: Omit<EditCardArgs, 'id'>) => {
+    updateCard({ ...data, id: item?.id ?? '' })
+  }
+
   return item && currentUser === item.userId ? (
     <>
-      <button>
-        <Edit2Outline width={16} />
-      </button>
+      <CardModal
+        confirmHandler={updateDeckHandler}
+        defaultValues={
+          {
+            answer: item.answer,
+            previewImgAnswer: item.answerImg,
+            previewImgQuestion: item.questionImg,
+            question: item.question,
+          } as DefaultValueOfModal
+        }
+        title={'Edit card'}
+      />
       <RemoveItemModal id={item.id} name={item.question} type={'Card'} />
     </>
   ) : (

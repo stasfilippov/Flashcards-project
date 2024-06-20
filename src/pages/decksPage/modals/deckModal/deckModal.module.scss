@@ -2,6 +2,15 @@
   display: inline-block;
 }
 
+.input {
+  margin-bottom: 24px;
+}
+
+.inputTypeFileWrapper {
+  display: block;
+  margin-bottom: 10px;
+}
+
 .buttonsContainer {
   display: flex;
   justify-content: space-between;

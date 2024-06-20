@@ -14,9 +14,23 @@ const decksApi = flashcardsApi.injectEndpoints({
     return {
       createDeck: builder.mutation<CreateUpdateDeckResponse, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
-        query: args => {
+        query: ({ cover, isPrivate, name }) => {
+          const formData = new FormData()
+
+          formData.append('name', name)
+
+          if (isPrivate) {
+            formData.append('isPrivate', isPrivate.toString())
+          }
+
+          if (cover) {
+            formData.append('cover', cover)
+          } else if (cover === null) {
+            formData.append('cover', '')
+          }
+
           return {
-            body: args,
+            body: formData,
             method: 'POST',
             url: 'v1/decks',
           }
@@ -43,9 +57,25 @@ const decksApi = flashcardsApi.injectEndpoints({
       }),
       updateDeck: builder.mutation<CreateUpdateDeckResponse, UpdateDeckArgs>({
         invalidatesTags: ['Decks'],
-        query: ({ id, ...body }) => {
+        query: ({ cover, id, isPrivate, name }) => {
+          const formData = new FormData()
+
+          if (name) {
+            formData.append('name', name)
+          }
+
+          if (isPrivate) {
+            formData.append('isPrivate', isPrivate.toString())
+          }
+
+          if (cover) {
+            formData.append('cover', cover)
+          } else if (cover === null) {
+            formData.append('cover', '')
+          }
+
           return {
-            body,
+            body: formData,
             method: 'PATCH',
             url: `v1/decks/${id}`,
           }

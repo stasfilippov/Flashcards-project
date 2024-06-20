@@ -4,8 +4,9 @@ import { ROUTES } from '@/common/constants'
 import { Page } from '@/components/layout'
 import { TextField } from '@/components/ui'
 import { BackNavigation } from '@/components/ui/backNavigation/backNavigation'
+import { useMeQuery } from '@/pages/auth/api/authApi'
 import { useGetDeckByIdQuery } from '@/pages/cardsPage/api/cardsApi'
-import { Header } from '@/pages/cardsPage/components/header/header'
+import { HeaderOfCardsPage } from '@/pages/cardsPage/components/header/headerOfCardsPage'
 import { TableWithCards } from '@/pages/cardsPage/components/tableWithCards/tableWithCards'
 import { SortValues } from '@/pages/decksPage/api/decksApi.types'
 import clsx from 'clsx'
@@ -15,12 +16,11 @@ export const CardsPage = () => {
   const { deckId } = useParams<{ deckId: string }>()
   const [searchParams, setSearchParams] = useSearchParams()
 
-  //!- сделать получение currentUser
-  const currentUser = '32c3f2f9-5fc9-4e34-b60c-a34a2f72727e'
+  const { data: user } = useMeQuery()
 
-  const { data, error, isLoading } = useGetDeckByIdQuery({ id: deckId ?? '' })
+  const { data: deck, error, isLoading } = useGetDeckByIdQuery({ id: deckId ?? '' })
 
-  const isMyDeck = currentUser === data?.userId
+  const isMyDeck = user?.id === deck?.userId
 
   const search = searchParams.get('question') ?? ''
   const sort = searchParams.get('sort') as SortValues
@@ -41,14 +41,14 @@ export const CardsPage = () => {
         <h1>Error {JSON.stringify(error)}</h1>
       ) : isLoading ? (
         <h1>Loading....</h1>
-      ) : data ? (
+      ) : deck ? (
         <>
           <BackNavigation
             className={classNames.backNavigation}
             pageName={'Decks Page'}
             route={ROUTES.base}
           />
-          <Header deck={data} isMy={isMyDeck} />
+          <HeaderOfCardsPage deck={deck} isMy={isMyDeck} />
           <TextField
             className={classNames.textField}
             inputChangeHandler={searchChangeHandler}
@@ -58,10 +58,10 @@ export const CardsPage = () => {
           />
           <TableWithCards
             className={classNames.table}
-            currentUser={currentUser}
             deckId={deckId ?? ''}
             search={search}
             sort={sort}
+            userId={user?.id ?? ''}
           />
         </>
       ) : null}
