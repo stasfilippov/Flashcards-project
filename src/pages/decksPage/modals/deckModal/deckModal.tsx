@@ -18,7 +18,7 @@ const addDeckSchema = z.object({
 
 type FormValues = z.infer<typeof addDeckSchema>
 type Props = {
-  confirmHandler: (data: { cover?: File | null | string } & FormValues) => void
+  confirmHandler: (data: { cover?: File | null | undefined } & FormValues) => void
   defaultValues?: { cover?: null | string } & FormValues
 } & Omit<ModalProps, 'children' | 'open'>
 
@@ -26,6 +26,7 @@ export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) =>
   const [open, setOpen] = useState(false)
   const [cover, setCover] = useState<File | null>(null)
   const [previewSource, setPreviewSource] = useState<null | string>('')
+  const [isImageDeleted, setImageDeleted] = useState(false)
 
   useEffect(() => {
     if (defaultValues?.cover) {
@@ -54,10 +55,12 @@ export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) =>
   })
 
   const submitHandler = handleSubmit(data => {
-    confirmHandler({ ...data, cover: cover ?? defaultValues?.cover ?? null })
+    const newCover = cover ?? (isImageDeleted ? null : undefined)
+    const dataToSend = { ...data, cover: newCover }
+
+    confirmHandler(dataToSend)
     reset()
     setCover(null)
-    setPreviewSource(defaultValues?.cover ?? null)
     setOpen(false)
   })
 
@@ -105,6 +108,7 @@ export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) =>
             label={'deckImg'}
             previewImg={previewSource}
             setCover={setCover}
+            setImageDeleted={setImageDeleted}
             setPreview={setPreviewSource}
           />
           <ControlledCheckbox control={control} label={'Private pack'} name={'isPrivate'} />
@@ -113,7 +117,7 @@ export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) =>
               Cancel
             </Button>
             <Button type={'submit'} variant={'primary'}>
-              Add new Deck
+              {defaultValues ? 'Update Deck' : 'Add New Deck'}
             </Button>
           </div>
         </form>
