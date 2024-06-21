@@ -1,3 +1,4 @@
+import { appSlice } from '@/services/appSlice/appSlice'
 import { flashcardsApi } from '@/services/flashcardApi'
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
@@ -5,6 +6,7 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 export const store = configureStore({
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(flashcardsApi.middleware),
   reducer: {
+    [appSlice.name]: appSlice.reducer,
     [flashcardsApi.reducerPath]: flashcardsApi.reducer,
   },
 })

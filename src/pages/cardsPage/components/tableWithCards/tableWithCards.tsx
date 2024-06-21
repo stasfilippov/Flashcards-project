@@ -40,7 +40,7 @@ export const TableWithCards = ({ className, deckId, search, sort, userId }: Prop
   const currentPage = searchParams.get('page') ?? '1'
   const itemsPerPage = searchParams.get('items') ?? '10'
 
-  const { data, error, isLoading } = useGetCardsQuery({
+  const { data, error } = useGetCardsQuery({
     currentPage: +currentPage,
     id: deckId,
     itemsPerPage: +itemsPerPage,
@@ -69,8 +69,6 @@ export const TableWithCards = ({ className, deckId, search, sort, userId }: Prop
           <TableHeader columns={columns} sortValue={sort} />
           {error ? (
             <h1>Error {JSON.stringify(error)}</h1>
-          ) : isLoading ? (
-            <h1>Loading....</h1>
           ) : data ? (
             <TableBody>
               {data.items.map(card => {

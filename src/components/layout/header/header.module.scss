@@ -77,3 +77,10 @@
     object-fit: cover;
   }
 }
+
+.progressBar {
+  position: absolute;
+  top: var(--header-height);
+  left: 0;
+  width: 100%;
+}
