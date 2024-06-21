@@ -15,9 +15,15 @@ export const appSlice = createSlice({
           state.appStatus = 'idle'
         }
       )
+      .addMatcher(
+        action => action.type.endsWith('executeQuery/rejected'),
+        state => {
+          state.appStatus = 'error'
+        }
+      )
   },
   initialState: {
-    appStatus: 'idle' as 'idle' | 'loading',
+    appStatus: 'idle' as 'error' | 'idle' | 'loading',
   },
   name: 'app',
   reducers: {},
