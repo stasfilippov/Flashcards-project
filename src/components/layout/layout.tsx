@@ -2,7 +2,10 @@ import { ReactNode } from 'react'
 import { Outlet, useOutletContext } from 'react-router-dom'
 
 import { Header, HeaderProps } from '@/components/layout/header'
+import { Spinner } from '@/components/ui'
 import { useMeQuery } from '@/pages/auth/api/authApi'
+
+import s from './layout.module.scss'
 
 type AuthContextType = { isAuthenticated: boolean }
 export const Layout = () => {
@@ -11,7 +14,11 @@ export const Layout = () => {
   const isAuthenticated = !isError && !isLoading
 
   if (isLoading) {
-    return <h1>Loading</h1>
+    return (
+      <div className={s.loaderWrapper}>
+        <Spinner />
+      </div>
+    )
   }
 
   return (

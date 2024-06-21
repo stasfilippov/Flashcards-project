@@ -1,4 +1,5 @@
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { LogOutOutline, PersonOutline } from '@/assets/icons/components'
@@ -12,6 +13,8 @@ import {
   DropdownSeparator,
   Typography,
 } from '@/components/ui'
+import { ProgressBar } from '@/components/ui/progressBar/progressBar'
+import { appStatusSelector } from '@/services/appSlice/appSlice.selectors'
 import clsx from 'clsx'
 
 import s from './header.module.scss'
@@ -28,10 +31,13 @@ export type HeaderProps = {
 } & ComponentPropsWithoutRef<'header'>
 
 export const Header = ({ className, onLogout, user, ...rest }: HeaderProps) => {
+  const isLoading = useSelector(appStatusSelector)
+
   const classNames = {
     header: clsx(s.header, className),
     headerWrapper: clsx(s.headerWrapper),
     imgWrapper: clsx(s.imgWrapper),
+    progressBar: clsx(s.progressBar),
     userContainer: clsx(s.userContainer),
   }
 
@@ -59,6 +65,7 @@ export const Header = ({ className, onLogout, user, ...rest }: HeaderProps) => {
           </Button>
         )}
       </header>
+      {isLoading === 'loading' && <ProgressBar className={classNames.progressBar} />}
     </div>
   )
 }

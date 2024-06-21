@@ -25,11 +25,7 @@ export const DecksPage = () => {
   const [decksRange, setDecksRange] = useState<number[]>([0, 100])
   const debouncedSearchValue = useDebounce(search, 500)
 
-  const {
-    data: decks,
-    error,
-    isLoading,
-  } = useGetDecksQuery({
+  const { data: decks, error } = useGetDecksQuery({
     authorId: currentTab,
     currentPage: +currentPage,
     itemsPerPage: +itemsPerPage,
@@ -89,8 +85,6 @@ export const DecksPage = () => {
       />
       {error ? (
         <h1>Error: {JSON.stringify(error)}</h1>
-      ) : isLoading ? (
-        <h1>Loading...</h1>
       ) : decks ? (
         <>
           <DecksPageTable decks={decks.items} sortValue={sort} userId={user?.id ?? ''} />

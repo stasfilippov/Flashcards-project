@@ -20,8 +20,6 @@ type Props = {
   userId: string
 }
 export const DecksPageTable = ({ decks, sortValue, userId }: Props) => {
-  // const currentUser=
-
   return (
     <Table>
       <TableHeader columns={columns} sortValue={sortValue} />

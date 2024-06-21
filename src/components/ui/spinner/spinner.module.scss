@@ -1,0 +1,41 @@
+.loader {
+  position: relative;
+
+  display: inline-block;
+
+  box-sizing: border-box;
+  width: 48px;
+  height: 48px;
+
+  border: 3px solid var(--color-light-100);
+  border-radius: 50%;
+
+  animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+  content: '';
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  box-sizing: border-box;
+  width: 56px;
+  height: 56px;
+
+  border: 3px solid;
+  border-color: var(--color-accent-500) transparent;
+  border-radius: 50%;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
