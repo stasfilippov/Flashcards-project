@@ -5,7 +5,8 @@ import {
   CreateUpdateDeckResponse,
   DecksListResponse,
   GetDecksArgs,
-  RemoveDeckArgs,
+  RemoveDeckResponse,
+  RemoveItemArgs,
   UpdateDeckArgs,
 } from './decksApi.types'
 
@@ -46,7 +47,7 @@ const decksApi = flashcardsApi.injectEndpoints({
           }
         },
       }),
-      removeDeck: builder.mutation<void, RemoveDeckArgs>({
+      removeDeck: builder.mutation<RemoveDeckResponse, RemoveItemArgs>({
         invalidatesTags: ['Decks'],
         query: ({ id }) => {
           return {

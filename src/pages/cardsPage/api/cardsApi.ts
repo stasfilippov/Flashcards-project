@@ -9,6 +9,7 @@ import {
   GetDeckByIdArgs,
   GetDeckByIdResponse,
 } from '@/pages/cardsPage/api/cardsApi.types'
+import { RemoveItemArgs } from '@/pages/decksPage/api/decksApi.types'
 import { flashcardsApi } from '@/services/flashcardApi'
 
 const cardsApi = flashcardsApi.injectEndpoints({
@@ -45,7 +46,7 @@ const cardsApi = flashcardsApi.injectEndpoints({
         }
       },
     }),
-    deleteCard: builder.mutation<any, any>({
+    deleteCard: builder.mutation<void, RemoveItemArgs>({
       invalidatesTags: ['Cards'],
       query: ({ id }) => ({
         method: 'DELETE',
@@ -110,6 +111,7 @@ const cardsApi = flashcardsApi.injectEndpoints({
 
 export const {
   useCreateNewCardMutation,
+  useDeleteCardMutation,
   useEditCardMutation,
   useGetCardsQuery,
   useGetDeckByIdQuery,
