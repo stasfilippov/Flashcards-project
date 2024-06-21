@@ -18,7 +18,7 @@ const addDeckSchema = z.object({
 
 type FormValues = z.infer<typeof addDeckSchema>
 type Props = {
-  confirmHandler: (data: { cover?: File | null } & FormValues) => void
+  confirmHandler: (data: { cover?: File | null | string } & FormValues) => void
   defaultValues?: { cover?: null | string } & FormValues
 } & Omit<ModalProps, 'children' | 'open'>
 
@@ -29,20 +29,22 @@ export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) =>
 
   useEffect(() => {
     if (defaultValues?.cover) {
-      setPreviewSource(defaultValues?.cover)
+      setPreviewSource(defaultValues.cover)
     }
   }, [defaultValues?.cover])
 
   useEffect(() => {
+    let newPreview: null | string = null
+
     if (cover) {
-      const newPreview = URL.createObjectURL(cover)
-
-      if (previewSource) {
-        URL.revokeObjectURL(previewSource)
-      }
+      newPreview = URL.createObjectURL(cover)
       setPreviewSource(newPreview)
+    }
 
-      return () => URL.revokeObjectURL(newPreview)
+    return () => {
+      if (newPreview) {
+        URL.revokeObjectURL(newPreview)
+      }
     }
   }, [cover])
 
@@ -50,19 +52,29 @@ export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) =>
     defaultValues: defaultValues,
     resolver: zodResolver(addDeckSchema),
   })
+
   const submitHandler = handleSubmit(data => {
-    confirmHandler({ ...data, cover })
+    confirmHandler({ ...data, cover: cover ?? defaultValues?.cover ?? null })
     reset()
+    setCover(null)
+    setPreviewSource(defaultValues?.cover ?? null)
     setOpen(false)
   })
 
   const openModalHandler = () => {
     setOpen(true)
   }
+
   const closeModalHandler = () => {
     reset()
+    setCover(null)
+    setPreviewSource(defaultValues?.cover ?? null)
     setOpen(false)
   }
+
+  useEffect(() => {
+    reset(defaultValues)
+  }, [defaultValues, reset])
 
   const classNames = {
     container: clsx(s.container),
