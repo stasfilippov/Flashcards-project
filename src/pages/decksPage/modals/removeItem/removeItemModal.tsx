@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { TrashOutline } from '@/assets/icons/components'
 import { Button, Modal, ModalProps, Typography } from '@/components/ui'
+import { RemoveItemArgs } from '@/pages/decksPage/api/decksApi.types'
 import clsx from 'clsx'
 
 import s from './removeItemModal.module.scss'
@@ -9,7 +10,7 @@ import s from './removeItemModal.module.scss'
 type Props = {
   id: string
   name: string
-  onRemove?: (id: string) => Promise<void>
+  onRemove: (data: RemoveItemArgs) => void
   type: 'Card' | 'Deck'
 } & Omit<ModalProps, 'children' | 'open'>
 
@@ -24,7 +25,8 @@ export const RemoveItemModal = ({ id, name, onRemove, type, ...props }: Props) =
   }
 
   const removeHandler = () => {
-    // onRemove(id).then(() => closeModalHandler())
+    onRemove({ id })
+    closeModalHandler()
   }
 
   const classNames = {

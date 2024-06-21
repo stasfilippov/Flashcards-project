@@ -75,10 +75,20 @@ export type UpdateDeckArgs = {
   id: string
 } & Partial<CreateDeckArgs>
 
-export type RemoveDeckArgs = {
+export type RemoveItemArgs = {
   id: string
 }
 
+export type RemoveDeckResponse = {
+  cardsCount: number
+  cover: string
+  created: string
+  id: string
+  isPrivate: boolean
+  name: string
+  updated: string
+  userId: string
+}
 export type SortBy =
   | 'answer'
   | 'author.name'
