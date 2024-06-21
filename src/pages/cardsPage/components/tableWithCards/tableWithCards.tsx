@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useDebounce } from '@/common/hooks'
 import {
   Pagination,
+  Spinner,
   Table,
   TableBody,
   TableCellWithGrade,
@@ -10,6 +11,7 @@ import {
   TableCellWithText,
   TableHeader,
   TableRow,
+  Typography,
 } from '@/components/ui'
 import { TableCellWithControls } from '@/components/ui/table/tableCell/tableCellWithControls'
 import { useGetCardsQuery } from '@/pages/cardsPage/api/cardsApi'
@@ -40,7 +42,7 @@ export const TableWithCards = ({ className, deckId, search, sort, userId }: Prop
   const currentPage = searchParams.get('page') ?? '1'
   const itemsPerPage = searchParams.get('items') ?? '10'
 
-  const { data, error } = useGetCardsQuery({
+  const { data, error, isLoading } = useGetCardsQuery({
     currentPage: +currentPage,
     id: deckId,
     itemsPerPage: +itemsPerPage,
@@ -59,51 +61,69 @@ export const TableWithCards = ({ className, deckId, search, sort, userId }: Prop
   }
 
   const classNames = {
+    emptyTable: clsx(s.emptyTable),
+    loaderWrapper: clsx(s.loaderWrapper),
     tableWrapper: clsx(s.outerContainer, className),
   }
 
-  return (
-    <>
-      <div className={classNames.tableWrapper}>
-        <Table>
-          <TableHeader columns={columns} sortValue={sort} />
-          {error ? (
-            <h1>Error {JSON.stringify(error)}</h1>
-          ) : data ? (
-            <TableBody>
-              {data.items.map(card => {
-                const updatedAt = new Date(card.updated).toLocaleDateString('ru-RU')
+  if (error) {
+    return <h1>Error {JSON.stringify(error)}</h1>
+  }
 
-                return (
-                  <TableRow key={card.id}>
-                    <TableCellWithPhotoQuestions id={'question'} item={card}>
-                      {card.question}
-                    </TableCellWithPhotoQuestions>
-                    <TableCellWithPhotoQuestions id={'answer'} item={card}>
-                      {card.answer}
-                    </TableCellWithPhotoQuestions>
-                    <TableCellWithText id={'updatedQuestion'}>{updatedAt}</TableCellWithText>
-                    <TableCellWithGrade id={'grade'} item={card} />
-                    <TableCellWithControls
-                      id={'control'}
-                      item={{ card }}
-                      userId={userId}
-                      variant={'Card'}
-                    />
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          ) : null}
-        </Table>
+  if (isLoading) {
+    return (
+      <div className={classNames.loaderWrapper}>
+        <Spinner />
       </div>
-      <Pagination
-        currentPage={+currentPage}
-        itemsPerPage={+itemsPerPage}
-        onItemsPerPageChange={itemsPerPageChangeHandler}
-        onPageChange={currentPageChangeHandler}
-        totalPages={data?.pagination.totalPages}
-      />
-    </>
+    )
+  }
+
+  return (
+    <div>
+      {data && data.items.length > 0 ? (
+        <>
+          <div className={classNames.tableWrapper}>
+            <Table>
+              <TableHeader columns={columns} sortValue={sort} />
+              <TableBody>
+                {data.items.map(card => {
+                  const updatedAt = new Date(card.updated).toLocaleDateString('ru-RU')
+
+                  return (
+                    <TableRow key={card.id}>
+                      <TableCellWithPhotoQuestions id={'question'} item={card}>
+                        {card.question}
+                      </TableCellWithPhotoQuestions>
+                      <TableCellWithPhotoQuestions id={'answer'} item={card}>
+                        {card.answer}
+                      </TableCellWithPhotoQuestions>
+                      <TableCellWithText id={'updatedQuestion'}>{updatedAt}</TableCellWithText>
+                      <TableCellWithGrade id={'grade'} item={card} />
+                      <TableCellWithControls
+                        id={'control'}
+                        item={{ card }}
+                        userId={userId}
+                        variant={'Card'}
+                      />
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </div>
+          <Pagination
+            currentPage={+currentPage}
+            itemsPerPage={+itemsPerPage}
+            onItemsPerPageChange={itemsPerPageChangeHandler}
+            onPageChange={currentPageChangeHandler}
+            totalPages={data?.pagination.totalPages}
+          />
+        </>
+      ) : (
+        <div className={classNames.emptyTable}>
+          <Typography variant={'body1'}>This deck is empty.</Typography>
+        </div>
+      )}
+    </div>
   )
 }

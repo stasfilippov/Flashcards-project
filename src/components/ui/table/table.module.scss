@@ -157,3 +157,14 @@
 .starOutline {
   stroke: var(--color-warning-500);
 }
+
+.emptyTable {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loaderWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
