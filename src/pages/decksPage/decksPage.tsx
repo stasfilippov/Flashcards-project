@@ -87,7 +87,12 @@ export const DecksPage = () => {
         <h1>Error: {JSON.stringify(error)}</h1>
       ) : decks ? (
         <>
-          <DecksPageTable decks={decks.items} sortValue={sort} userId={user?.id ?? ''} />
+          <DecksPageTable
+            className={s.table}
+            decks={decks.items}
+            sortValue={sort}
+            userId={user?.id ?? ''}
+          />
           <Pagination
             currentPage={+currentPage}
             itemsPerPage={+itemsPerPage}
