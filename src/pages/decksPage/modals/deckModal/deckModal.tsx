@@ -18,7 +18,7 @@ const addDeckSchema = z.object({
 
 type FormValues = z.infer<typeof addDeckSchema>
 type Props = {
-  confirmHandler: (data: { cover?: File | null } & FormValues) => void
+  confirmHandler: (data: { cover?: File | null | undefined } & FormValues) => void
   defaultValues?: { cover?: null | string } & FormValues
 } & Omit<ModalProps, 'children' | 'open'>
 
@@ -26,23 +26,26 @@ export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) =>
   const [open, setOpen] = useState(false)
   const [cover, setCover] = useState<File | null>(null)
   const [previewSource, setPreviewSource] = useState<null | string>('')
+  const [isImageDeleted, setImageDeleted] = useState(false)
 
   useEffect(() => {
     if (defaultValues?.cover) {
-      setPreviewSource(defaultValues?.cover)
+      setPreviewSource(defaultValues.cover)
     }
   }, [defaultValues?.cover])
 
   useEffect(() => {
+    let newPreview: null | string = null
+
     if (cover) {
-      const newPreview = URL.createObjectURL(cover)
-
-      if (previewSource) {
-        URL.revokeObjectURL(previewSource)
-      }
+      newPreview = URL.createObjectURL(cover)
       setPreviewSource(newPreview)
+    }
 
-      return () => URL.revokeObjectURL(newPreview)
+    return () => {
+      if (newPreview) {
+        URL.revokeObjectURL(newPreview)
+      }
     }
   }, [cover])
 
@@ -50,19 +53,31 @@ export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) =>
     defaultValues: defaultValues,
     resolver: zodResolver(addDeckSchema),
   })
+
   const submitHandler = handleSubmit(data => {
-    confirmHandler({ ...data, cover })
+    const newCover = cover ?? (isImageDeleted ? null : undefined)
+    const dataToSend = { ...data, cover: newCover }
+
+    confirmHandler(dataToSend)
     reset()
+    setCover(null)
     setOpen(false)
   })
 
   const openModalHandler = () => {
     setOpen(true)
   }
+
   const closeModalHandler = () => {
     reset()
+    setCover(null)
+    setPreviewSource(defaultValues?.cover ?? null)
     setOpen(false)
   }
+
+  useEffect(() => {
+    reset(defaultValues)
+  }, [defaultValues, reset])
 
   const classNames = {
     container: clsx(s.container),
@@ -93,6 +108,7 @@ export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) =>
             label={'deckImg'}
             previewImg={previewSource}
             setCover={setCover}
+            setImageDeleted={setImageDeleted}
             setPreview={setPreviewSource}
           />
           <ControlledCheckbox control={control} label={'Private pack'} name={'isPrivate'} />
@@ -101,7 +117,7 @@ export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) =>
               Cancel
             </Button>
             <Button type={'submit'} variant={'primary'}>
-              Add new Deck
+              {defaultValues ? 'Update Deck' : 'Add New Deck'}
             </Button>
           </div>
         </form>

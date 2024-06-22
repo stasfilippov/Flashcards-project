@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useRef, useState } from 'react'
+import React, { ComponentPropsWithoutRef, useRef, useState } from 'react'
 
 import { ImageOutline } from '@/assets/icons/components'
 import defaultImg from '@/assets/img/no-image.jpg'
@@ -14,9 +14,17 @@ type Props = {
   label: string
   previewImg?: null | string
   setCover: (file: File | null) => void
+  setImageDeleted: (isImageDeleted: boolean) => void
   setPreview: (file: null | string) => void
 } & ComponentPropsWithoutRef<'input'>
-export const InputTypeFile = ({ className, cover, previewImg, setCover, setPreview }: Props) => {
+export const InputTypeFile = ({
+  className,
+  cover,
+  previewImg,
+  setCover,
+  setImageDeleted,
+  setPreview,
+}: Props) => {
   const [isBroken, setIsBroken] = useState(false)
   const internalRef = useRef<HTMLInputElement>(null)
 
@@ -24,7 +32,9 @@ export const InputTypeFile = ({ className, cover, previewImg, setCover, setPrevi
     internalRef && internalRef.current?.click()
   }
 
-  const deleteImageHandler = () => {
+  const deleteImageHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    setImageDeleted(true)
     setCover(null)
     setPreview(null)
   }
