@@ -57,6 +57,7 @@ const decksApi = flashcardsApi.injectEndpoints({
         },
       }),
       getMinMaxCards: builder.query<MinMaxCardsResponse, void>({
+        providesTags: ['MinMaxCards'],
         query: () => ({
           method: 'GET',
           url: '/v2/decks/min-max-cards',
