@@ -68,6 +68,12 @@ export const DecksPage = () => {
 
   const showDecksHandler = (tabValue: string) => {
     searchParams.set('page', '1')
+    if (tabValue) {
+      searchParams.set('tab', tabValue)
+    } else {
+      searchParams.delete('tab')
+    }
+    setSearchParams(searchParams)
     setCurrentTab(tabValue)
   }
 
