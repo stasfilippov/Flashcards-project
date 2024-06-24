@@ -8,6 +8,7 @@ type Props = {
   clearFilters: () => void
   currentTabValue: string
   decksRangeValue: number[]
+  maxRangeValue: number | undefined
   searchValue: string
   setCurrentTabValue: (currentTabValue: string) => void
   setDecksRangeValue: (decksRangeValue: number[]) => void
@@ -18,6 +19,7 @@ export const DecksPageFilters = (props: Props) => {
     clearFilters,
     currentTabValue,
     decksRangeValue,
+    maxRangeValue,
     searchValue,
     setCurrentTabValue,
     setDecksRangeValue,
@@ -44,6 +46,7 @@ export const DecksPageFilters = (props: Props) => {
       <div className={s.sliderBox}>
         <Typography variant={'body2'}>Number of cards</Typography>
         <Slider
+          max={maxRangeValue}
           minStepsBetweenThumbs={1}
           onValueChange={setDecksRangeValue}
           value={decksRangeValue}

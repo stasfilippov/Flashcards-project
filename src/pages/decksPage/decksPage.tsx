@@ -1,11 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '@/common/hooks'
 import { Page } from '@/components/layout'
 import { Pagination, Typography } from '@/components/ui'
 import { useMeQuery } from '@/pages/auth/api/authApi'
-import { useCreateDeckMutation, useGetDecksQuery } from '@/pages/decksPage/api/decksApi'
+import {
+  useCreateDeckMutation,
+  useGetDecksQuery,
+  useGetMinMaxCardsQuery,
+} from '@/pages/decksPage/api/decksApi'
 import { CreateDeckArgs, SortValues } from '@/pages/decksPage/api/decksApi.types'
 import { DecksPageFilters, DecksPageTable } from '@/pages/decksPage/components'
 import { DeckModal } from '@/pages/decksPage/modals/deckModal/deckModal'
@@ -15,15 +19,25 @@ import s from './decksPage.module.scss'
 export const DecksPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { data: user } = useMeQuery()
+  const { data: minMaxCards } = useGetMinMaxCardsQuery()
 
   const search = searchParams.get('name') ?? ''
   const sort = searchParams.get('sort') as SortValues
   const currentPage = searchParams.get('page') ?? '1'
   const itemsPerPage = searchParams.get('items') ?? '10'
+  const currentTab = searchParams.get('tab') ?? ''
 
-  const [currentTab, setCurrentTab] = useState('')
-  const [decksRange, setDecksRange] = useState<number[]>([0, 100])
+  const [decksRange, setDecksRange] = useState<number[]>([
+    minMaxCards?.min ?? 0,
+    minMaxCards?.max ?? 0,
+  ])
   const debouncedSearchValue = useDebounce(search, 500)
+
+  useEffect(() => {
+    if (minMaxCards) {
+      setDecksRange([minMaxCards.min, minMaxCards.max])
+    }
+  }, [minMaxCards])
 
   const { data: decks, error } = useGetDecksQuery({
     authorId: currentTab,
@@ -38,9 +52,9 @@ export const DecksPage = () => {
   const [createDeck] = useCreateDeckMutation()
 
   const clearFiltersHandler = () => {
-    setSearchParams({ items: itemsPerPage })
-    setCurrentTab('')
-    setDecksRange([0, 100])
+    searchParams.delete('tab')
+    setSearchParams({ ...searchParams, items: itemsPerPage })
+    setDecksRange([minMaxCards?.min, minMaxCards?.max] as number[])
   }
   const changeItemsPerPageHandler = (itemsCount: number) => {
     searchParams.set('page', '1')
@@ -74,7 +88,6 @@ export const DecksPage = () => {
       searchParams.delete('tab')
     }
     setSearchParams(searchParams)
-    setCurrentTab(tabValue)
   }
 
   return (
@@ -90,6 +103,7 @@ export const DecksPage = () => {
         clearFilters={clearFiltersHandler}
         currentTabValue={currentTab}
         decksRangeValue={decksRange}
+        maxRangeValue={minMaxCards?.max}
         searchValue={search}
         setCurrentTabValue={showDecksHandler}
         setDecksRangeValue={setDecksRange}
