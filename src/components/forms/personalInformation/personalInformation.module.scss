@@ -24,6 +24,7 @@
 }
 
 .nicknameBox {
+  cursor: default;
   display: flex;
   gap: 8px;
   margin-top: 6px;
@@ -34,6 +35,7 @@
 }
 
 .email {
+  cursor: default;
   margin-bottom: 14px;
   color: var(--color-dark-100);
 }
