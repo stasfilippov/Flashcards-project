@@ -3,8 +3,11 @@ import { Page, User } from '@/components/layout'
 import { ProgressBar } from '@/components/ui/progressBar/progressBar'
 import { useMeQuery } from '@/pages/auth/api/authApi'
 
+import { useUpdateUserMutation } from './api/profileApi'
+
 export const Profile = () => {
   const { data, isError, isLoading } = useMeQuery()
+  const [updateUser] = useUpdateUserMutation()
 
   if (isError) {
     // TODO error handling
@@ -24,7 +27,7 @@ export const Profile = () => {
 
     return (
       <Page>
-        <PersonalInformation onSubmit={() => {}} user={user} />
+        <PersonalInformation onSubmit={updateUser} user={user} />
       </Page>
     )
   }
