@@ -1,4 +1,5 @@
 import {
+  ForgotPasswordArgs,
   LoginArgs,
   LoginResponse,
   SignUpArgs,
@@ -50,6 +51,14 @@ const authApi = flashcardsApi.injectEndpoints({
         url: `/v1/auth/me`,
       }),
     }),
+    recoverPassword: builder.mutation<void, ForgotPasswordArgs>({
+      invalidatesTags: ['Auth'],
+      query: args => ({
+        body: args,
+        method: 'POST',
+        url: `/v1/auth/recover-password`,
+      }),
+    }),
     signUp: builder.mutation<signUpResponse, SignUpArgs>({
       query: args => ({
         body: args,
@@ -72,6 +81,7 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useMeQuery,
+  useRecoverPasswordMutation,
   useSignUpMutation,
   useUpdateUserDataMutation,
 } = authApi
