@@ -33,9 +33,13 @@ type Props = {
 export const CardModal = ({ confirmHandler, defaultValues, title, ...props }: Props) => {
   const [open, setOpen] = useState(false)
   const [questionImg, setQuestionImg] = useState<File | null>(null)
-  const [questionImgPreview, setQuestionImgPreview] = useState<null | string>('')
   const [answerImg, setAnswerImg] = useState<File | null>(null)
+
+  const [questionImgPreview, setQuestionImgPreview] = useState<null | string>('')
   const [answerImgPreview, setAnswerImgPreview] = useState<null | string>('')
+
+  const [isQuestionImgDeleted, setQuestionImgDeleted] = useState(false)
+  const [isAnswerImgDeleted, setAnswerImgDeleted] = useState(false)
 
   useEffect(() => {
     if (defaultValues?.previewImgQuestion || defaultValues?.previewImgAnswer) {
@@ -45,28 +49,32 @@ export const CardModal = ({ confirmHandler, defaultValues, title, ...props }: Pr
   }, [defaultValues?.previewImgAnswer, defaultValues?.previewImgQuestion])
 
   useEffect(() => {
+    let newPreview: null | string = null
+
     if (questionImg) {
-      const newPreview = URL.createObjectURL(questionImg)
-
-      if (questionImgPreview) {
-        URL.revokeObjectURL(questionImgPreview)
-      }
+      newPreview = URL.createObjectURL(questionImg)
       setQuestionImgPreview(newPreview)
+    }
 
-      return () => URL.revokeObjectURL(newPreview)
+    return () => {
+      if (newPreview) {
+        URL.revokeObjectURL(newPreview)
+      }
     }
   }, [questionImg])
 
   useEffect(() => {
+    let newPreview: null | string = null
+
     if (answerImg) {
-      const newPreview = URL.createObjectURL(answerImg)
-
-      if (answerImgPreview) {
-        URL.revokeObjectURL(answerImgPreview)
-      }
+      newPreview = URL.createObjectURL(answerImg)
       setAnswerImgPreview(newPreview)
+    }
 
-      return () => URL.revokeObjectURL(newPreview)
+    return () => {
+      if (newPreview) {
+        URL.revokeObjectURL(newPreview)
+      }
     }
   }, [answerImg])
 
@@ -76,8 +84,13 @@ export const CardModal = ({ confirmHandler, defaultValues, title, ...props }: Pr
   })
 
   const submitHandler = handleSubmit(({ answer, question }) => {
-    confirmHandler({ answer, answerImg, question, questionImg })
+    const newQuestionImg = questionImg ?? (isQuestionImgDeleted ? null : undefined)
+    const newAnswerImg = answerImg ?? (isAnswerImgDeleted ? null : undefined)
+
+    confirmHandler({ answer, answerImg: newAnswerImg, question, questionImg: newQuestionImg })
     reset()
+    setAnswerImg(null)
+    setQuestionImg(null)
     setOpen(false)
   })
   const openModalHandler = () => {
@@ -85,8 +98,16 @@ export const CardModal = ({ confirmHandler, defaultValues, title, ...props }: Pr
   }
   const closeModalHandler = () => {
     reset()
+    setAnswerImg(null)
+    setQuestionImg(null)
+    setAnswerImgPreview(defaultValues?.previewImgAnswer ?? null)
+    setQuestionImgPreview(defaultValues?.previewImgQuestion ?? null)
     setOpen(false)
   }
+
+  useEffect(() => {
+    reset(defaultValues)
+  }, [defaultValues, reset])
 
   const classNames = {
     buttonsWrapper: clsx(s.buttonsWrapper),
@@ -118,6 +139,7 @@ export const CardModal = ({ confirmHandler, defaultValues, title, ...props }: Pr
             <ControlledTextField
               className={classNames.input}
               control={control}
+              defaultValue={defaultValues?.question}
               label={'Question'}
               name={'question'}
             />
@@ -126,6 +148,7 @@ export const CardModal = ({ confirmHandler, defaultValues, title, ...props }: Pr
               label={'questionImg'}
               previewImg={questionImgPreview}
               setCover={setQuestionImg}
+              setImageDeleted={setQuestionImgDeleted}
               setPreview={setQuestionImgPreview}
             />
           </div>
@@ -133,6 +156,7 @@ export const CardModal = ({ confirmHandler, defaultValues, title, ...props }: Pr
             <ControlledTextField
               className={classNames.input}
               control={control}
+              defaultValue={defaultValues?.answer}
               label={'Answer'}
               name={'answer'}
             />
@@ -141,6 +165,7 @@ export const CardModal = ({ confirmHandler, defaultValues, title, ...props }: Pr
               label={'answerImg'}
               previewImg={answerImgPreview}
               setCover={setAnswerImg}
+              setImageDeleted={setAnswerImgDeleted}
               setPreview={setAnswerImgPreview}
             />
           </div>
