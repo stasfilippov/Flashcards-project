@@ -6,8 +6,6 @@ import {
   GetCardByIdArgs,
   GetCardsArgs,
   GetCardsResponse,
-  GetDeckByIdArgs,
-  GetDeckByIdResponse,
 } from '@/pages/cardsPage/api/cardsApi.types'
 import { RemoveItemArgs } from '@/pages/decksPage/api/decksApi.types'
 import { flashcardsApi } from '@/services/flashcardApi'
@@ -86,6 +84,7 @@ const cardsApi = flashcardsApi.injectEndpoints({
       },
     }),
     getCardById: builder.query<Card, GetCardByIdArgs>({
+      providesTags: ['Cards'],
       query: ({ id }) => ({
         method: 'GET',
         url: `/v1/cards/${id}`,
@@ -99,13 +98,6 @@ const cardsApi = flashcardsApi.injectEndpoints({
         url: `/v1/decks/${id}/cards`,
       }),
     }),
-    getDeckById: builder.query<GetDeckByIdResponse, GetDeckByIdArgs>({
-      providesTags: ['Cards'],
-      query: ({ id }) => ({
-        method: 'GET',
-        url: `/v1/decks/${id}`,
-      }),
-    }),
   }),
 })
 
@@ -114,5 +106,4 @@ export const {
   useDeleteCardMutation,
   useEditCardMutation,
   useGetCardsQuery,
-  useGetDeckByIdQuery,
 } = cardsApi

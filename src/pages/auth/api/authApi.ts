@@ -29,6 +29,20 @@ const authApi = flashcardsApi.injectEndpoints({
         url: `/v1/auth/login`,
       }),
     }),
+    logout: builder.mutation<void, void>({
+      invalidatesTags: ['Auth'],
+      onQueryStarted(_, { dispatch }) {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+
+        //-https://stackoverflow.com/questions/71573317/how-to-invalidate-rtk-query-cachesreset-state-globally
+        dispatch(flashcardsApi.util.resetApiState())
+      },
+      query: _ => ({
+        method: 'POST',
+        url: `/v1/auth/logout`,
+      }),
+    }),
     me: builder.query<authMeResponse, void>({
       providesTags: ['Auth'],
       query: _ => ({
@@ -54,5 +68,10 @@ const authApi = flashcardsApi.injectEndpoints({
   }),
 })
 
-export const { useLoginMutation, useMeQuery, useSignUpMutation, useUpdateUserDataMutation } =
-  authApi
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useMeQuery,
+  useSignUpMutation,
+  useUpdateUserDataMutation,
+} = authApi

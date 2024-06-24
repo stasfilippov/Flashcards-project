@@ -1,3 +1,4 @@
+import { GetDeckByIdArgs, GetDeckByIdResponse } from '@/pages/cardsPage/api/cardsApi.types'
 import { flashcardsApi } from '@/services/flashcardApi'
 
 import {
@@ -36,6 +37,13 @@ const decksApi = flashcardsApi.injectEndpoints({
             url: 'v1/decks',
           }
         },
+      }),
+      getDeckById: builder.query<GetDeckByIdResponse, GetDeckByIdArgs>({
+        providesTags: ['Decks'],
+        query: ({ id }) => ({
+          method: 'GET',
+          url: `/v1/decks/${id}`,
+        }),
       }),
       getDecks: builder.query<DecksListResponse, GetDecksArgs | void>({
         providesTags: ['Decks'],
@@ -88,6 +96,7 @@ const decksApi = flashcardsApi.injectEndpoints({
 
 export const {
   useCreateDeckMutation,
+  useGetDeckByIdQuery,
   useGetDecksQuery,
   useRemoveDeckMutation,
   useUpdateDeckMutation,
