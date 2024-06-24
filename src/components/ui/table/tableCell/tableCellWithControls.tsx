@@ -74,7 +74,7 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
             defaultValues={{ cover: item.cover, isPrivate: item.isPrivate, name: item.name }}
             id={item.id}
           />
-          <button disabled={!item.cardsCount}>
+          <button disabled={!item.cardsCount} onClick={learnHandler}>
             <PlayCircleOutline width={16} />
           </button>
           <RemoveItemModal
