@@ -66,6 +66,11 @@ export const DecksPage = () => {
     clearFiltersHandler()
   }
 
+  const showDecksHandler = (tabValue: string) => {
+    searchParams.set('page', '1')
+    setCurrentTab(tabValue)
+  }
+
   return (
     <Page>
       <div className={s.decksHeader}>
@@ -80,7 +85,7 @@ export const DecksPage = () => {
         currentTabValue={currentTab}
         decksRangeValue={decksRange}
         searchValue={search}
-        setCurrentTabValue={setCurrentTab}
+        setCurrentTabValue={showDecksHandler}
         setDecksRangeValue={setDecksRange}
       />
       {error ? (
