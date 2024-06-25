@@ -17,6 +17,7 @@ export const ForgotPasswordPage = () => {
       html: recoverPasswordTemplate.html,
       subject: recoverPasswordTemplate.subject,
     }).unwrap()
+    await router.navigate(ROUTES.checkEmail)
 
     //TODO - add error handler
     console.log(error)
