@@ -55,7 +55,11 @@ export const baseQueryWithReauth: BaseQueryFn<
 
           result = await baseQuery(args, api, extraOptions)
         } else {
-          await router.navigate(ROUTES.signIn)
+          const currentPath = window.location.pathname
+
+          if (!currentPath.startsWith(`${ROUTES.createNewPassword}/`)) {
+            await router.navigate(ROUTES.signIn)
+          }
         }
       } finally {
         release()

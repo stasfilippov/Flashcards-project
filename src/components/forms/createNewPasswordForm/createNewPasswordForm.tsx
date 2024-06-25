@@ -16,7 +16,7 @@ const createNewPasswordSchema = z.object({
 type FormValues = z.infer<typeof createNewPasswordSchema>
 
 type Props = {
-  onSubmit: (args: FormValues) => void
+  onSubmit: (password: string) => void
 }
 
 export const CreateNewPasswordForm = ({ onSubmit }: Props) => {
@@ -25,7 +25,7 @@ export const CreateNewPasswordForm = ({ onSubmit }: Props) => {
   })
 
   const submitHandler = handleSubmit(data => {
-    onSubmit(data)
+    onSubmit(data.password)
   })
 
   const classNames = {
