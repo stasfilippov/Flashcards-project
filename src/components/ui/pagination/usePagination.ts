@@ -65,8 +65,8 @@ export const usePagination = ({
 
   const lastPage = paginationRange.at(-1)
 
-  const isFirstPage = currentPage === 1
-  const isLastPage = currentPage === lastPage
+  const isFirstPage = currentPage === 1 || !totalPages
+  const isLastPage = currentPage === lastPage || !totalPages
 
   const nextPageClickHandler = useCallback(() => {
     onPageChange(currentPage + 1)
