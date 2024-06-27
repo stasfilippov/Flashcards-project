@@ -13,7 +13,7 @@ import { flashcardsApi } from '@/services/flashcardApi'
 const cardsApi = flashcardsApi.injectEndpoints({
   endpoints: builder => ({
     createNewCard: builder.mutation<Card, CreateCardArgs>({
-      invalidatesTags: ['Cards'],
+      invalidatesTags: ['Cards', 'MinMaxCards'],
       query: ({ answer, answerImg, id, question, questionImg }) => {
         const formData = new FormData()
 
@@ -45,7 +45,7 @@ const cardsApi = flashcardsApi.injectEndpoints({
       },
     }),
     deleteCard: builder.mutation<void, RemoveItemArgs>({
-      invalidatesTags: ['Cards'],
+      invalidatesTags: ['Cards', 'MinMaxCards'],
       query: ({ id }) => ({
         method: 'DELETE',
         url: `/v1/cards/${id}`,

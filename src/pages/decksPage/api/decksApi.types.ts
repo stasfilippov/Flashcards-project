@@ -99,3 +99,8 @@ export type SortBy =
   | 'name'
   | 'question'
   | 'updated'
+
+export type MinMaxCardsResponse = {
+  max: number
+  min: number
+}
