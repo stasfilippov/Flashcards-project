@@ -5,6 +5,7 @@ import { ROUTES } from '@/common/constants'
 import { Button, Typography } from '@/components/ui'
 import { useCreateNewCardMutation } from '@/pages/cardsPage/api/cardsApi'
 import { CreateCardArgs, GetDeckByIdResponse } from '@/pages/cardsPage/api/cardsApi.types'
+import { DropDownDeckMenu } from '@/pages/cardsPage/components/dropDownDeckMenu/dropDownDeckMenu'
 import { CardModal } from '@/pages/cardsPage/modals/cardModal/cardModal'
 import clsx from 'clsx'
 
@@ -36,6 +37,7 @@ export const HeaderOfCardsPage = ({ deck, isMy }: Props) => {
         <Typography className={classNames.title} variant={'h1'}>
           {deck.name}
         </Typography>
+        {isMy && <DropDownDeckMenu deck={deck} />}
         {isMy ? (
           <CardModal confirmHandler={createCardHandler} title={'Add New Card'} />
         ) : (
