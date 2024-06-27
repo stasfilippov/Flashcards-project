@@ -1,4 +1,4 @@
-import { Edit2Outline, PlayCircleOutline } from '@/assets/icons/components'
+import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets/icons/components'
 import { ROUTES } from '@/common/constants'
 import { DropdownItem, DropdownMenu, DropdownSeparator, Typography } from '@/components/ui'
 import { useRemoveDeckMutation } from '@/pages/decksPage/api/decksApi'
@@ -21,7 +21,7 @@ export const DropDownDeckMenu = ({ deck }: Props) => {
   const [removeDeck] = useRemoveDeckMutation()
 
   const removeDeckHandler = ({ id }: RemoveItemArgs) => {
-    removeDeck({ id })
+    removeDeck({ id }).then(() => router.navigate(ROUTES.decks))
   }
 
   const learnHandler = () => {
@@ -30,7 +30,7 @@ export const DropDownDeckMenu = ({ deck }: Props) => {
 
   return (
     <DropdownMenu>
-      <DropdownItem className={classNames.item} onSelect={learnHandler}>
+      <DropdownItem className={classNames.item} disabled={!deck.cardsCount} onSelect={learnHandler}>
         <PlayCircleOutline width={16} />
         <Typography variant={'caption'}>Learn</Typography>
       </DropdownItem>
@@ -41,8 +41,20 @@ export const DropDownDeckMenu = ({ deck }: Props) => {
       </DropdownItem>
       <DropdownSeparator />
       <DropdownItem className={classNames.item}>
-        <RemoveItemModal id={deck.id} name={deck.name} onRemove={removeDeckHandler} type={'Deck'} />
-        <Typography variant={'caption'}>Delete</Typography>
+        <RemoveItemModal id={deck.id} name={deck.name} onRemove={removeDeckHandler} type={'Deck'}>
+          {openModal => (
+            <div
+              className={classNames.item}
+              onClick={e => {
+                e.stopPropagation()
+                openModal()
+              }}
+            >
+              <TrashOutline width={16} />
+              <Typography variant={'caption'}>Delete</Typography>
+            </div>
+          )}
+        </RemoveItemModal>
       </DropdownItem>
     </DropdownMenu>
   )

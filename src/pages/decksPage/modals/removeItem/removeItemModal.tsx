@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { JSX, useState } from 'react'
 
-import { TrashOutline } from '@/assets/icons/components'
 import { Button, Modal, ModalProps, Typography } from '@/components/ui'
 import { RemoveItemArgs } from '@/pages/decksPage/api/decksApi.types'
 import clsx from 'clsx'
@@ -8,13 +7,14 @@ import clsx from 'clsx'
 import s from './removeItemModal.module.scss'
 
 type Props = {
+  children: (openModal: () => void) => JSX.Element
   id: string
   name: string
   onRemove: (data: RemoveItemArgs) => void
   type: 'Card' | 'Deck'
 } & Omit<ModalProps, 'children' | 'open'>
 
-export const RemoveItemModal = ({ id, name, onRemove, type, ...props }: Props) => {
+export const RemoveItemModal = ({ children, id, name, onRemove, type, ...props }: Props) => {
   const [open, setOpen] = useState<boolean>(false)
 
   const openModalHandler = () => {
@@ -37,9 +37,7 @@ export const RemoveItemModal = ({ id, name, onRemove, type, ...props }: Props) =
 
   return (
     <div className={classNames.container}>
-      <button className={classNames.trigger} onClick={openModalHandler}>
-        <TrashOutline width={16} />
-      </button>
+      {children(openModalHandler)}
       <Modal onClose={closeModalHandler} open={open} title={`Delete ${type}`} {...props}>
         <Typography>
           Do you really want to remove <Typography variant={'subtitle1'}>{name}</Typography>?

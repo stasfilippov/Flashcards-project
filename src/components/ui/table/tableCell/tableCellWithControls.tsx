@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { PlayCircleOutline } from '@/assets/icons/components'
+import { PlayCircleOutline, TrashOutline } from '@/assets/icons/components'
 import { ROUTES } from '@/common/constants'
 import { TableCell } from '@/components/ui/table'
 import { useDeleteCardMutation, useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
@@ -77,12 +77,13 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
           <button disabled={!item.cardsCount} onClick={learnHandler}>
             <PlayCircleOutline width={16} />
           </button>
-          <RemoveItemModal
-            id={item.id}
-            name={item.name}
-            onRemove={removeDeckHandler}
-            type={'Deck'}
-          />
+          <RemoveItemModal id={item.id} name={item.name} onRemove={removeDeckHandler} type={'Deck'}>
+            {openModal => (
+              <button onClick={openModal}>
+                <TrashOutline width={16} />
+              </button>
+            )}
+          </RemoveItemModal>
         </>
       ) : (
         <>
@@ -125,12 +126,13 @@ const CardVariant = ({ currentUser, item }: CardVariantProps) => {
         }
         title={'Edit card'}
       />
-      <RemoveItemModal
-        id={item.id}
-        name={item.question}
-        onRemove={removeCardHandler}
-        type={'Card'}
-      />
+      <RemoveItemModal id={item.id} name={item.question} onRemove={removeCardHandler} type={'Card'}>
+        {openModal => (
+          <button onClick={openModal}>
+            <TrashOutline width={16} />
+          </button>
+        )}
+      </RemoveItemModal>
     </>
   ) : (
     <></>
