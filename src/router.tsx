@@ -13,6 +13,7 @@ import {
   CheckEmail,
   DecksPage,
   Error,
+  ForgotPasswordPage,
   LearnPage,
   Profile,
   SignInPage,
