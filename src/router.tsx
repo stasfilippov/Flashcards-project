@@ -29,7 +29,7 @@ const publicRoutes: RouteObject[] = [
     path: ROUTES.signIn,
   },
   {
-    element: <div>Forgot Password</div>,
+    element: <ForgotPasswordPage />,
     path: ROUTES.forgotPassword,
   },
   {

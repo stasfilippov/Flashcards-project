@@ -1,0 +1,1 @@
+export { recoverPasswordTemplate } from './recoverPasswordTemplate'

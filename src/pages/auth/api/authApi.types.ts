@@ -35,3 +35,9 @@ export type SignUpArgs = {
   sendConfirmationEmail?: boolean
   subject?: string
 }
+
+export type ForgotPasswordArgs = {
+  email: string
+  html?: string
+  subject?: string
+}

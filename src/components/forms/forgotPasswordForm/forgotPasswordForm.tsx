@@ -17,14 +17,14 @@ const forgotPasswordSchema = z.object({
 
 type FormValues = z.infer<typeof forgotPasswordSchema>
 type Props = {
-  onSubmit: (args: FormValues) => void
+  onSubmit: (email: string) => void
 }
 export const ForgotPasswordForm = ({ onSubmit }: Props) => {
   const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(forgotPasswordSchema),
   })
   const submitHandler = handleSubmit(data => {
-    onSubmit(data)
+    onSubmit(data.email)
   })
 
   return (
