@@ -1,12 +1,12 @@
 import {
+  AuthMeResponse,
   ForgotPasswordArgs,
   LoginArgs,
   LoginResponse,
   SignUpArgs,
-  authMeResponse,
-  signUpResponse,
-  updateUserDataArgs,
-  updateUserDataResponse,
+  SignUpResponse,
+  UpdateUserDataArgs,
+  UpdateUserDataResponse,
 } from '@/pages/auth/api/authApi.types'
 import { flashcardsApi } from '@/services/flashcardApi'
 
@@ -44,7 +44,7 @@ const authApi = flashcardsApi.injectEndpoints({
         url: `/v1/auth/logout`,
       }),
     }),
-    me: builder.query<authMeResponse, void>({
+    me: builder.query<AuthMeResponse, void>({
       providesTags: ['Auth'],
       query: _ => ({
         method: 'GET',
@@ -59,14 +59,14 @@ const authApi = flashcardsApi.injectEndpoints({
         url: `/v1/auth/recover-password`,
       }),
     }),
-    signUp: builder.mutation<signUpResponse, SignUpArgs>({
+    signUp: builder.mutation<SignUpResponse, SignUpArgs>({
       query: args => ({
         body: args,
         method: 'POST',
         url: `/v1/auth/sign-up`,
       }),
     }),
-    updateUserData: builder.mutation<updateUserDataResponse, updateUserDataArgs>({
+    updateUserData: builder.mutation<UpdateUserDataResponse, UpdateUserDataArgs>({
       invalidatesTags: ['Auth'],
       query: args => ({
         body: args,

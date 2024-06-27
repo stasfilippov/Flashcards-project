@@ -4,6 +4,7 @@ import { Edit2Outline } from '@/assets/icons/components'
 import { commonStyles } from '@/common/styles'
 import { User } from '@/components/layout'
 import { Avatar, Button, Card } from '@/components/ui'
+import { UpdateProfileArgs } from '@/pages/profile/api/profileApi.types'
 
 import s from './personalInformation.module.scss'
 
@@ -11,9 +12,10 @@ import { ChangeNicknameForm, NicknameFormValues } from './changeNicknameForm'
 import { PersonalInformationContent } from './personalInformationContent'
 
 type Props = {
-  onSubmit: (args: NicknameFormValues) => void
+  onSubmit: (args: UpdateProfileArgs) => void
   user: User
 }
+
 export const PersonalInformation = ({ onSubmit, user }: Props) => {
   const [editMode, setEditMode] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -31,10 +33,23 @@ export const PersonalInformation = ({ onSubmit, user }: Props) => {
   }
 
   const changePhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files)
+    if (e.target.files && e.target.files.length) {
+      const avatar = e.target.files[0]
+
+      onSubmit({ avatar })
+    }
   }
+
+  const changeNicknameHandler = ({ nickname }: NicknameFormValues) => {
+    onSubmit({ name: nickname })
+  }
+
   const content = editMode ? (
-    <ChangeNicknameForm closeEditMode={closeEditModeHandler} onSubmit={onSubmit} />
+    <ChangeNicknameForm
+      closeEditMode={closeEditModeHandler}
+      name={user.name}
+      onSubmit={changeNicknameHandler}
+    />
   ) : (
     <PersonalInformationContent
       email={user.email}
@@ -57,6 +72,7 @@ export const PersonalInformation = ({ onSubmit, user }: Props) => {
                 variant={'secondary'}
               />
               <input
+                accept={'image/png, image/gif, image/jpeg'}
                 onChange={changePhotoHandler}
                 ref={fileInputRef}
                 style={{ display: 'none' }}
