@@ -14,9 +14,10 @@ const changeNicknameSchema = z.object({
 export type NicknameFormValues = z.infer<typeof changeNicknameSchema>
 type Props = {
   closeEditMode: () => void
+  name: string
   onSubmit: (args: NicknameFormValues) => void
 }
-export const ChangeNicknameForm = ({ closeEditMode, onSubmit }: Props) => {
+export const ChangeNicknameForm = ({ closeEditMode, name, onSubmit }: Props) => {
   const { control, handleSubmit } = useForm<NicknameFormValues>({
     resolver: zodResolver(changeNicknameSchema),
   })
@@ -30,6 +31,7 @@ export const ChangeNicknameForm = ({ closeEditMode, onSubmit }: Props) => {
       <ControlledTextField
         className={s.input}
         control={control}
+        defaultValue={name}
         label={'Nickname'}
         name={'nickname'}
       />
