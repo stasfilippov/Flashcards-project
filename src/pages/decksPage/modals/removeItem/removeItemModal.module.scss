@@ -2,30 +2,6 @@
   display: inline-block;
 }
 
-.trigger {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 5px;
-
-  background: transparent;
-  border: none;
-  border-radius: 50px;
-
-  transition: all 0.2s;
-
-  &:hover {
-    cursor: pointer;
-    background-color: var(--color-dark-500);
-  }
-
-  &[disabled] {
-    pointer-events: none;
-    opacity: 0.6;
-  }
-}
-
 .buttonsContainer {
   display: flex;
   justify-content: space-between;

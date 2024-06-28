@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { PlayCircleOutline, TrashOutline } from '@/assets/icons/components'
+import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets/icons/components'
 import { ROUTES } from '@/common/constants'
 import { TableCell } from '@/components/ui/table'
 import { useDeleteCardMutation, useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
@@ -73,7 +73,13 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
             confirmHandler={updateDeckHandler}
             defaultValues={{ cover: item.cover, isPrivate: item.isPrivate, name: item.name }}
             id={item.id}
-          />
+          >
+            {openModal => (
+              <button onClick={openModal}>
+                <Edit2Outline width={16} />
+              </button>
+            )}
+          </DeckModal>
           <button disabled={!item.cardsCount} onClick={learnHandler}>
             <PlayCircleOutline width={16} />
           </button>

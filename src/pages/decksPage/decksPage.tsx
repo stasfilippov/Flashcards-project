@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '@/common/hooks'
 import { Page } from '@/components/layout'
-import { Pagination, Typography } from '@/components/ui'
+import { Button, Pagination, Typography } from '@/components/ui'
 import { useMeQuery } from '@/pages/auth/api/authApi'
 import {
   useCreateDeckMutation,
@@ -96,7 +96,18 @@ export const DecksPage = () => {
         <Typography component={'h1'} variant={'h1'}>
           Decks lists
         </Typography>
-        <DeckModal confirmHandler={createDeckHandler} />
+        <DeckModal confirmHandler={createDeckHandler}>
+          {openModal => (
+            <Button
+              onClick={e => {
+                e.stopPropagation()
+                openModal()
+              }}
+            >
+              Add new Deck
+            </Button>
+          )}
+        </DeckModal>
       </div>
       <DecksPageFilters
         changeSearchValue={changeSearchValueHandler}

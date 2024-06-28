@@ -32,7 +32,6 @@ export const RemoveItemModal = ({ children, id, name, onRemove, type, ...props }
   const classNames = {
     buttonContainer: clsx(s.buttonsContainer),
     container: clsx(s.container),
-    trigger: clsx(s.trigger),
   }
 
   return (

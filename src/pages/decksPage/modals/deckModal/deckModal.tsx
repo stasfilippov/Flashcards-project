@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
+import { JSX, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Edit2Outline } from '@/assets/icons/components'
 import { ControlledCheckbox, ControlledTextField } from '@/components/controlled'
 import { Button, Modal, ModalProps } from '@/components/ui'
 import { InputTypeFile } from '@/components/ui/inputTypeFile/inputTypeFile'
@@ -18,11 +17,12 @@ const addDeckSchema = z.object({
 
 type FormValues = z.infer<typeof addDeckSchema>
 type Props = {
+  children: (openModal: () => void) => JSX.Element
   confirmHandler: (data: { cover?: File | null | undefined } & FormValues) => void
   defaultValues?: { cover?: null | string } & FormValues
 } & Omit<ModalProps, 'children' | 'open'>
 
-export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) => {
+export const DeckModal = ({ children, confirmHandler, defaultValues, ...props }: Props) => {
   const [open, setOpen] = useState(false)
   const [cover, setCover] = useState<File | null>(null)
   const [previewSource, setPreviewSource] = useState<null | string>('')
@@ -87,13 +87,7 @@ export const DeckModal = ({ confirmHandler, defaultValues, ...props }: Props) =>
 
   return (
     <div className={classNames.container}>
-      {defaultValues ? (
-        <button onClick={openModalHandler}>
-          <Edit2Outline width={16} />
-        </button>
-      ) : (
-        <Button onClick={openModalHandler}>Add new Deck</Button>
-      )}
+      {children(openModalHandler)}
       <Modal onClose={closeModalHandler} open={open} title={'Add New Deck'} {...props}>
         <form onSubmit={submitHandler}>
           <ControlledTextField
