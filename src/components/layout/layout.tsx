@@ -3,14 +3,13 @@ import { Outlet, useOutletContext } from 'react-router-dom'
 
 import { Header, HeaderProps } from '@/components/layout/header'
 import { Spinner } from '@/components/ui'
-import { useLogoutMutation, useMeQuery } from '@/pages/auth/api/authApi'
+import { useMeQuery } from '@/pages/auth/api/authApi'
 
 import s from './layout.module.scss'
 
 type AuthContextType = { isAuthenticated: boolean }
 export const Layout = () => {
   const { data, isError, isLoading } = useMeQuery()
-  const [logout] = useLogoutMutation()
 
   const isAuthenticated = !isError && !isLoading
 
@@ -23,7 +22,7 @@ export const Layout = () => {
   }
 
   return (
-    <LayoutWrapper onLogout={logout} user={data}>
+    <LayoutWrapper user={data}>
       <Outlet context={{ isAuthenticated } satisfies AuthContextType} />
     </LayoutWrapper>
   )

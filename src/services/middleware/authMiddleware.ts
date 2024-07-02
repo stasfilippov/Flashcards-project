@@ -1,12 +1,12 @@
 import { toast } from 'react-toastify'
 
 import { isErrorWithMessage, isFetchBaseQueryError } from '@/services/helpers/helpers'
-import { Middleware, MiddlewareAPI, isRejected } from '@reduxjs/toolkit'
+import { Middleware, isRejected } from '@reduxjs/toolkit'
 
 /**
  * Log a warning and show a toast!
  */
-export const rtkErrorLogger: Middleware = (api: MiddlewareAPI) => next => action => {
+export const rtkErrorLogger: Middleware = () => next => action => {
   if (isRejected(action)) {
     let errorMessage = 'Unkown Error accourred.'
 

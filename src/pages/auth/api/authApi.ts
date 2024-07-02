@@ -1,3 +1,4 @@
+import { ROUTES } from '@/common/constants'
 import {
   AuthMeResponse,
   ForgotPasswordArgs,
@@ -8,6 +9,7 @@ import {
   UpdateUserDataArgs,
   UpdateUserDataResponse,
 } from '@/pages/auth/api/authApi.types'
+import { router } from '@/router'
 import { flashcardsApi } from '@/services/flashcardApi'
 
 const authApi = flashcardsApi.injectEndpoints({
@@ -32,16 +34,17 @@ const authApi = flashcardsApi.injectEndpoints({
     }),
     logout: builder.mutation<void, void>({
       invalidatesTags: ['Auth'],
-      onQueryStarted(_, { dispatch }) {
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        await queryFulfilled
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
-
         //-https://stackoverflow.com/questions/71573317/how-to-invalidate-rtk-query-cachesreset-state-globally
         dispatch(flashcardsApi.util.resetApiState())
+        router.navigate(ROUTES.signIn)
       },
       query: _ => ({
         method: 'POST',
-        url: `/v1/auth/logout`,
+        url: `/v2/auth/logout`,
       }),
     }),
     me: builder.query<AuthMeResponse, void>({
