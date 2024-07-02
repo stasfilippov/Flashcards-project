@@ -14,8 +14,7 @@ export const ForgotPasswordPage = () => {
   const submitHandler = async (email: string) => {
     await recoverPassword({
       email,
-      html: recoverPasswordTemplate.html,
-      subject: recoverPasswordTemplate.subject,
+      ...recoverPasswordTemplate,
     }).unwrap()
     await router.navigate(ROUTES.checkEmail)
 
