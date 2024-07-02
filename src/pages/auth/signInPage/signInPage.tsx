@@ -10,8 +10,8 @@ import { router } from '@/router'
 export const SignInPage = () => {
   const [signIn] = useLoginMutation()
 
-  const signInHandler = async (data: LoginArgs) => {
-    await signIn(data)
+  const signInHandler = (data: LoginArgs) => {
+    signIn(data)
       .unwrap()
       .then(() => {
         toast.success('You have successfully logged in!')

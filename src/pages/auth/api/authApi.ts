@@ -1,7 +1,7 @@
 import { ROUTES } from '@/common/constants'
 import {
-  CreatePasswordArgs,
   AuthMeResponse,
+  CreatePasswordArgs,
   ForgotPasswordArgs,
   LoginArgs,
   LoginResponse,

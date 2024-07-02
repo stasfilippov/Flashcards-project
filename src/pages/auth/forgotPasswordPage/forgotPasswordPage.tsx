@@ -8,7 +8,7 @@ import { router } from '@/router'
 import { useRecoverPasswordMutation } from '../api/authApi'
 
 export const ForgotPasswordPage = () => {
-  const [recoverPassword, { error }] = useRecoverPasswordMutation()
+  const [recoverPassword] = useRecoverPasswordMutation()
   const { isAuthenticated } = useIsAuthenticated()
 
   const submitHandler = async (email: string) => {
@@ -17,9 +17,6 @@ export const ForgotPasswordPage = () => {
       ...recoverPasswordTemplate,
     }).unwrap()
     await router.navigate(ROUTES.checkEmail)
-
-    //TODO - add error handler
-    console.log(error)
   }
 
   if (isAuthenticated) {
