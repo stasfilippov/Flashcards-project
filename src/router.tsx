@@ -7,13 +7,19 @@ import {
 } from 'react-router-dom'
 
 import { ROUTES } from '@/common/constants'
-import { Layout, useIsAuthenticated } from '@/components/layout/layout'
-import { CheckEmail, Error, SignInPage, SignUpPage } from '@/pages'
-import { CardsPage } from '@/pages/cardsPage'
-import { CreatePasswordPage } from '@/pages/createPasswordPage/createPasswordPage'
-import { DecksPage } from '@/pages/decksPage'
-import { ForgotPasswordPage } from '@/pages/forgotPasswordPage/forgotPasswordPage'
-import { LearnPage } from '@/pages/learn'
+import { Layout, useIsAuthenticated } from '@/components/layout'
+import {
+  CardsPage,
+  CheckEmail,
+  CreatePasswordPage,
+  DecksPage,
+  Error,
+  ForgotPasswordPage,
+  LearnPage,
+  Profile,
+  SignInPage,
+  SignUpPage,
+} from '@/pages'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -60,7 +66,7 @@ const privateRoutes: RouteObject[] = [
     path: `${ROUTES.decks}/:deckId${ROUTES.learn}`,
   },
   {
-    element: <div>Profile</div>,
+    element: <Profile />,
     path: ROUTES.profile,
   },
 ]

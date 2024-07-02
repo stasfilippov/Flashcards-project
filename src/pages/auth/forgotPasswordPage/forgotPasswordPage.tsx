@@ -5,7 +5,7 @@ import { Page } from '@/components/layout'
 import { useIsAuthenticated } from '@/components/layout/layout'
 import { router } from '@/router'
 
-import { useRecoverPasswordMutation } from '../auth/api/authApi'
+import { useRecoverPasswordMutation } from '../api/authApi'
 
 export const ForgotPasswordPage = () => {
   const [recoverPassword, { error }] = useRecoverPasswordMutation()

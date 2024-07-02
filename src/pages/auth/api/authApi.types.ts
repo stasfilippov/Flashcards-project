@@ -1,8 +1,8 @@
-export type authMeResponse = UserData
-export type updateUserDataResponse = UserData
-export type signUpResponse = UserData
+export type AuthMeResponse = UserData
+export type UpdateUserDataResponse = UserData
+export type SignUpResponse = UserData
 
-export type updateUserDataArgs = {
+export type UpdateUserDataArgs = {
   avatar: string
   name: string
 }
