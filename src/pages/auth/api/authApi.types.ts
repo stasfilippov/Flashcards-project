@@ -41,3 +41,7 @@ export type ForgotPasswordArgs = {
   html?: string
   subject?: string
 }
+export type CreatePasswordArgs = {
+  password: string
+  resetToken: string
+}
