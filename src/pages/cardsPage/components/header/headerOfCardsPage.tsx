@@ -24,6 +24,7 @@ export const HeaderOfCardsPage = ({ deck, isMy }: Props) => {
   const classNames = {
     image: clsx(s.image),
     title: clsx(s.title),
+    titleWithDropDownContainer: clsx(s.titleWithDropDownContainer),
     wrapperWithControl: clsx(s.wrapperWithControl),
   }
 
@@ -38,10 +39,12 @@ export const HeaderOfCardsPage = ({ deck, isMy }: Props) => {
   return (
     <div>
       <div className={classNames.wrapperWithControl}>
-        <Typography className={classNames.title} variant={'h1'}>
-          {deck.name}
+        <div className={classNames.titleWithDropDownContainer}>
+          <Typography className={classNames.title} variant={'h1'}>
+            {deck.name}
+          </Typography>
           {isMy && <DropDownDeckMenu deck={deck} />}
-        </Typography>
+        </div>
         {isMy ? (
           <CardModal confirmHandler={createCardHandler} title={'Add New Card'} />
         ) : (
