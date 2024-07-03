@@ -21,12 +21,12 @@ export const DropDownDeckMenu = ({ deck }: Props) => {
   }
 
   const [isOpenEditDeckModal, setIsOpenEditDeckModal] = useState(false)
+  const [isOpenRemoveDeckModal, setIsOpenRemoveDeckModal] = useState(false)
 
   const [removeDeck] = useRemoveDeckMutation()
   const [updateDeck] = useUpdateDeckMutation()
 
   const editDeckHandler = (data: Partial<CreateDeckArgs>) => {
-    debugger
     updateDeck({ id: deck.id, ...data })
   }
 
@@ -52,7 +52,7 @@ export const DropDownDeckMenu = ({ deck }: Props) => {
         <DropdownSeparator />
         <DropdownItem
           className={classNames.item}
-          onClick={() => {
+          onSelect={() => {
             setIsOpenEditDeckModal(true)
           }}
         >
@@ -60,21 +60,9 @@ export const DropDownDeckMenu = ({ deck }: Props) => {
           <Typography variant={'caption'}>Edit</Typography>
         </DropdownItem>
         <DropdownSeparator />
-        <DropdownItem className={classNames.item}>
-          <RemoveItemModal id={deck.id} name={deck.name} onRemove={removeDeckHandler} type={'Deck'}>
-            {openModal => (
-              <div
-                className={classNames.item}
-                onClick={e => {
-                  e.stopPropagation()
-                  openModal()
-                }}
-              >
-                <TrashOutline width={16} />
-                <Typography variant={'caption'}>Delete</Typography>
-              </div>
-            )}
-          </RemoveItemModal>
+        <DropdownItem className={classNames.item} onSelect={() => setIsOpenRemoveDeckModal(true)}>
+          <TrashOutline width={16} />
+          <Typography variant={'caption'}>Delete</Typography>
         </DropdownItem>
       </DropdownMenu>{' '}
       <DeckModal
@@ -83,6 +71,14 @@ export const DropDownDeckMenu = ({ deck }: Props) => {
         defaultValues={{ cover: deck.cover, isPrivate: deck.isPrivate, name: deck.name }}
         id={deck.id}
         isOpen={isOpenEditDeckModal}
+      />
+      <RemoveItemModal
+        closeModal={() => setIsOpenRemoveDeckModal(false)}
+        id={deck.id}
+        isOpen={isOpenRemoveDeckModal}
+        name={deck.name}
+        onRemove={removeDeckHandler}
+        type={'Deck'}
       />
     </>
   )

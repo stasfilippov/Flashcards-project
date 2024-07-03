@@ -1,5 +1,3 @@
-import { JSX, useState } from 'react'
-
 import { Button, Modal, ModalProps, Typography } from '@/components/ui'
 import { RemoveItemArgs } from '@/pages/decksPage/api/decksApi.types'
 import clsx from 'clsx'
@@ -7,26 +5,26 @@ import clsx from 'clsx'
 import s from './removeItemModal.module.scss'
 
 type Props = {
-  children: (openModal: () => void) => JSX.Element
+  closeModal: () => void
   id: string
+  isOpen: boolean
   name: string
   onRemove: (data: RemoveItemArgs) => void
   type: 'Card' | 'Deck'
 } & Omit<ModalProps, 'children' | 'open'>
 
-export const RemoveItemModal = ({ children, id, name, onRemove, type, ...props }: Props) => {
-  const [open, setOpen] = useState<boolean>(false)
-
-  const openModalHandler = () => {
-    setOpen(true)
-  }
-  const closeModalHandler = () => {
-    setOpen(false)
-  }
-
+export const RemoveItemModal = ({
+  closeModal,
+  id,
+  isOpen,
+  name,
+  onRemove,
+  type,
+  ...props
+}: Props) => {
   const removeHandler = () => {
     onRemove({ id })
-    closeModalHandler()
+    closeModal()
   }
 
   const classNames = {
@@ -36,15 +34,14 @@ export const RemoveItemModal = ({ children, id, name, onRemove, type, ...props }
 
   return (
     <div className={classNames.container}>
-      {children(openModalHandler)}
-      <Modal onClose={closeModalHandler} open={open} title={`Delete ${type}`} {...props}>
+      <Modal onClose={closeModal} open={isOpen} title={`Delete ${type}`} {...props}>
         <Typography>
           Do you really want to remove <Typography variant={'subtitle1'}>{name}</Typography>?
         </Typography>
         <br />
         {type === 'Deck' && <Typography>All cards will be removed.</Typography>}
         <div className={classNames.buttonContainer}>
-          <Button onClick={closeModalHandler} variant={'secondary'}>
+          <Button onClick={closeModal} variant={'secondary'}>
             Cancel
           </Button>
           <Button onClick={removeHandler} variant={'primary'}>

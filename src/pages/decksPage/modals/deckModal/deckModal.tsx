@@ -67,8 +67,6 @@ export const DeckModal = ({
     const newCover = cover ?? (isImageDeleted ? null : undefined)
     const dataToSend = { ...data, cover: newCover }
 
-    debugger
-
     confirmHandler(dataToSend)
     reset()
     setCover(null)

@@ -54,6 +54,7 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
   const [removeDeck] = useRemoveDeckMutation()
 
   const [isOpenEditDeckModal, setIsOpenEditDeckModal] = useState(false)
+  const [isOpenRemoveDeckModal, setIsOpenRemoveDeckModal] = useState(false)
 
   const updateDeckHandler = (data: Partial<CreateDeckArgs>) => {
     updateDeck({ ...data, id: item?.id ?? '' })
@@ -77,6 +78,9 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
           <button disabled={!item.cardsCount} onClick={learnHandler}>
             <PlayCircleOutline width={16} />
           </button>
+          <button onClick={() => setIsOpenRemoveDeckModal(true)}>
+            <TrashOutline width={16} />
+          </button>
           <DeckModal
             closeModal={() => setIsOpenEditDeckModal(false)}
             confirmHandler={updateDeckHandler}
@@ -84,13 +88,14 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
             id={item.id}
             isOpen={isOpenEditDeckModal}
           />
-          <RemoveItemModal id={item.id} name={item.name} onRemove={removeDeckHandler} type={'Deck'}>
-            {openModal => (
-              <button onClick={openModal}>
-                <TrashOutline width={16} />
-              </button>
-            )}
-          </RemoveItemModal>
+          <RemoveItemModal
+            closeModal={() => setIsOpenRemoveDeckModal(false)}
+            id={item.id}
+            isOpen={isOpenRemoveDeckModal}
+            name={item.name}
+            onRemove={removeDeckHandler}
+            type={'Deck'}
+          />
         </>
       ) : (
         <>
@@ -110,6 +115,8 @@ type CardVariantProps = {
 const CardVariant = ({ currentUser, item }: CardVariantProps) => {
   const [updateCard] = useEditCardMutation()
   const [deleteCard] = useDeleteCardMutation()
+
+  const [isOpenRemoveCardModal, setIsOpenRemoveCardModal] = useState(false)
 
   const updateDeckHandler = (data: Omit<EditCardArgs, 'id'>) => {
     updateCard({ ...data, id: item?.id ?? '' })
@@ -133,13 +140,17 @@ const CardVariant = ({ currentUser, item }: CardVariantProps) => {
         }
         title={'Edit card'}
       />
-      <RemoveItemModal id={item.id} name={item.question} onRemove={removeCardHandler} type={'Card'}>
-        {openModal => (
-          <button onClick={openModal}>
-            <TrashOutline width={16} />
-          </button>
-        )}
-      </RemoveItemModal>
+      <button onClick={() => setIsOpenRemoveCardModal(true)}>
+        <TrashOutline width={16} />
+      </button>
+      <RemoveItemModal
+        closeModal={() => setIsOpenRemoveCardModal(false)}
+        id={item.id}
+        isOpen={isOpenRemoveCardModal}
+        name={item.question}
+        onRemove={removeCardHandler}
+        type={'Card'}
+      />
     </>
   ) : (
     <></>
