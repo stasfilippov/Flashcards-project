@@ -1,7 +1,8 @@
-import { appSlice } from '@/services/appSlice/appSlice'
-import { flashcardsApi } from '@/services/flashcardApi'
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
+
+import { appSlice } from './appSlice'
+import { flashcardsApi } from './flashcardApi'
 
 export const store = configureStore({
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(flashcardsApi.middleware),

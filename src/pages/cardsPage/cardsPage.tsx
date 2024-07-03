@@ -2,16 +2,15 @@ import { useParams, useSearchParams } from 'react-router-dom'
 
 import { ROUTES } from '@/common/constants'
 import { Page } from '@/components/layout'
-import { TextField } from '@/components/ui'
-import { BackNavigation } from '@/components/ui/backNavigation/backNavigation'
-import { useMeQuery } from '@/pages/auth/api/authApi'
-import { HeaderOfCardsPage } from '@/pages/cardsPage/components/header/headerOfCardsPage'
-import { TableWithCards } from '@/pages/cardsPage/components/tableWithCards/tableWithCards'
-import { useGetDeckByIdQuery } from '@/pages/decksPage/api/decksApi'
-import { SortValues } from '@/pages/decksPage/api/decksApi.types'
+import { BackNavigation, TextField } from '@/components/ui'
+import { useMeQuery } from '@/pages/auth/api'
+import { SortValues, useGetDeckByIdQuery } from '@/pages/decksPage/api'
 import clsx from 'clsx'
 
 import s from './cardsPage.module.scss'
+
+import { HeaderOfCardsPage, TableWithCards } from './components'
+
 export const CardsPage = () => {
   const { deckId } = useParams<{ deckId: string }>()
   const [searchParams, setSearchParams] = useSearchParams()

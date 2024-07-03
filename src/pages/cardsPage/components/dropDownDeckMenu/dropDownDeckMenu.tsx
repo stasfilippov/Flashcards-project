@@ -2,10 +2,15 @@ import { useState } from 'react'
 
 import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets/icons/components'
 import { ROUTES } from '@/common/constants'
+import { DeckModal, RemoveItemModal } from '@/components/modals'
 import { DropdownItem, DropdownMenu, DropdownSeparator, Typography } from '@/components/ui'
-import { useRemoveDeckMutation, useUpdateDeckMutation } from '@/pages/decksPage/api/decksApi'
-import { CreateDeckArgs, Deck, RemoveItemArgs } from '@/pages/decksPage/api/decksApi.types'
-import { DeckModal, RemoveItemModal } from '@/pages/decksPage/modals'
+import {
+  CreateDeckArgs,
+  Deck,
+  RemoveItemArgs,
+  useRemoveDeckMutation,
+  useUpdateDeckMutation,
+} from '@/pages/decksPage/api'
 import { router } from '@/router'
 import clsx from 'clsx'
 

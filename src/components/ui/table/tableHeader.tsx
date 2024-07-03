@@ -1,10 +1,11 @@
 import { ComponentPropsWithoutRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { SuperSort } from '@/components/ui/table/superSort'
-import { TableRow } from '@/components/ui/table/table'
-import { SortBy, SortValues } from '@/pages/decksPage/api/decksApi.types'
+import { SortBy, SortValues } from '@/pages/decksPage/api'
 import clsx from 'clsx'
+
+import { TableRow } from './'
+import { SuperSort } from './superSort'
 
 export type Column = {
   /**

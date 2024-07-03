@@ -1,7 +1,7 @@
 import { PersonalInformation } from '@/components/forms'
 import { Page, User } from '@/components/layout'
-import { ProgressBar } from '@/components/ui/progressBar/progressBar'
-import { useMeQuery } from '@/pages/auth/api/authApi'
+import { ProgressBar } from '@/components/ui'
+import { useMeQuery } from '@/pages/auth/api'
 
 import { useUpdateUserMutation } from './api/profileApi'
 

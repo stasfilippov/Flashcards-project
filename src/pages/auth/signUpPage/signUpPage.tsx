@@ -1,10 +1,9 @@
 import { ROUTES } from '@/common/constants'
 import { SignUpForm } from '@/components/forms'
-import { Page } from '@/components/layout'
-import { useIsAuthenticated } from '@/components/layout/layout'
-import { useSignUpMutation } from '@/pages/auth/api/authApi'
-import { SignUpArgs } from '@/pages/auth/api/authApi.types'
+import { Page, useIsAuthenticated } from '@/components/layout'
 import { router } from '@/router'
+
+import { SignUpArgs, useSignUpMutation } from '../api'
 
 export const SignUpPage = () => {
   const [signUp, { error }] = useSignUpMutation()

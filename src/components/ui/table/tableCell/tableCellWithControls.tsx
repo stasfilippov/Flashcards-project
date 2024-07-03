@@ -2,14 +2,21 @@ import { ComponentPropsWithoutRef, useState } from 'react'
 
 import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets/icons/components'
 import { ROUTES } from '@/common/constants'
+import { CardModal, DeckModal, DefaultValueOfModal, RemoveItemModal } from '@/components/modals'
 import { TableCell } from '@/components/ui/table'
-import { useDeleteCardMutation, useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
-import { Card, EditCardArgs } from '@/pages/cardsPage/api/cardsApi.types'
-import { CardModal, DefaultValueOfModal } from '@/pages/cardsPage/modals/cardModal/cardModal'
-import { useRemoveDeckMutation, useUpdateDeckMutation } from '@/pages/decksPage/api/decksApi'
-import { CreateDeckArgs, Deck, RemoveItemArgs } from '@/pages/decksPage/api/decksApi.types'
-import { DeckModal } from '@/pages/decksPage/modals/deckModal/deckModal'
-import { RemoveItemModal } from '@/pages/decksPage/modals/removeItem/removeItemModal'
+import {
+  Card,
+  EditCardArgs,
+  useDeleteCardMutation,
+  useEditCardMutation,
+} from '@/pages/cardsPage/api'
+import {
+  CreateDeckArgs,
+  Deck,
+  RemoveItemArgs,
+  useRemoveDeckMutation,
+  useUpdateDeckMutation,
+} from '@/pages/decksPage/api'
 import { router } from '@/router'
 import clsx from 'clsx'
 

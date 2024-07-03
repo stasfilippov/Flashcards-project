@@ -1,5 +1,5 @@
 import { Button, Modal, ModalProps, Typography } from '@/components/ui'
-import { RemoveItemArgs } from '@/pages/decksPage/api/decksApi.types'
+import { RemoveItemArgs } from '@/pages/decksPage/api'
 import clsx from 'clsx'
 
 import s from './removeItemModal.module.scss'

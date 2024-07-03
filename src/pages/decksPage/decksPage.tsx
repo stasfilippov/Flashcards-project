@@ -3,16 +3,17 @@ import { useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '@/common/hooks'
 import { Page } from '@/components/layout'
+import { DeckModal } from '@/components/modals/'
 import { Button, Pagination, Typography } from '@/components/ui'
 import { useMeQuery } from '@/pages/auth/api/authApi'
 import {
+  CreateDeckArgs,
+  SortValues,
   useCreateDeckMutation,
   useGetDecksQuery,
   useGetMinMaxCardsQuery,
-} from '@/pages/decksPage/api/decksApi'
-import { CreateDeckArgs, SortValues } from '@/pages/decksPage/api/decksApi.types'
+} from '@/pages/decksPage/api'
 import { DecksPageFilters, DecksPageTable } from '@/pages/decksPage/components'
-import { DeckModal } from '@/pages/decksPage/modals/deckModal/deckModal'
 
 import s from './decksPage.module.scss'
 

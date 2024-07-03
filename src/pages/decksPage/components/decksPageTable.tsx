@@ -1,10 +1,12 @@
 import { Table, TableBody, TableRow } from '@/components/ui'
-import { TableCellWithControls } from '@/components/ui/table/tableCell/tableCellWithControls'
-import { TableCellWithPhotoDecks } from '@/components/ui/table/tableCell/tableCellWithPhotoDecks'
-import { TableCellWithText } from '@/components/ui/table/tableCell/tableCellWithText'
-import { TableHeader } from '@/components/ui/table/tableHeader'
-import { formatDateToDdMmYY } from '@/components/ui/table/utils/convertDate'
-import { Deck, SortBy, SortValues } from '@/pages/decksPage/api/decksApi.types'
+import {
+  TableCellWithControls,
+  TableCellWithPhotoDecks,
+  TableCellWithText,
+  TableHeader,
+  formatDateToDdMmYY,
+} from '@/components/ui/table'
+import { Deck, SortBy, SortValues } from '@/pages/decksPage/api'
 
 const ids: SortBy[] = ['name', 'cardsCount', 'updated', 'created', 'controls']
 const titles = ['Name', 'Cards', 'Last Updated', 'Created by', '']

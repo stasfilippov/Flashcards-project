@@ -1,3 +1,6 @@
+import { RemoveItemArgs } from '@/pages/decksPage/api'
+import { flashcardsApi } from '@/services/flashcardApi'
+
 import {
   Card,
   CreateCardArgs,
@@ -6,9 +9,7 @@ import {
   GetCardByIdArgs,
   GetCardsArgs,
   GetCardsResponse,
-} from '@/pages/cardsPage/api/cardsApi.types'
-import { RemoveItemArgs } from '@/pages/decksPage/api/decksApi.types'
-import { flashcardsApi } from '@/services/flashcardApi'
+} from './cardsApi.types'
 
 const cardsApi = flashcardsApi.injectEndpoints({
   endpoints: builder => ({

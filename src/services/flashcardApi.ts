@@ -1,5 +1,6 @@
-import { baseQueryWithReauth } from '@/services/flashcardsBaseQuery'
 import { createApi } from '@reduxjs/toolkit/query/react'
+
+import { baseQueryWithReauth } from './flashcardsBaseQuery'
 
 export const flashcardsApi = createApi({
   baseQuery: baseQueryWithReauth,

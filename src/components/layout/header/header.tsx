@@ -11,10 +11,10 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownSeparator,
+  ProgressBar,
   Typography,
 } from '@/components/ui'
-import { ProgressBar } from '@/components/ui/progressBar/progressBar'
-import { appStatusSelector } from '@/services/appSlice/appSlice.selectors'
+import { appStatusSelector } from '@/services/appSlice'
 import clsx from 'clsx'
 
 import s from './header.module.scss'

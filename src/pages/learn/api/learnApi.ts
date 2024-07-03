@@ -1,4 +1,4 @@
-import { Card } from '@/pages/cardsPage/api/cardsApi.types'
+import { Card } from '@/pages/cardsPage/api'
 import { flashcardsApi } from '@/services/flashcardApi'
 
 import { GetRandomCardArgs, SaveTheGradeArgs } from './'

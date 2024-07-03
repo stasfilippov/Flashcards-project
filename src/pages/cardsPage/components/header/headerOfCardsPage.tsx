@@ -2,14 +2,18 @@ import { Link } from 'react-router-dom'
 
 import defaultImg from '@/assets/img/defaultImageDeck.png'
 import { ROUTES } from '@/common/constants'
+import { CardModal } from '@/components/modals'
 import { Button, Typography } from '@/components/ui'
-import { useCreateNewCardMutation } from '@/pages/cardsPage/api/cardsApi'
-import { CreateCardArgs, GetDeckByIdResponse } from '@/pages/cardsPage/api/cardsApi.types'
-import { DropDownDeckMenu } from '@/pages/cardsPage/components/dropDownDeckMenu/dropDownDeckMenu'
-import { CardModal } from '@/pages/cardsPage/modals/cardModal/cardModal'
+import {
+  CreateCardArgs,
+  GetDeckByIdResponse,
+  useCreateNewCardMutation,
+} from '@/pages/cardsPage/api'
 import clsx from 'clsx'
 
 import s from './header.module.scss'
+
+import { DropDownDeckMenu } from '../'
 
 type Props = {
   deck: GetDeckByIdResponse
@@ -36,8 +40,8 @@ export const HeaderOfCardsPage = ({ deck, isMy }: Props) => {
       <div className={classNames.wrapperWithControl}>
         <Typography className={classNames.title} variant={'h1'}>
           {deck.name}
+          {isMy && <DropDownDeckMenu deck={deck} />}
         </Typography>
-        {isMy && <DropDownDeckMenu deck={deck} />}
         {isMy ? (
           <CardModal confirmHandler={createCardHandler} title={'Add New Card'} />
         ) : (
