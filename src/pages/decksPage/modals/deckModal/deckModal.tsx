@@ -1,4 +1,4 @@
-import { JSX, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { ControlledCheckbox, ControlledTextField } from '@/components/controlled'
@@ -15,15 +15,24 @@ const addDeckSchema = z.object({
   name: z.string().min(3).max(30),
 })
 
+export type DeckModalDefaultValues = { cover?: null | string } & FormValues
+export type DeckModalConfirmHandlerArgs = { cover?: File | null | undefined } & FormValues
+
 type FormValues = z.infer<typeof addDeckSchema>
 type Props = {
-  children: (openModal: () => void) => JSX.Element
-  confirmHandler: (data: { cover?: File | null | undefined } & FormValues) => void
-  defaultValues?: { cover?: null | string } & FormValues
+  closeModal: () => void
+  confirmHandler: (data: DeckModalConfirmHandlerArgs) => void
+  defaultValues?: DeckModalDefaultValues
+  isOpen: boolean
 } & Omit<ModalProps, 'children' | 'open'>
 
-export const DeckModal = ({ children, confirmHandler, defaultValues, ...props }: Props) => {
-  const [open, setOpen] = useState(false)
+export const DeckModal = ({
+  closeModal,
+  confirmHandler,
+  defaultValues,
+  isOpen,
+  ...props
+}: Props) => {
   const [cover, setCover] = useState<File | null>(null)
   const [previewSource, setPreviewSource] = useState<null | string>('')
   const [isImageDeleted, setImageDeleted] = useState(false)
@@ -50,7 +59,7 @@ export const DeckModal = ({ children, confirmHandler, defaultValues, ...props }:
   }, [cover])
 
   const { control, handleSubmit, reset } = useForm<FormValues>({
-    defaultValues: defaultValues,
+    defaultValues,
     resolver: zodResolver(addDeckSchema),
   })
 
@@ -58,21 +67,19 @@ export const DeckModal = ({ children, confirmHandler, defaultValues, ...props }:
     const newCover = cover ?? (isImageDeleted ? null : undefined)
     const dataToSend = { ...data, cover: newCover }
 
+    debugger
+
     confirmHandler(dataToSend)
     reset()
     setCover(null)
-    setOpen(false)
+    closeModal()
   })
-
-  const openModalHandler = () => {
-    setOpen(true)
-  }
 
   const closeModalHandler = () => {
     reset()
     setCover(null)
     setPreviewSource(defaultValues?.cover ?? null)
-    setOpen(false)
+    closeModal()
   }
 
   useEffect(() => {
@@ -87,8 +94,12 @@ export const DeckModal = ({ children, confirmHandler, defaultValues, ...props }:
 
   return (
     <div className={classNames.container}>
-      {children(openModalHandler)}
-      <Modal onClose={closeModalHandler} open={open} title={'Add New Deck'} {...props}>
+      <Modal
+        onClose={closeModalHandler}
+        open={isOpen}
+        title={defaultValues ? 'Update Deck' : 'Add New Deck'}
+        {...props}
+      >
         <form onSubmit={submitHandler}>
           <ControlledTextField
             className={classNames.input}

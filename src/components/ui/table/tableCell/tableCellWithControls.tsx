@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, useState } from 'react'
 
 import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets/icons/components'
 import { ROUTES } from '@/common/constants'
@@ -53,6 +53,8 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
   const [updateDeck] = useUpdateDeckMutation()
   const [removeDeck] = useRemoveDeckMutation()
 
+  const [isOpenEditDeckModal, setIsOpenEditDeckModal] = useState(false)
+
   const updateDeckHandler = (data: Partial<CreateDeckArgs>) => {
     updateDeck({ ...data, id: item?.id ?? '' })
   }
@@ -69,20 +71,19 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
     <>
       {item && currentUser === item.author.id ? (
         <>
-          <DeckModal
-            confirmHandler={updateDeckHandler}
-            defaultValues={{ cover: item.cover, isPrivate: item.isPrivate, name: item.name }}
-            id={item.id}
-          >
-            {openModal => (
-              <button onClick={openModal}>
-                <Edit2Outline width={16} />
-              </button>
-            )}
-          </DeckModal>
+          <button onClick={() => setIsOpenEditDeckModal(true)}>
+            <Edit2Outline width={16} />
+          </button>
           <button disabled={!item.cardsCount} onClick={learnHandler}>
             <PlayCircleOutline width={16} />
           </button>
+          <DeckModal
+            closeModal={() => setIsOpenEditDeckModal(false)}
+            confirmHandler={updateDeckHandler}
+            defaultValues={{ cover: item.cover, isPrivate: item.isPrivate, name: item.name }}
+            id={item.id}
+            isOpen={isOpenEditDeckModal}
+          />
           <RemoveItemModal id={item.id} name={item.name} onRemove={removeDeckHandler} type={'Deck'}>
             {openModal => (
               <button onClick={openModal}>

@@ -21,6 +21,8 @@ export const DecksPage = () => {
   const { data: user } = useMeQuery()
   const { data: minMaxCards } = useGetMinMaxCardsQuery()
 
+  const [isOpenAddDeckModal, setIsOpenAddDeckModal] = useState(false)
+
   const search = searchParams.get('name') ?? ''
   const sort = searchParams.get('sort') as SortValues
   const currentPage = searchParams.get('page') ?? '1'
@@ -96,18 +98,7 @@ export const DecksPage = () => {
         <Typography component={'h1'} variant={'h1'}>
           Decks lists
         </Typography>
-        <DeckModal confirmHandler={createDeckHandler}>
-          {openModal => (
-            <Button
-              onClick={e => {
-                e.stopPropagation()
-                openModal()
-              }}
-            >
-              Add new Deck
-            </Button>
-          )}
-        </DeckModal>
+        <Button onClick={() => setIsOpenAddDeckModal(true)}>Add new Deck</Button>
       </div>
       <DecksPageFilters
         changeSearchValue={changeSearchValueHandler}
@@ -138,6 +129,11 @@ export const DecksPage = () => {
           />
         </>
       ) : null}
+      <DeckModal
+        closeModal={() => setIsOpenAddDeckModal(false)}
+        confirmHandler={createDeckHandler}
+        isOpen={isOpenAddDeckModal}
+      />
     </Page>
   )
 }
