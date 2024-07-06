@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { ROUTES } from '@/common/constants'
 import { CreateNewPasswordForm } from '@/components/forms'
@@ -9,17 +10,18 @@ import { useCreatePasswordMutation } from '../auth/api/authApi'
 
 export const CreatePasswordPage = () => {
   const { resetToken } = useParams()
-  const [createPassword, { error }] = useCreatePasswordMutation()
+  const [createPassword] = useCreatePasswordMutation()
 
-  const submitHandler = async (password: string) => {
+  const submitHandler = (password: string) => {
     if (!resetToken) {
       return
     }
-    await createPassword({ password, resetToken }).unwrap()
-    await router.navigate(ROUTES.signIn)
-
-    //TODO - add error handler
-    console.log(error)
+    createPassword({ password, resetToken })
+      .unwrap()
+      .then(() => {
+        toast.success('The password has been successfully changed!')
+      })
+      .finally(() => router.navigate(ROUTES.signIn))
   }
 
   return (

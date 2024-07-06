@@ -1,21 +1,26 @@
+import { toast } from 'react-toastify'
+
 import { ROUTES } from '@/common/constants'
 import { SignUpForm } from '@/components/forms'
 import { Page } from '@/components/layout'
 import { useIsAuthenticated } from '@/components/layout/layout'
-import { useSignUpMutation } from '@/pages/auth/api/authApi'
+import { useLoginMutation, useSignUpMutation } from '@/pages/auth/api/authApi'
 import { SignUpArgs } from '@/pages/auth/api/authApi.types'
 import { router } from '@/router'
 
 export const SignUpPage = () => {
-  const [signUp, { error }] = useSignUpMutation()
+  const [signUp] = useSignUpMutation()
+  const [login] = useLoginMutation()
   const { isAuthenticated } = useIsAuthenticated()
 
-  const signUpHandler = async (data: SignUpArgs) => {
-    await signUp(data).unwrap()
-    await router.navigate(ROUTES.decks)
-
-    //TODO - add error handler
-    console.log(error)
+  const signUpHandler = (data: SignUpArgs) => {
+    signUp(data)
+      .unwrap()
+      .then(async () => {
+        await login({ email: data.email, password: data.password, rememberMe: false })
+        toast.success('You have successfully registered!')
+        router.navigate(ROUTES.decks)
+      })
   }
 
   if (isAuthenticated) {
