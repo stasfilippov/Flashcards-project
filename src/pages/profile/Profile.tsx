@@ -6,13 +6,8 @@ import { useMeQuery } from '@/pages/auth/api/authApi'
 import { useUpdateUserMutation } from './api/profileApi'
 
 export const Profile = () => {
-  const { data, isError, isLoading } = useMeQuery()
+  const { data, isLoading } = useMeQuery()
   const [updateUser] = useUpdateUserMutation()
-
-  if (isError) {
-    // TODO error handling
-    return <div>error handling here</div>
-  }
 
   if (isLoading) {
     return <ProgressBar />

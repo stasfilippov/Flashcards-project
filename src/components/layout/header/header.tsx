@@ -14,6 +14,7 @@ import {
   Typography,
 } from '@/components/ui'
 import { ProgressBar } from '@/components/ui/progressBar/progressBar'
+import { useLogoutMutation } from '@/pages/auth/api/authApi'
 import { appStatusSelector } from '@/services/appSlice/appSlice.selectors'
 import clsx from 'clsx'
 
@@ -26,12 +27,12 @@ export type User = {
 }
 
 export type HeaderProps = {
-  onLogout: () => void
   user?: User
 } & ComponentPropsWithoutRef<'header'>
 
-export const Header = ({ className, onLogout, user, ...rest }: HeaderProps) => {
+export const Header = ({ className, user, ...rest }: HeaderProps) => {
   const isLoading = useSelector(appStatusSelector)
+  const [logout] = useLogoutMutation()
 
   const classNames = {
     header: clsx(s.header, className),
@@ -39,6 +40,10 @@ export const Header = ({ className, onLogout, user, ...rest }: HeaderProps) => {
     imgWrapper: clsx(s.imgWrapper),
     progressBar: clsx(s.progressBar),
     userContainer: clsx(s.userContainer),
+  }
+
+  const logoutHandler = async () => {
+    await logout().unwrap()
   }
 
   const dropDownTrigger = (
@@ -58,7 +63,7 @@ export const Header = ({ className, onLogout, user, ...rest }: HeaderProps) => {
           </div>
         </Link>
         {user ? (
-          <HeaderDropDown onLogout={onLogout} trigger={dropDownTrigger} user={user} />
+          <HeaderDropDown onLogout={logoutHandler} trigger={dropDownTrigger} user={user} />
         ) : (
           <Button as={Link} to={ROUTES.signIn} variant={'secondary'}>
             Sign In
