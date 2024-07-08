@@ -10,7 +10,6 @@ import s from './layout.module.scss'
 type AuthContextType = { isAuthenticated: boolean }
 export const Layout = () => {
   const { data, isError, isLoading } = useMeQuery()
-  const [logout] = useLogoutMutation()
 
   const isAuthenticated = !isError && !isLoading
 
@@ -23,7 +22,7 @@ export const Layout = () => {
   }
 
   return (
-    <LayoutWrapper onLogout={logout} user={data}>
+    <LayoutWrapper user={data}>
       <Outlet context={{ isAuthenticated } satisfies AuthContextType} />
     </LayoutWrapper>
   )

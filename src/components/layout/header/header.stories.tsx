@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import avatar from '@/assets/img/avatar.png'
-import { fn } from '@storybook/test'
 import { withRouter } from 'storybook-addon-remix-react-router'
 
 import { Header } from './'
@@ -22,14 +21,9 @@ const user = {
   photo: { src: avatar },
 }
 
-export const HeaderWithButton: Story = {
-  args: {
-    onLogout: fn(),
-  },
-}
+export const HeaderWithButton: Story = {}
 export const HeaderWithAvatar: Story = {
   args: {
-    onLogout: fn(),
     user: {
       avatar: user.photo.src,
       email: 'boris@ivan.com',

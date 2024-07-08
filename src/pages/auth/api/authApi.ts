@@ -1,7 +1,8 @@
 import { flashcardsApi } from '@/services/flashcardApi'
-
+import { ROUTES } from '@/common/constants'
 import {
   AuthMeResponse,
+  CreatePasswordArgs,
   ForgotPasswordArgs,
   LoginArgs,
   LoginResponse,
@@ -10,9 +11,17 @@ import {
   UpdateUserDataArgs,
   UpdateUserDataResponse,
 } from './'
+import { router } from '@/router'
 
 const authApi = flashcardsApi.injectEndpoints({
   endpoints: builder => ({
+    createPassword: builder.mutation<void, CreatePasswordArgs>({
+      query: ({ resetToken, ...body }) => ({
+        body,
+        method: 'POST',
+        url: `/v1/auth/reset-password/${resetToken}`,
+      }),
+    }),
     login: builder.mutation<LoginResponse, LoginArgs>({
       invalidatesTags: ['Auth'],
       async onQueryStarted(_, { queryFulfilled }) {
@@ -33,16 +42,17 @@ const authApi = flashcardsApi.injectEndpoints({
     }),
     logout: builder.mutation<void, void>({
       invalidatesTags: ['Auth'],
-      onQueryStarted(_, { dispatch }) {
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        await queryFulfilled
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
-
         //-https://stackoverflow.com/questions/71573317/how-to-invalidate-rtk-query-cachesreset-state-globally
         dispatch(flashcardsApi.util.resetApiState())
+        router.navigate(ROUTES.signIn)
       },
       query: _ => ({
         method: 'POST',
-        url: `/v1/auth/logout`,
+        url: `/v2/auth/logout`,
       }),
     }),
     me: builder.query<AuthMeResponse, void>({
@@ -53,7 +63,6 @@ const authApi = flashcardsApi.injectEndpoints({
       }),
     }),
     recoverPassword: builder.mutation<void, ForgotPasswordArgs>({
-      invalidatesTags: ['Auth'],
       query: args => ({
         body: args,
         method: 'POST',
@@ -79,6 +88,7 @@ const authApi = flashcardsApi.injectEndpoints({
 })
 
 export const {
+  useCreatePasswordMutation,
   useLoginMutation,
   useLogoutMutation,
   useMeQuery,

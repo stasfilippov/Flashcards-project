@@ -11,6 +11,7 @@ import { Layout, useIsAuthenticated } from '@/components/layout'
 import {
   CardsPage,
   CheckEmail,
+  CreatePasswordPage,
   DecksPage,
   Error,
   ForgotPasswordPage,
@@ -38,8 +39,8 @@ const publicRoutes: RouteObject[] = [
     path: ROUTES.checkEmail,
   },
   {
-    element: <div>Create New Password</div>,
-    path: ROUTES.createNewPassword,
+    element: <CreatePasswordPage />,
+    path: `${ROUTES.createNewPassword}/:resetToken`,
   },
   {
     element: <Error />,
