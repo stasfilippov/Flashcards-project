@@ -1,10 +1,11 @@
 import { ArrowIosDownOutline, ArrowIosUp } from '@/assets/icons/components'
 import { Typography } from '@/components/ui'
-import { TableHeadCell } from '@/components/ui/table/table'
-import { SortBy, SortValues } from '@/pages/decksPage/api/decksApi.types'
+import { SortBy, SortValues } from '@/pages/decksPage/api'
 import clsx from 'clsx'
 
 import s from './table.module.scss'
+
+import { TableHeadCell } from './'
 
 export type SuperSortProps = {
   onChange: (newSort: string) => void

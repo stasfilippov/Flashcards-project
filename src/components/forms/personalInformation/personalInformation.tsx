@@ -4,7 +4,7 @@ import { Edit2Outline } from '@/assets/icons/components'
 import { commonStyles } from '@/common/styles'
 import { User } from '@/components/layout'
 import { Avatar, Button, Card } from '@/components/ui'
-import { UpdateProfileArgs } from '@/pages/profile/api/profileApi.types'
+import { UpdateProfileArgs } from '@/pages/profile/api'
 
 import s from './personalInformation.module.scss'
 

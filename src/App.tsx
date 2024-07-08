@@ -1,8 +1,8 @@
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 
-import { Router } from '@/router'
-import { store } from '@/services'
+import { Router } from './router'
+import { store } from './services'
 
 import 'react-toastify/dist/ReactToastify.css'
 

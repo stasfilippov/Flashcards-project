@@ -1,6 +1,6 @@
 import { ROUTES } from '@/common/constants'
 import { Page } from '@/components/layout'
-import { BackNavigation } from '@/pages/cardsPage/components'
+import { BackNavigation } from '@/components/ui'
 import clsx from 'clsx'
 
 import s from './learnPage.module.scss'

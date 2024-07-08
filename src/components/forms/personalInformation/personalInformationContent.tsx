@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 
 import { Edit2Outline, LogOutOutline } from '@/assets/icons/components'
 import { ROUTES } from '@/common/constants'
-import { Typography } from '@/components/ui'
-import { Button } from '@/components/ui/button'
+import { Button, Typography } from '@/components/ui'
 
 import s from './personalInformation.module.scss'
+
 type Props = {
   email: string
   nickname: string

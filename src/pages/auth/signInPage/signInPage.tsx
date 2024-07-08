@@ -2,10 +2,10 @@ import { toast } from 'react-toastify'
 
 import { ROUTES } from '@/common/constants'
 import { SignInForm } from '@/components/forms'
-import { Page } from '@/components/layout'
-import { useLoginMutation } from '@/pages/auth/api/authApi'
-import { LoginArgs } from '@/pages/auth/api/authApi.types'
+import { Page, useIsAuthenticated } from '@/components/layout'
 import { router } from '@/router'
+
+import { LoginArgs, useLoginMutation } from '../api'
 
 export const SignInPage = () => {
   const [signIn] = useLoginMutation()

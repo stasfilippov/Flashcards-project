@@ -11,11 +11,12 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownSeparator,
+  ProgressBar,
   Typography,
 } from '@/components/ui'
+import { appStatusSelector } from '@/services/appSlice'
 import { ProgressBar } from '@/components/ui/progressBar/progressBar'
 import { useLogoutMutation } from '@/pages/auth/api/authApi'
-import { appStatusSelector } from '@/services/appSlice/appSlice.selectors'
 import clsx from 'clsx'
 
 import s from './header.module.scss'

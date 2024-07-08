@@ -1,3 +1,4 @@
+import { flashcardsApi } from '@/services/flashcardApi'
 import { ROUTES } from '@/common/constants'
 import {
   AuthMeResponse,
@@ -9,9 +10,8 @@ import {
   SignUpResponse,
   UpdateUserDataArgs,
   UpdateUserDataResponse,
-} from '@/pages/auth/api/authApi.types'
+} from './'
 import { router } from '@/router'
-import { flashcardsApi } from '@/services/flashcardApi'
 
 const authApi = flashcardsApi.injectEndpoints({
   endpoints: builder => ({

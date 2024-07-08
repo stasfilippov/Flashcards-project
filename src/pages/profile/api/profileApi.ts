@@ -1,4 +1,4 @@
-import { UserData } from '@/pages/auth/api/authApi.types'
+import { UserData } from '@/pages/auth/api'
 import { flashcardsApi } from '@/services/flashcardApi'
 
 import { UpdateProfileArgs } from './profileApi.types'
