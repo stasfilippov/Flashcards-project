@@ -3,16 +3,17 @@ import { useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '@/common/hooks'
 import { Page } from '@/components/layout'
-import { Pagination, Typography } from '@/components/ui'
+import { DeckModal } from '@/components/modals/'
+import { Button, Pagination, Typography } from '@/components/ui'
 import { useMeQuery } from '@/pages/auth/api/authApi'
 import {
+  CreateDeckArgs,
+  SortValues,
   useCreateDeckMutation,
   useGetDecksQuery,
   useGetMinMaxCardsQuery,
-} from '@/pages/decksPage/api/decksApi'
-import { CreateDeckArgs, SortValues } from '@/pages/decksPage/api/decksApi.types'
+} from '@/pages/decksPage/api'
 import { DecksPageFilters, DecksPageTable } from '@/pages/decksPage/components'
-import { DeckModal } from '@/pages/decksPage/modals/deckModal/deckModal'
 
 import s from './decksPage.module.scss'
 
@@ -20,6 +21,8 @@ export const DecksPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { data: user } = useMeQuery()
   const { data: minMaxCards } = useGetMinMaxCardsQuery()
+
+  const [isOpenAddDeckModal, setIsOpenAddDeckModal] = useState(false)
 
   const search = searchParams.get('name') ?? ''
   const sort = searchParams.get('sort') as SortValues
@@ -96,7 +99,7 @@ export const DecksPage = () => {
         <Typography component={'h1'} variant={'h1'}>
           Decks lists
         </Typography>
-        <DeckModal confirmHandler={createDeckHandler} />
+        <Button onClick={() => setIsOpenAddDeckModal(true)}>Add new Deck</Button>
       </div>
       <DecksPageFilters
         changeSearchValue={changeSearchValueHandler}
@@ -127,6 +130,11 @@ export const DecksPage = () => {
           />
         </>
       ) : null}
+      <DeckModal
+        closeModal={() => setIsOpenAddDeckModal(false)}
+        confirmHandler={createDeckHandler}
+        isOpen={isOpenAddDeckModal}
+      />
     </Page>
   )
 }

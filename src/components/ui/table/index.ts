@@ -1,5 +1,4 @@
 export * from './table'
-export * from './tableCell/tableCellWithGrade'
-export * from './tableCell/tableCellWithPhotoQuestions'
-export * from './tableCell/tableCellWithText'
+export * from './tableCell'
 export * from './tableHeader'
+export * from './utils/convertDate'

@@ -1,15 +1,22 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, useState } from 'react'
 
-import { PlayCircleOutline } from '@/assets/icons/components'
+import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets/icons/components'
 import { ROUTES } from '@/common/constants'
+import { CardModal, DeckModal, DefaultValueOfModal, RemoveItemModal } from '@/components/modals'
 import { TableCell } from '@/components/ui/table'
-import { useDeleteCardMutation, useEditCardMutation } from '@/pages/cardsPage/api/cardsApi'
-import { Card, EditCardArgs } from '@/pages/cardsPage/api/cardsApi.types'
-import { CardModal, DefaultValueOfModal } from '@/pages/cardsPage/modals/cardModal/cardModal'
-import { useRemoveDeckMutation, useUpdateDeckMutation } from '@/pages/decksPage/api/decksApi'
-import { CreateDeckArgs, Deck, RemoveItemArgs } from '@/pages/decksPage/api/decksApi.types'
-import { DeckModal } from '@/pages/decksPage/modals/deckModal/deckModal'
-import { RemoveItemModal } from '@/pages/decksPage/modals/removeItem/removeItemModal'
+import {
+  Card,
+  EditCardArgs,
+  useDeleteCardMutation,
+  useEditCardMutation,
+} from '@/pages/cardsPage/api'
+import {
+  CreateDeckArgs,
+  Deck,
+  RemoveItemArgs,
+  useRemoveDeckMutation,
+  useUpdateDeckMutation,
+} from '@/pages/decksPage/api'
 import { router } from '@/router'
 import clsx from 'clsx'
 
@@ -53,6 +60,9 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
   const [updateDeck] = useUpdateDeckMutation()
   const [removeDeck] = useRemoveDeckMutation()
 
+  const [isOpenEditDeckModal, setIsOpenEditDeckModal] = useState(false)
+  const [isOpenRemoveDeckModal, setIsOpenRemoveDeckModal] = useState(false)
+
   const updateDeckHandler = (data: Partial<CreateDeckArgs>) => {
     updateDeck({ ...data, id: item?.id ?? '' })
   }
@@ -69,16 +79,26 @@ const DeckVariant = ({ currentUser, item }: DeckVariantProps) => {
     <>
       {item && currentUser === item.author.id ? (
         <>
-          <DeckModal
-            confirmHandler={updateDeckHandler}
-            defaultValues={{ cover: item.cover, isPrivate: item.isPrivate, name: item.name }}
-            id={item.id}
-          />
+          <button onClick={() => setIsOpenEditDeckModal(true)}>
+            <Edit2Outline width={16} />
+          </button>
           <button disabled={!item.cardsCount} onClick={learnHandler}>
             <PlayCircleOutline width={16} />
           </button>
-          <RemoveItemModal
+          <button onClick={() => setIsOpenRemoveDeckModal(true)}>
+            <TrashOutline width={16} />
+          </button>
+          <DeckModal
+            closeModal={() => setIsOpenEditDeckModal(false)}
+            confirmHandler={updateDeckHandler}
+            defaultValues={{ cover: item.cover, isPrivate: item.isPrivate, name: item.name }}
             id={item.id}
+            isOpen={isOpenEditDeckModal}
+          />
+          <RemoveItemModal
+            closeModal={() => setIsOpenRemoveDeckModal(false)}
+            id={item.id}
+            isOpen={isOpenRemoveDeckModal}
             name={item.name}
             onRemove={removeDeckHandler}
             type={'Deck'}
@@ -103,6 +123,8 @@ const CardVariant = ({ currentUser, item }: CardVariantProps) => {
   const [updateCard] = useEditCardMutation()
   const [deleteCard] = useDeleteCardMutation()
 
+  const [isOpenRemoveCardModal, setIsOpenRemoveCardModal] = useState(false)
+
   const updateDeckHandler = (data: Omit<EditCardArgs, 'id'>) => {
     updateCard({ ...data, id: item?.id ?? '' })
   }
@@ -125,8 +147,13 @@ const CardVariant = ({ currentUser, item }: CardVariantProps) => {
         }
         title={'Edit card'}
       />
+      <button onClick={() => setIsOpenRemoveCardModal(true)}>
+        <TrashOutline width={16} />
+      </button>
       <RemoveItemModal
+        closeModal={() => setIsOpenRemoveCardModal(false)}
         id={item.id}
+        isOpen={isOpenRemoveCardModal}
         name={item.question}
         onRemove={removeCardHandler}
         type={'Card'}

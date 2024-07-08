@@ -1,3 +1,6 @@
+import { RemoveItemArgs } from '@/pages/decksPage/api'
+import { flashcardsApi } from '@/services/flashcardApi'
+
 import {
   Card,
   CreateCardArgs,
@@ -6,14 +9,12 @@ import {
   GetCardByIdArgs,
   GetCardsArgs,
   GetCardsResponse,
-} from '@/pages/cardsPage/api/cardsApi.types'
-import { RemoveItemArgs } from '@/pages/decksPage/api/decksApi.types'
-import { flashcardsApi } from '@/services/flashcardApi'
+} from './cardsApi.types'
 
 const cardsApi = flashcardsApi.injectEndpoints({
   endpoints: builder => ({
     createNewCard: builder.mutation<Card, CreateCardArgs>({
-      invalidatesTags: ['Cards', 'MinMaxCards'],
+      invalidatesTags: ['Cards', 'MinMaxCards', 'Decks'],
       query: ({ answer, answerImg, id, question, questionImg }) => {
         const formData = new FormData()
 
@@ -45,7 +46,7 @@ const cardsApi = flashcardsApi.injectEndpoints({
       },
     }),
     deleteCard: builder.mutation<void, RemoveItemArgs>({
-      invalidatesTags: ['Cards', 'MinMaxCards'],
+      invalidatesTags: ['Cards', 'MinMaxCards', 'Decks'],
       query: ({ id }) => ({
         method: 'DELETE',
         url: `/v1/cards/${id}`,

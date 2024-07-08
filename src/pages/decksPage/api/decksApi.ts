@@ -1,4 +1,4 @@
-import { GetDeckByIdArgs, GetDeckByIdResponse } from '@/pages/cardsPage/api/cardsApi.types'
+import { GetDeckByIdArgs, GetDeckByIdResponse } from '@/pages/cardsPage/api'
 import { flashcardsApi } from '@/services/flashcardApi'
 
 import {

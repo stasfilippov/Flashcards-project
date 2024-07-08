@@ -1,11 +1,10 @@
 import { ROUTES } from '@/common/constants'
 import { recoverPasswordTemplate } from '@/common/htmlTemplates'
 import { ForgotPasswordForm } from '@/components/forms'
-import { Page } from '@/components/layout'
-import { useIsAuthenticated } from '@/components/layout/layout'
+import { Page, useIsAuthenticated } from '@/components/layout'
 import { router } from '@/router'
 
-import { useRecoverPasswordMutation } from '../api/authApi'
+import { useRecoverPasswordMutation } from '../api'
 
 export const ForgotPasswordPage = () => {
   const [recoverPassword] = useRecoverPasswordMutation()

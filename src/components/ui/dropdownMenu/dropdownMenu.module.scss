@@ -1,6 +1,5 @@
 .trigger {
   cursor: pointer;
-  min-width: 36px;
 }
 
 .dropdownContent {
@@ -19,6 +18,11 @@
   gap: 6px;
   align-items: center;
   justify-content: left;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 }
 
 .triangleBox {

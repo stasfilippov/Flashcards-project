@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { Card } from '@/pages/cardsPage/api/cardsApi.types'
-import { useGetDeckByIdQuery } from '@/pages/decksPage/api/decksApi'
+import { Card } from '@/pages/cardsPage/api'
+import { useGetDeckByIdQuery } from '@/pages/decksPage/api'
 import { useGetRandomCardQuery, useSaveTheGradeMutation } from '@/pages/learn/api'
 
 export const useLearnPage = () => {

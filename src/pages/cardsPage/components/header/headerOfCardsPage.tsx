@@ -2,13 +2,18 @@ import { Link } from 'react-router-dom'
 
 import defaultImg from '@/assets/img/defaultImageDeck.png'
 import { ROUTES } from '@/common/constants'
+import { CardModal } from '@/components/modals'
 import { Button, Typography } from '@/components/ui'
-import { useCreateNewCardMutation } from '@/pages/cardsPage/api/cardsApi'
-import { CreateCardArgs, GetDeckByIdResponse } from '@/pages/cardsPage/api/cardsApi.types'
-import { CardModal } from '@/pages/cardsPage/modals/cardModal/cardModal'
+import {
+  CreateCardArgs,
+  GetDeckByIdResponse,
+  useCreateNewCardMutation,
+} from '@/pages/cardsPage/api'
 import clsx from 'clsx'
 
 import s from './header.module.scss'
+
+import { DropDownDeckMenu } from '../'
 
 type Props = {
   deck: GetDeckByIdResponse
@@ -19,6 +24,7 @@ export const HeaderOfCardsPage = ({ deck, isMy }: Props) => {
   const classNames = {
     image: clsx(s.image),
     title: clsx(s.title),
+    titleWithDropDownContainer: clsx(s.titleWithDropDownContainer),
     wrapperWithControl: clsx(s.wrapperWithControl),
   }
 
@@ -33,9 +39,12 @@ export const HeaderOfCardsPage = ({ deck, isMy }: Props) => {
   return (
     <div>
       <div className={classNames.wrapperWithControl}>
-        <Typography className={classNames.title} variant={'h1'}>
-          {deck.name}
-        </Typography>
+        <div className={classNames.titleWithDropDownContainer}>
+          <Typography className={classNames.title} variant={'h1'}>
+            {deck.name}
+          </Typography>
+          {isMy && <DropDownDeckMenu deck={deck} />}
+        </div>
         {isMy ? (
           <CardModal confirmHandler={createCardHandler} title={'Add New Card'} />
         ) : (

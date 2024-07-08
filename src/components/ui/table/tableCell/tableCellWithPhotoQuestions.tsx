@@ -3,7 +3,7 @@ import { ComponentPropsWithoutRef } from 'react'
 import defaultImage from '@/assets/img/defaultImageDeck.png'
 import { Typography } from '@/components/ui'
 import { TableCell } from '@/components/ui/table'
-import { Card } from '@/pages/cardsPage/api/cardsApi.types'
+import { Card } from '@/pages/cardsPage/api'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'

@@ -1,15 +1,21 @@
 .wrapperWithControl {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 15px;
 
   .title {
     cursor: default;
   }
+
+  .titleWithDropDownContainer {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
 }
 
 .image {
-  border-radius: 2px;
   width: 170px;
+  border-radius: 2px;
 }

@@ -13,9 +13,9 @@ import {
   TableRow,
   Typography,
 } from '@/components/ui'
-import { TableCellWithControls } from '@/components/ui/table/tableCell/tableCellWithControls'
-import { useGetCardsQuery } from '@/pages/cardsPage/api/cardsApi'
-import { SortBy, SortValues } from '@/pages/decksPage/api/decksApi.types'
+import { TableCellWithControls } from '@/components/ui/table'
+import { useGetCardsQuery } from '@/pages/cardsPage/api'
+import { SortBy, SortValues } from '@/pages/decksPage/api'
 import clsx from 'clsx'
 
 import s from '@/components/ui/table/table.module.scss'
