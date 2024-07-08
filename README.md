@@ -38,7 +38,8 @@ To perform a production build, run the command:
 pnpm run build
 ```
 
-## Команда разработки
+## Development team
 - [Anastasiya Darashkevich](https://github.com/doroshkent) — Front-End Developer
 - [Vladislav Zimin](https://github.com/VladZimin) — Front-End Developer
 - [Stanislav Filippov](https://github.com/stasfilippov) — Front-End Developer
+- [Andrii Zadorozhnyi](https://github.com/ershisan99) - Back-End Developer
