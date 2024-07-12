@@ -3,7 +3,7 @@ import { Outlet, useOutletContext } from 'react-router-dom'
 
 import { Header, HeaderProps } from '@/components/layout'
 import { Spinner } from '@/components/ui'
-import { useLogoutMutation, useMeQuery } from '@/pages/auth/api'
+import { useMeQuery } from '@/pages/auth/api'
 
 import s from './layout.module.scss'
 

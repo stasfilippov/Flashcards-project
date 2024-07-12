@@ -1,5 +1,7 @@
-import { flashcardsApi } from '@/services/flashcardApi'
 import { ROUTES } from '@/common/constants'
+import { router } from '@/router'
+import { flashcardsApi } from '@/services/flashcardApi'
+
 import {
   AuthMeResponse,
   CreatePasswordArgs,
@@ -10,8 +12,8 @@ import {
   SignUpResponse,
   UpdateUserDataArgs,
   UpdateUserDataResponse,
+  VerifyEmailArgs,
 } from './'
-import { router } from '@/router'
 
 const authApi = flashcardsApi.injectEndpoints({
   endpoints: builder => ({
@@ -84,6 +86,13 @@ const authApi = flashcardsApi.injectEndpoints({
         url: `/v1/auth/me`,
       }),
     }),
+    verifyEmail: builder.mutation<void, VerifyEmailArgs>({
+      query: body => ({
+        body,
+        method: 'POST',
+        url: '/v1/auth/verify-email',
+      }),
+    }),
   }),
 })
 
@@ -95,4 +104,5 @@ export const {
   useRecoverPasswordMutation,
   useSignUpMutation,
   useUpdateUserDataMutation,
+  useVerifyEmailMutation,
 } = authApi
