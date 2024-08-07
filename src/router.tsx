@@ -20,6 +20,7 @@ import {
   SignInPage,
   SignUpPage,
 } from '@/pages'
+import { ConfirmEmailPage } from '@/pages/auth/confirmEmail/confirmEmail'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -41,6 +42,10 @@ const publicRoutes: RouteObject[] = [
   {
     element: <CreatePasswordPage />,
     path: `${ROUTES.createNewPassword}/:resetToken`,
+  },
+  {
+    element: <ConfirmEmailPage />,
+    path: `${ROUTES.confirmEmail}/:verificationToken`,
   },
   {
     element: <Error />,

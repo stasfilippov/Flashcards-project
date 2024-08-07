@@ -57,7 +57,10 @@ export const baseQueryWithReauth: BaseQueryFn<
         } else {
           const currentPath = window.location.pathname
 
-          if (!currentPath.startsWith(`${ROUTES.createNewPassword}/`)) {
+          if (
+            !currentPath.startsWith(`${ROUTES.createNewPassword}/`) ||
+            !currentPath.startsWith(`${ROUTES.confirmEmail}/`)
+          ) {
             await router.navigate(ROUTES.signIn)
           }
         }
