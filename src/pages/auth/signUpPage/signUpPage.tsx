@@ -1,11 +1,12 @@
 import { toast } from 'react-toastify'
 
 import { ROUTES } from '@/common/constants'
+import { emailConfirmTemplate } from '@/common/htmlTemplates/emailConfirmTemplate'
 import { SignUpForm } from '@/components/forms'
 import { Page, useIsAuthenticated } from '@/components/layout'
 import { router } from '@/router'
 
-import { SignUpArgs, useSignUpMutation } from '../api'
+import { SignUpArgs, useLoginMutation, useSignUpMutation } from '../api'
 
 export const SignUpPage = () => {
   const [signUp] = useSignUpMutation()
@@ -13,7 +14,7 @@ export const SignUpPage = () => {
   const { isAuthenticated } = useIsAuthenticated()
 
   const signUpHandler = (data: SignUpArgs) => {
-    signUp(data)
+    signUp({ ...data, ...emailConfirmTemplate, sendConfirmationEmail: true })
       .unwrap()
       .then(async () => {
         await login({ email: data.email, password: data.password, rememberMe: false })

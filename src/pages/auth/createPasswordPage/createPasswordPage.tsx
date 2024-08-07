@@ -6,7 +6,7 @@ import { CreateNewPasswordForm } from '@/components/forms'
 import { Page } from '@/components/layout'
 import { router } from '@/router'
 
-import { useCreatePasswordMutation } from '../auth/api/authApi'
+import { useCreatePasswordMutation } from '../api/authApi'
 
 export const CreatePasswordPage = () => {
   const { resetToken } = useParams()

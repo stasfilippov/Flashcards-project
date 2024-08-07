@@ -30,6 +30,7 @@ export type LoginResponse = {
 
 export type SignUpArgs = {
   email: string
+  html?: string
   name?: string
   password: string
   sendConfirmationEmail?: boolean
@@ -44,4 +45,7 @@ export type ForgotPasswordArgs = {
 export type CreatePasswordArgs = {
   password: string
   resetToken: string
+}
+export type VerifyEmailArgs = {
+  code: string
 }
